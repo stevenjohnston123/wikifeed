@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiFeed - A Social Media View of Wikipedia</title>
+    <style>
+        /* Basic Reset and Variables */
+        :root {
+            --primary-color: #0079d3;
+            --background-color: #dae0e6;
+            --card-background: #ffffff;
+            --text-color: #1c1c1c;
+            --subtle-text: #7c7c7c;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding-top: 20px;
+        }
+
+        /* Header and Categories */
+        .header {
+            background-color: var(--card-background);
+            border-bottom: 1px solid #ccc;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .category-selector {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 10px 15px; 
+            padding-bottom: 5px;
+            overflow-x: hidden; 
+            white-space: normal; 
+        }
+
+        .category-button {
+            background: none;
+            border: none;
+            color: var(--subtle-text);
+            cursor: pointer;
+            padding: 5px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .category-button:hover {
+            color: var(--primary-color);
+        }
+
+        .category-button.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        /* Article Card Styles */
+        .article-card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            color: var(--text-color);
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .card-title a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .card-title a:hover {
+            text-decoration: underline;
+        }
+
+        .card-summary {
+            color: var(--text-color);
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .card-meta {
+            font-size: 0.85em;
+            color: var(--subtle-text);
+            padding: 0 15px 15px 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .card-image-container {
+            width: 160px;
+            height: 120px; 
+            flex-shrink: 0;
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            color: var(--subtle-text);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🔥 WikiFeed</h2>
+            <div class="category-selector">
+                <button class="category-button active" data-category="featured">Featured 🔥</button>
+                <button class="category-button" data-category="science">Science 🔬</button>
+                <button class="category-button" data-category="technology">Technology 💻</button>
+                <button class="category-button" data-category="mathematics">Mathematics ➗</button>
+                <button class="category-button" data-category="history">History 📜</button>
+                <button class="category-button" data-category="politics">Politics 🏛️</button>
+                <button class="category-button" data-category="business">Business 📈</button>
+                <button class="category-button" data-category="arts">Arts 🎨</button>
+                <button class="category-button" data-category="literature">Literature 📚</button>
+                <button class="category-button" data-category="philosophy">Philosophy 🤔</button>
+                <button class="category-button" data-category="music">Music 🎶</button>
+                <button class="category-button" data-category="entertainment">Entertainment 🎬</button>
+                <button class="category-button" data-category="religion">Religion 🙏</button>
+                <button class="category-button" data-category="legal">Legal ⚖️</button>
+            </div>
+        </div>
+        
+        <div id="feed-container">
+            </div>
+
+        <div id="loading-indicator" class="loading">
+            Loading more articles...
+        </div>
+    </div>
+
+    <script>
+        const feedContainer = document.getElementById('feed-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const categoryButtons = document.querySelectorAll('.category-button');
+
+        let currentCategory = 'featured'; 
+        let offset = 0; 
+        const articlesPerBatch = 8; 
+        let isLoading = false;
+        const loadedArticleIds = new Set();
+        
+        // --- Category Mapping for API ---
+        const categoryQueryMap = {
+            'featured': 'Featured article',
+            'science': 'Physics OR Biology',
+            'technology': 'Computer science OR Internet',
+            'mathematics': 'Calculus OR Algebra',
+            'history': 'World history OR Ancient history',
+            'politics': 'Political science OR Government',
+            'business': 'Economics OR Finance',
+            'arts': 'Visual arts OR Sculpture',
+            'literature': 'Novel OR Poetry',
+            'philosophy': 'Ethics OR Metaphysics',
+            'music': 'Classical music OR Jazz',
+            'entertainment': 'Film OR Television',
+            'religion': 'Christianity OR Islam',
+            'legal': 'Jurisprudence OR Constitution',
+        };
+
+        // --- NEW UTILITY FUNCTION: Remove IPA ---
+        function cleanTitle(title) {
+            // Regex to remove text within parentheses that starts with common IPA characters
+            // E.g., removes pronunciation guidance like "(/ˌkɑːl ˈsɑːɡən/)"
+            return title.replace(/\s*\([^)]*\/[^)]*\)/g, '').trim();
+        }
+        // --- END NEW UTILITY FUNCTION ---
+
+        /**
+         * Creates an HTML card element for a single Wikipedia article.
+         */
+        function createArticleCard(article) {
+            const card = document.createElement('div');
+            card.className = 'article-card';
+
+            const cleanArticleTitle = cleanTitle(article.title);
+            const summary = article.extract ? article.extract.split('\n')[0].substring(0, 250) + '...' : 'No summary available.';
+            
+            const imageUrl = article.thumbnail 
+                ? article.thumbnail.source 
+                : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png';
+            
+            const pageUrl = `https://en.wikipedia.org/?curid=${article.pageid}`;
+            const categoryDisplay = article.category.charAt(0).toUpperCase() + article.category.slice(1);
+            
+            card.innerHTML = `
+                <div class="card-body">
+                    <div class="card-image-container">
+                        <img src="${imageUrl}" alt="Image for ${cleanArticleTitle}" class="card-image">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">
+                            <a href="${pageUrl}" target="_blank">${cleanArticleTitle}</a>
+                        </h3>
+                        <p class="card-summary">${summary}</p>
+                    </div>
+                </div>
+                <div class="card-meta">
+                    Category: <b>wiki/${categoryDisplay}</b> | Page ID: ${article.pageid}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // --- Core Fetching Logic (Unchanged) ---
+        async function fetchArticles() {
+            if (isLoading) return; 
+            isLoading = true;
+            loadingIndicator.style.display = 'block'; 
+            
+            const searchTopic = categoryQueryMap[currentCategory] || 'Featured article';
+            
+            const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=${searchTopic}&gsrlimit=${articlesPerBatch}&prop=pageimages|extracts&exintro&explaintext&exlimit=max&pithumbsize=160&redirects=1&formatversion=2&origin=*&gsroffset=${offset}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                let pages = data.query ? data.query.pages : [];
+                
+                if (pages.length === 0 && offset === 0) {
+                     loadingIndicator.textContent = "Could not find any articles for this category.";
+                     return;
+                }
+                
+                if (pages.length === 0 && offset > 0) {
+                    loadingIndicator.textContent = "No more articles found in this category.";
+                    return;
+                }
+
+                // Filter for images AND duplicates
+                let filteredPages = pages
+                    .filter(page => page.thumbnail)
+                    .filter(page => {
+                        const isNew = !loadedArticleIds.has(page.pageid);
+                        if (isNew) {
+                            loadedArticleIds.add(page.pageid); 
+                        }
+                        return isNew;
+                    });
+                
+                // Fallback: If filtering removed all articles, use the raw set to avoid an empty scroll trigger
+                if (filteredPages.length === 0 && pages.length > 0) {
+                     pages.forEach(page => {
+                        if (!loadedArticleIds.has(page.pageid)) {
+                             filteredPages.push(page);
+                             loadedArticleIds.add(page.pageid);
+                        }
+                     });
+                }
+                
+                // Add articles to the DOM
+                filteredPages.forEach(page => {
+                    page.category = currentCategory; 
+                    feedContainer.appendChild(createArticleCard(page));
+                });
+
+                // Update offset
+                offset += articlesPerBatch; 
+
+                loadingIndicator.textContent = filteredPages.length > 0 ? "Loading more articles..." : "No new articles found with images.";
+
+            } catch (error) {
+                console.error("Error fetching articles:", error);
+                loadingIndicator.textContent = "Failed to load articles. Please try again.";
+            } finally {
+                isLoading = false;
+                loadingIndicator.style.display = 'block'; 
+            }
+        }
+
+        // --- Infinite Scroll Setup (Unchanged) ---
+        const intersectionCallback = (entries, observer) => {
+            const entry = entries[0];
+            if (entry.isIntersecting && !isLoading) {
+                fetchArticles();
+            }
+        };
+
+        const observer = new IntersectionObserver(intersectionCallback, {
+            root: null, 
+            threshold: 0.1
+        });
+
+        observer.observe(loadingIndicator);
+
+        // --- Category Switching Logic (Unchanged) ---
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const newCategory = button.getAttribute('data-category');
+                
+                if (newCategory !== currentCategory) {
+                    currentCategory = newCategory;
+                    offset = 0; 
+                    isLoading = false; 
+                    loadedArticleIds.clear(); 
+
+                    feedContainer.innerHTML = '';
+                    loadingIndicator.textContent = "Loading more articles...";
+
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    fetchArticles();
+                }
+            });
+        });
+        
+        // Initial load
+        fetchArticles();
+
+    </script>
+</body>
+</html>
