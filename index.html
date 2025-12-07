@@ -139,7 +139,6 @@
             font-size: 1.2em;
             color: var(--subtle-text);
         }
-
     </style>
 </head>
 <body>
@@ -164,8 +163,7 @@
             </div>
         </div>
         
-        <div id="feed-container">
-            </div>
+        <div id="feed-container"></div>
 
         <div id="loading-indicator" class="loading">
             Loading more articles...
@@ -179,9 +177,16 @@
 
         let currentCategory = 'featured'; 
         let offset = 0; 
-        const articlesPerBatch = 8; 
+        
+        // SETTINGS
+        const API_BATCH_SIZE = 30; 
+        const REQUESTS_PER_LOAD = 2; 
+        
         let isLoading = false;
         const loadedArticleIds = new Set();
+        
+        // Initialize the AbortController for managing in-flight requests
+        let activeController = new AbortController(); 
         
         // --- Category Mapping for API ---
         const categoryQueryMap = {
@@ -193,7 +198,7 @@
             'politics': 'Political science OR Government',
             'business': 'Economics OR Finance',
             'arts': 'Visual arts OR Sculpture',
-            'literature': 'Novel OR Poetry',
+            'literature': 'Literature OR Literary genre OR Author OR Classic novel',
             'philosophy': 'Ethics OR Metaphysics',
             'music': 'Classical music OR Jazz',
             'entertainment': 'Film OR Television',
@@ -201,23 +206,38 @@
             'legal': 'Jurisprudence OR Constitution',
         };
 
-        // --- NEW UTILITY FUNCTION: Remove IPA ---
+        // --- UTILITIES ---
+
+        function calculateTotalViews(pageviewsData) {
+             // Change this line:
+             if (!pageviewsData) return 0; // Return 0 if data is missing, instead of -1
+             
+             return Object.values(pageviewsData).reduce((total, dailyViews) => {
+                 // This part already correctly handles individual nulls/ -1 as 0
+                 const views = (dailyViews === null || dailyViews === -1) ? 0 : dailyViews;
+                 return total + views;
+             }, 0);
+        }
+
         function cleanTitle(title) {
-            // Regex to remove text within parentheses that starts with common IPA characters
-            // E.g., removes pronunciation guidance like "(/ˌkɑːl ˈsɑːɡən/)"
             return title.replace(/\s*\([^)]*\/[^)]*\)/g, '').trim();
         }
-        // --- END NEW UTILITY FUNCTION ---
 
-        /**
-         * Creates an HTML card element for a single Wikipedia article.
-         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
         function createArticleCard(article) {
             const card = document.createElement('div');
             card.className = 'article-card';
 
             const cleanArticleTitle = cleanTitle(article.title);
-            const summary = article.extract ? article.extract.split('\n')[0].substring(0, 250) + '...' : 'No summary available.';
+            const rawSummary = article.extract || '';
+            const summary = rawSummary.length > 50 ? rawSummary.split('\n')[0].substring(0, 250) + '...' : 'No summary available.';
             
             const imageUrl = article.thumbnail 
                 ? article.thumbnail.source 
@@ -226,6 +246,12 @@
             const pageUrl = `https://en.wikipedia.org/?curid=${article.pageid}`;
             const categoryDisplay = article.category.charAt(0).toUpperCase() + article.category.slice(1);
             
+            const totalViews = calculateTotalViews(article.pageviews);
+            let viewDisplay = 'N/A';
+            if (totalViews !== -1) {
+                viewDisplay = totalViews.toLocaleString();
+            }
+
             card.innerHTML = `
                 <div class="card-body">
                     <div class="card-image-container">
@@ -239,81 +265,129 @@
                     </div>
                 </div>
                 <div class="card-meta">
-                    Category: <b>wiki/${categoryDisplay}</b> | Page ID: ${article.pageid}
+                    Category: <b>wiki/${categoryDisplay}</b> | Views (14 Days): <b>${viewDisplay}</b>
                 </div>
             `;
-            
             return card;
         }
 
-        // --- Core Fetching Logic (Unchanged) ---
+        // --- Core Fetching Logic ---
+        
         async function fetchArticles() {
             if (isLoading) return; 
             isLoading = true;
             loadingIndicator.style.display = 'block'; 
             
-            const searchTopic = categoryQueryMap[currentCategory] || 'Featured article';
+            // 1. Check URL for category on initial load
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlCategory = urlParams.get('category');
             
-            const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=${searchTopic}&gsrlimit=${articlesPerBatch}&prop=pageimages|extracts&exintro&explaintext&exlimit=max&pithumbsize=160&redirects=1&formatversion=2&origin=*&gsroffset=${offset}`;
+            if (urlCategory && categoryQueryMap.hasOwnProperty(urlCategory)) {
+                currentCategory = urlCategory;
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`.category-button[data-category="${currentCategory}"]`);
+                if (activeBtn) activeBtn.classList.add('active');
+            }
+            
+            const categoryToFetch = currentCategory;
+            const searchTopic = categoryQueryMap[categoryToFetch] || 'Featured article';
+            const encodedSearchTopic = encodeURIComponent(searchTopic);
+            
+            const baseApiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=${encodedSearchTopic}&gsrlimit=${API_BATCH_SIZE}&prop=pageimages|extracts|pageviews&pvipdays=14&exintro&explaintext&exlimit=max&pithumbsize=160&redirects=1&formatversion=2&origin=*`;
 
+            let combinedPages = [];
+            let currentOffset = offset;
+            let fullLoadComplete = false;
+            
             try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+                // 2. Sequential Fetching Loop
+                for (let i = 0; i < REQUESTS_PER_LOAD; i++) {
+                    // Validity Check
+                    if (categoryToFetch !== currentCategory) {
+                        break; 
+                    }
+
+                    const url = `${baseApiUrl}&gsroffset=${currentOffset}`;
+                    
+                    // NEW LOGGING ADDED HERE
+                    console.log("Fetching URL: " + url);
+                    
+                    const response = await fetch(url, { signal: activeController.signal }); 
+                    const data = await response.json();
+
+                    if (data.query && data.query.pages) {
+                        combinedPages = combinedPages.concat(Object.values(data.query.pages));
+                    } else {
+                        fullLoadComplete = true;
+                        break;
+                    }
+                    
+                    currentOffset += API_BATCH_SIZE;
+                }
                 
-                let pages = data.query ? data.query.pages : [];
+                // If the category changed during the await, don't process or update state
+                if (categoryToFetch !== currentCategory) {
+                    return; 
+                }
+
+                offset = currentOffset; 
                 
-                if (pages.length === 0 && offset === 0) {
+                if (combinedPages.length === 0 && offset === 0) {
                      loadingIndicator.textContent = "Could not find any articles for this category.";
                      return;
                 }
                 
-                if (pages.length === 0 && offset > 0) {
-                    loadingIndicator.textContent = "No more articles found in this category.";
-                    return;
-                }
+                // 3. Filter
+                let pool = combinedPages.filter(page => {
+                    const hasSummary = page.extract && page.extract.length > 50;
+                    const hasImage = page.thumbnail;
+                    const isNew = !loadedArticleIds.has(page.pageid);
 
-                // Filter for images AND duplicates
-                let filteredPages = pages
-                    .filter(page => page.thumbnail)
-                    .filter(page => {
-                        const isNew = !loadedArticleIds.has(page.pageid);
-                        if (isNew) {
-                            loadedArticleIds.add(page.pageid); 
-                        }
-                        return isNew;
-                    });
+                    if (hasSummary && hasImage && isNew) {
+                        loadedArticleIds.add(page.pageid); 
+                        return true;
+                    }
+                    return false;
+                });
                 
-                // Fallback: If filtering removed all articles, use the raw set to avoid an empty scroll trigger
-                if (filteredPages.length === 0 && pages.length > 0) {
-                     pages.forEach(page => {
-                        if (!loadedArticleIds.has(page.pageid)) {
-                             filteredPages.push(page);
-                             loadedArticleIds.add(page.pageid);
-                        }
-                     });
+                // 4. Randomize (Shuffle)
+                pool = shuffleArray(pool);
+
+                // 5. Render
+                if (pool.length === 0) {
+                    if (combinedPages.length > 0 && !fullLoadComplete) {
+                        loadingIndicator.textContent = "Still loading, trying next batch for quality articles...";
+                        isLoading = false; 
+                        fetchArticles(); 
+                        return;
+                    } else {
+                        loadingIndicator.textContent = "No more articles found.";
+                        return;
+                    }
                 }
                 
-                // Add articles to the DOM
-                filteredPages.forEach(page => {
-                    page.category = currentCategory; 
+                pool.forEach(page => {
+                    page.category = categoryToFetch; 
                     feedContainer.appendChild(createArticleCard(page));
                 });
-
-                // Update offset
-                offset += articlesPerBatch; 
-
-                loadingIndicator.textContent = filteredPages.length > 0 ? "Loading more articles..." : "No new articles found with images.";
+                
+                loadingIndicator.textContent = "Loading more articles...";
 
             } catch (error) {
+                // Check for AbortError and ignore it gracefully
+                if (error.name === 'AbortError') {
+                    console.log('Fetch aborted by user action.');
+                    return;
+                }
+                
                 console.error("Error fetching articles:", error);
                 loadingIndicator.textContent = "Failed to load articles. Please try again.";
             } finally {
                 isLoading = false;
-                loadingIndicator.style.display = 'block'; 
             }
         }
 
-        // --- Infinite Scroll Setup (Unchanged) ---
+        // --- Infinite Scroll Setup ---
         const intersectionCallback = (entries, observer) => {
             const entry = entries[0];
             if (entry.isIntersecting && !isLoading) {
@@ -328,13 +402,21 @@
 
         observer.observe(loadingIndicator);
 
-        // --- Category Switching Logic (Unchanged) ---
+        // --- Category Switching Logic (CANCELS OLD REQUESTS) ---
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const newCategory = button.getAttribute('data-category');
                 
                 if (newCategory !== currentCategory) {
+                    // 1. Abort the previous request(s) immediately
+                    activeController.abort();
+                    // 2. Create a brand new controller for the new request
+                    activeController = new AbortController();
+
+                    // Set global state immediately
                     currentCategory = newCategory;
+                    
+                    // Reset everything
                     offset = 0; 
                     isLoading = false; 
                     loadedArticleIds.clear(); 
@@ -344,7 +426,12 @@
 
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
+                    
+                    // Update URL without reloading
+                    const newUrl = `${window.location.pathname}?category=${newCategory}`;
+                    history.pushState({ category: newCategory }, '', newUrl);
 
+                    // Start the new fetch
                     fetchArticles();
                 }
             });
