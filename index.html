@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
-        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
         <title>WikiFeed</title>
         <style>
         :root {
@@ -38,8 +36,9 @@
         .active-filters {
         display: flex;
         flex-wrap: wrap;
+        padding: 4px 12px;
         gap: 8px;
-        margin-bottom: 12px;
+        margin-bottom: 2px;
         min-height: 32px;
         }
         .tag {
@@ -126,6 +125,45 @@
         font-weight: 500;
         }
         .node-label.expanded { color: var(--accent); background: #fdfdfd; }
+        /* Styling for the primary toggle button */
+        .nav-btn.primary {
+        background: var(--accent);
+        color: white;
+        border: none;
+        }
+        /* Ensure the tree drawer doesn't push content too far down on mobile */
+        #treeDrawer {
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+        max-height: 50vh; /* Limits height on mobile */
+        overflow-y: auto;
+        }
+        /* Tighter nodes as requested previously */
+        .node-row {
+        min-width: 120px;
+        margin-bottom: 2px;
+        }
+        .node-label {
+        padding: 3px 8px;
+        font-size: 11px;
+        }
+        .node-plus {
+        padding: 3px 8px;
+        font-size: 10px;
+        }
+        /* On mobile, stack the top-level nodes vertically to save horizontal space */
+        @media (max-width: 600px) {
+        #treeContainer {
+        flex-direction: column;
+        gap: 5px;
+        }
+        .top-level-node {
+        width: 100%;
+        }
+        .node-row {
+        width: 100%; /* Rows take full width of drawer on mobile */
+        }
+        }
         /* --- Feed --- */
         #feed { max-width: 800px; margin: 20px auto; padding: 0 15px; min-height: 50vh;}
         .card {
@@ -148,12 +186,17 @@
         <header id="mainHeader">
             <div class="container">
                 <div class="nav-bar">
+                    <button class="nav-btn primary" id="treeToggle" onclick="toggleTreeVisibility()">
+                    🔍 Topics <span id="toggleArrow">▸</span>
+                    </button>
                     <button class="nav-btn" onclick="goToRoot()">🏠 Home</button>
                     <button class="nav-btn" onclick="pickRandom()">🎲 Random 2</button>
                     <button class="nav-btn" onclick="clearAll()" style="color:#dc3545">🗑 Clear All</button>
                     <div class="active-filters" id="activeFilters"></div>
                 </div>
-                <div id="treeContainer"></div>
+                <div id="treeDrawer" style="display: none; margin-top: 10px;">
+                    <div id="treeContainer"></div>
+                </div>
             </div>
         </header>
     <main id="feed"></main>
@@ -619,8 +662,14 @@
     let loading = false;
     function init() {
     const hash = window.location.hash.substring(1);
-    if (hash) activeTerms = decodeURIComponent(hash).split(',').filter(t => t);
+    // If hash is empty OR it literally says "random", run randomizer
+    if (!hash || hash === 'random') {
+    pickRandom();
+    } else {
+    activeTerms = decodeURIComponent(hash).split(',').filter(t => t);
     updateFilterUI();
+    resetFeed();
+    }
     renderTree();
     if (activeTerms.length > 0) resetFeed();
     // Shrink on click outside
@@ -799,10 +848,34 @@
     `;
     feed.appendChild(card);
     }
+    function toggleTreeVisibility() {
+    const drawer = document.getElementById('treeDrawer');
+    const arrow = document.getElementById('toggleArrow');
+    
+    if (drawer.style.display === 'none') {
+    drawer.style.display = 'block';
+    arrow.innerText = '▾';
+    } else {
+    drawer.style.display = 'none';
+    arrow.innerText = '▸';
+    }
+    }
+    // Update your "Click outside to shrink" logic to also close the drawer
+    document.addEventListener('click', (e) => {
+    const header = document.getElementById('mainHeader');
+    const drawer = document.getElementById('treeDrawer');
+    const arrow = document.getElementById('toggleArrow');
+    
+    if (!header.contains(e.target)) {
+    openPaths = [];
+    drawer.style.display = 'none';
+    arrow.innerText = '▸';
+    renderTree();
+    }
+    });
     const obs = new IntersectionObserver((e) => { if (e[0].isIntersecting && activeTerms.length > 0) fetchArticles(); });
     obs.observe(document.getElementById('sentinel'));
     init();
     </script>
 </body>
 </html>
-
