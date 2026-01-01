@@ -1,446 +1,804 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WikiFeed - A Social Media View of Wikipedia</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
-    <style>
-        /* Basic Reset and Variables */
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WikiFeed - Horizontal Tree</title>
+        <style>
         :root {
-            --primary-color: #0079d3;
-            --background-color: #dae0e6;
-            --card-background: #ffffff;
-            --text-color: #1c1c1c;
-            --subtle-text: #7c7c7c;
+        --bg: #f0f2f5;
+        --card: #ffffff;
+        --text: #1c1e21;
+        --accent: #007bff;
+        --secondary: #65676b;
+        --border: #dee2e6;
+        --tag-bg: #e7f3ff;
         }
-
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--background-color);
-            display: flex;
-            justify-content: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        margin: 0;
+        color: var(--text);
+        line-height: 1.4;
         }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            padding-top: 20px;
+        /* --- Header & Layout --- */
+        header {
+        background: var(--card);
+        border-bottom: 1px solid var(--border);
+        padding: 15px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-
-        /* Header and Categories */
-        .header {
-            background-color: var(--card-background);
-            border-bottom: 1px solid #ccc;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
+        .container { max-width: 1200px; margin: 0 auto; }
+        .active-filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+        min-height: 32px;
         }
-
-        .category-selector {
-            display: flex;
-            flex-wrap: wrap; 
-            gap: 10px 15px; 
-            padding-bottom: 5px;
-            overflow-x: hidden; 
-            white-space: normal; 
+        .tag {
+        background: var(--accent);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
         }
-
-        .category-button {
-            background: none;
-            border: none;
-            color: var(--subtle-text);
-            cursor: pointer;
-            padding: 5px 10px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: color 0.2s;
-            flex-shrink: 0;
+        .tag span { cursor: pointer; font-size: 16px; line-height: 1; }
+        .nav-bar {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-bottom: 15px;
         }
-
-        .category-button:hover {
-            color: var(--primary-color);
+        .nav-btn {
+        background: #fff;
+        border: 1px solid var(--border);
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
         }
-
-        .category-button.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
+        .nav-btn:hover { background: #f8f9fa; }
+        /* --- Horizontal Top Level Tree --- */
+        #treeContainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        align-items: flex-start;
         }
-
-        /* Article Card Styles */
-        .article-card {
-            background-color: var(--card-background);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #ccc;
+        /* Top level item container */
+        .top-level-node {
+        display: flex;
+        flex-direction: column;
         }
-
-        .card-body {
-            padding: 15px;
-            display: flex;
-            gap: 15px;
+        .node-branch {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-left: 15px;
+        padding-left: 10px;
+        border-left: 2px solid var(--border);
+        margin-top: 6px;
         }
-
-        .card-content {
-            flex-grow: 1;
+        .node-row {
+        display: flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 4px; /* Sharper corners for a tighter look */
+        background: white;
+        width: fit-content;
+        min-width: 120px; /* Reduced min-width */
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
-
-        .card-title {
-            font-size: 1.3em;
-            color: var(--text-color);
-            margin-top: 0;
-            margin-bottom: 5px;
+        .node-plus {
+        padding: 4px 8px; /* Reduced from 8px 12px */
+        background: #f8f9fa;
+        border-right: 1px solid var(--border);
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px; /* Smaller plus sign */
+        color: var(--accent);
         }
-
-        .card-title a {
-            text-decoration: none;
-            color: var(--primary-color);
+        .node-plus:hover { background: var(--tag-bg); }
+        .node-label {
+        flex-grow: 1;
+        padding: 4px 10px; /* Reduced from 8px 12px */
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+        font-size: 14px; /* Smaller text */
+        font-weight: 500;
         }
-
-        .card-title a:hover {
-            text-decoration: underline;
+        .node-label.expanded { color: var(--accent); background: #fdfdfd; }
+        /* --- Feed --- */
+        #feed { max-width: 800px; margin: 20px auto; padding: 0 15px; min-height: 50vh;}
+        .card {
+        display: flex;
+        background: var(--card);
+        border-radius: 10px;
+        margin-bottom: 16px;
+        border: 1px solid var(--border);
+        overflow: hidden;
         }
-
-        .card-summary {
-            color: var(--text-color);
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .card-meta {
-            font-size: 0.85em;
-            color: var(--subtle-text);
-            padding: 0 15px 15px 15px;
-            border-top: 1px solid #eee;
-        }
-
-        .card-image-container {
-            width: 160px;
-            height: 120px; 
-            flex-shrink: 0;
-        }
-        
-        .card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2em;
-            color: var(--subtle-text);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2>🔥 WikiFeed</h2>
-            <div class="category-selector">
-                <button class="category-button active" data-category="featured">Featured 🔥</button>
-                <button class="category-button" data-category="science">Science 🔬</button>
-                <button class="category-button" data-category="technology">Technology 💻</button>
-                <button class="category-button" data-category="mathematics">Mathematics ➗</button>
-                <button class="category-button" data-category="history">History 📜</button>
-                <button class="category-button" data-category="politics">Politics 🏛️</button>
-                <button class="category-button" data-category="business">Business 📈</button>
-                <button class="category-button" data-category="arts">Arts 🎨</button>
-                <button class="category-button" data-category="literature">Literature 📚</button>
-                <button class="category-button" data-category="philosophy">Philosophy 🤔</button>
-                <button class="category-button" data-category="music">Music 🎶</button>
-                <button class="category-button" data-category="entertainment">Entertainment 🎬</button>
-                <button class="category-button" data-category="religion">Religion 🙏</button>
-                <button class="category-button" data-category="legal">Legal ⚖️</button>
+        .card-img-link { flex: 0 0 180px; height: 140px; background: #eee; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .card-content { flex: 1; padding: 15px; min-width: 0; }
+        .card-title { display: block; font-size: 1.2rem; font-weight: 700; text-decoration: none; color: var(--text); margin-bottom: 5px; }
+        .card-summary { font-size: 0.95rem; color: var(--secondary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        #sentinel { text-align: center; padding: 50px; color: var(--secondary); }
+        </style>
+    </head>
+    <body>
+        <header id="mainHeader">
+            <div class="container">
+                <div class="nav-bar">
+                    <button class="nav-btn" onclick="goToRoot()">🏠 Home</button>
+                    <button class="nav-btn" onclick="pickRandom()">🎲 Random 2</button>
+                    <button class="nav-btn" onclick="clearAll()" style="color:#dc3545">🗑 Clear All</button>
+                    <div class="active-filters" id="activeFilters"></div>
+                </div>
+                <div id="treeContainer"></div>
             </div>
-        </div>
-        
-        <div id="feed-container"></div>
-
-        <div id="loading-indicator" class="loading">
-            Loading more articles...
-        </div>
-    </div>
-
+        </header>
+    <main id="feed"></main>
+    <div id="sentinel">Select topics to explore...</div>
     <script>
-        const feedContainer = document.getElementById('feed-container');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        const categoryButtons = document.querySelectorAll('.category-button');
-
-        let currentCategory = 'featured'; 
-        let offset = 0; 
-        
-        // SETTINGS
-        const API_BATCH_SIZE = 30; 
-        const REQUESTS_PER_LOAD = 2; 
-        
-        let isLoading = false;
-        const loadedArticleIds = new Set();
-        
-        // Initialize the AbortController for managing in-flight requests
-        let activeController = new AbortController(); 
-        
-        // --- Category Mapping for API ---
-        const categoryQueryMap = {
-            'featured': 'Featured article',
-            'science': 'Physics OR Biology',
-            'technology': 'Computer science OR Internet',
-            'mathematics': 'Calculus OR Algebra',
-            'history': 'World history OR Ancient history',
-            'politics': 'Political science OR Government',
-            'business': 'Economics OR Finance',
-            'arts': 'Visual arts OR Sculpture',
-            'literature': 'Literature OR Literary genre OR Author OR Classic novel',
-            'philosophy': 'Ethics OR Metaphysics',
-            'music': 'Classical music OR Jazz',
-            'entertainment': 'Film OR Television',
-            'religion': 'Christianity OR Islam',
-            'legal': 'Jurisprudence OR Constitution',
-        };
-
-        // --- UTILITIES ---
-
-        function calculateTotalViews(pageviewsData) {
-             // Change this line:
-             if (!pageviewsData) return 0; // Return 0 if data is missing, instead of -1
-             
-             return Object.values(pageviewsData).reduce((total, dailyViews) => {
-                 // This part already correctly handles individual nulls/ -1 as 0
-                 const views = (dailyViews === null || dailyViews === -1) ? 0 : dailyViews;
-                 return total + views;
-             }, 0);
-        }
-
-        function cleanTitle(title) {
-            return title.replace(/\s*\([^)]*\/[^)]*\)/g, '').trim();
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function createArticleCard(article) {
-            const card = document.createElement('div');
-            card.className = 'article-card';
-
-            const cleanArticleTitle = cleanTitle(article.title);
-            const rawSummary = article.extract || '';
-            const summary = rawSummary.length > 50 ? rawSummary.split('\n')[0].substring(0, 250) + '...' : 'No summary available.';
-            
-            const imageUrl = article.thumbnail 
-                ? article.thumbnail.source 
-                : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png';
-            
-            const pageUrl = `https://en.wikipedia.org/wiki/${encodeURIComponent(cleanArticleTitle)}`;
-            const categoryDisplay = article.category.charAt(0).toUpperCase() + article.category.slice(1);
-            
-            const totalViews = calculateTotalViews(article.pageviews);
-            let viewDisplay = 'N/A';
-            if (totalViews !== -1) {
-                viewDisplay = totalViews.toLocaleString();
-            }
-
-            card.innerHTML = `
-                <div class="card-body">
-                    <div class="card-image-container">
-                        <img src="${imageUrl}" alt="Image for ${cleanArticleTitle}" class="card-image">
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">
-                            <a href="${pageUrl}" target="_blank">${cleanArticleTitle}</a>
-                        </h3>
-                        <p class="card-summary">${summary}</p>
-                    </div>
-                </div>
-                <div class="card-meta">
-                    Category: <b>wiki/${categoryDisplay}</b> | Views (14 Days): <b>${viewDisplay}</b>
-                </div>
-            `;
-            return card;
-        }
-
-        // --- Core Fetching Logic ---
-        
-        async function fetchArticles() {
-            if (isLoading) return; 
-            isLoading = true;
-            loadingIndicator.style.display = 'block'; 
-            
-            // 1. Check URL for category on initial load
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlCategory = urlParams.get('category');
-            
-            if (urlCategory && categoryQueryMap.hasOwnProperty(urlCategory)) {
-                currentCategory = urlCategory;
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                const activeBtn = document.querySelector(`.category-button[data-category="${currentCategory}"]`);
-                if (activeBtn) activeBtn.classList.add('active');
-            }
-            
-            const categoryToFetch = currentCategory;
-            const searchTopic = categoryQueryMap[categoryToFetch] || 'Featured article';
-            const encodedSearchTopic = encodeURIComponent(searchTopic);
-            
-            const baseApiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch=${encodedSearchTopic}&gsrlimit=${API_BATCH_SIZE}&prop=pageimages|extracts|pageviews&pvipdays=14&exintro&explaintext&exlimit=max&pithumbsize=160&redirects=1&formatversion=2&origin=*`;
-
-            let combinedPages = [];
-            let currentOffset = offset;
-            let fullLoadComplete = false;
-            
-            try {
-                // 2. Sequential Fetching Loop
-                for (let i = 0; i < REQUESTS_PER_LOAD; i++) {
-                    // Validity Check
-                    if (categoryToFetch !== currentCategory) {
-                        break; 
-                    }
-
-                    const url = `${baseApiUrl}&gsroffset=${currentOffset}`;
-                    
-                    // NEW LOGGING ADDED HERE
-                    console.log("Fetching URL: " + url);
-                    
-                    const response = await fetch(url, { signal: activeController.signal }); 
-                    const data = await response.json();
-
-                    if (data.query && data.query.pages) {
-                        combinedPages = combinedPages.concat(Object.values(data.query.pages));
-                    } else {
-                        fullLoadComplete = true;
-                        break;
-                    }
-                    
-                    currentOffset += API_BATCH_SIZE;
-                }
-                
-                // If the category changed during the await, don't process or update state
-                if (categoryToFetch !== currentCategory) {
-                    return; 
-                }
-
-                offset = currentOffset; 
-                
-                if (combinedPages.length === 0 && offset === 0) {
-                     loadingIndicator.textContent = "Could not find any articles for this category.";
-                     return;
-                }
-                
-                // 3. Filter
-                let pool = combinedPages.filter(page => {
-                    const hasSummary = page.extract && page.extract.length > 50;
-                    const hasImage = page.thumbnail;
-                    const isNew = !loadedArticleIds.has(page.pageid);
-
-                    if (hasSummary && hasImage && isNew) {
-                        loadedArticleIds.add(page.pageid); 
-                        return true;
-                    }
-                    return false;
-                });
-                
-                // 4. Randomize (Shuffle)
-                pool = shuffleArray(pool);
-
-                // 5. Render
-                if (pool.length === 0) {
-                    if (combinedPages.length > 0 && !fullLoadComplete) {
-                        loadingIndicator.textContent = "Still loading, trying next batch for quality articles...";
-                        isLoading = false; 
-                        fetchArticles(); 
-                        return;
-                    } else {
-                        loadingIndicator.textContent = "No more articles found.";
-                        return;
-                    }
-                }
-                
-                pool.forEach(page => {
-                    page.category = categoryToFetch; 
-                    feedContainer.appendChild(createArticleCard(page));
-                });
-                
-                loadingIndicator.textContent = "Loading more articles...";
-
-            } catch (error) {
-                // Check for AbortError and ignore it gracefully
-                if (error.name === 'AbortError') {
-                    console.log('Fetch aborted by user action.');
-                    return;
-                }
-                
-                console.error("Error fetching articles:", error);
-                loadingIndicator.textContent = "Failed to load articles. Please try again.";
-            } finally {
-                isLoading = false;
-            }
-        }
-
-        // --- Infinite Scroll Setup ---
-        const intersectionCallback = (entries, observer) => {
-            const entry = entries[0];
-            if (entry.isIntersecting && !isLoading) {
-                fetchArticles();
-            }
-        };
-
-        const observer = new IntersectionObserver(intersectionCallback, {
-            root: null, 
-            threshold: 0.1
-        });
-
-        observer.observe(loadingIndicator);
-
-        // --- Category Switching Logic (CANCELS OLD REQUESTS) ---
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const newCategory = button.getAttribute('data-category');
-                
-                if (newCategory !== currentCategory) {
-                    // 1. Abort the previous request(s) immediately
-                    activeController.abort();
-                    // 2. Create a brand new controller for the new request
-                    activeController = new AbortController();
-
-                    // Set global state immediately
-                    currentCategory = newCategory;
-                    
-                    // Reset everything
-                    offset = 0; 
-                    isLoading = false; 
-                    loadedArticleIds.clear(); 
-
-                    feedContainer.innerHTML = '';
-                    loadingIndicator.textContent = "Loading more articles...";
-
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    // Update URL without reloading
-                    const newUrl = `${window.location.pathname}?category=${newCategory}`;
-                    history.pushState({ category: newCategory }, '', newUrl);
-
-                    // Start the new fetch
-                    fetchArticles();
-                }
-            });
-        });
-        
-        // Initial load
-        fetchArticles();
-
+    TREE = {
+    "Arts": {
+    "Literature": ["Poetry", "Novels", "Short Stories", "Drama", "Essays", "Fiction", "Non-Fiction"],
+    "Genres": ["Poetry","Novels","Short Stories","Drama","Essays","Fiction","Non-Fiction","Biography","Autobiography","Fantasy","Science Fiction","Mystery","Thriller","Horror","Romance","Historical Fiction","Satire","Adventure","Children's Literature","Young Adult"],
+    "Music": ["Classical", "Jazz", "Rock", "Pop", "Electronic", "World Music", "Music Theory", "Composition", "Performance"],
+    "Visual Arts": ["Painting", "Sculpture", "Drawing", "Printmaking", "Digital Art", "Installation Art", "Photography"],
+    "Performing Arts": ["Theater", "Dance", "Opera", "Performance Art", "Circus", "Mime"],
+    "Film": ["Directing", "Cinematography", "Screenwriting", "Editing", "Acting", "Film Theory", "Documentary"],
+    "Photography": ["Portrait Photography", "Landscape Photography", "Street Photography", "Photojournalism", "Experimental Photography"],
+    "Theater": ["Acting", "Directing", "Playwriting", "Stage Design", "Lighting", "Costume Design"],
+    "Dance": ["Ballet", "Modern Dance", "Hip-Hop", "Contemporary", "Folk Dance", "Choreography"],
+    "Architecture": ["Residential", "Commercial", "Urban Design", "Landscape Architecture", "Sustainable Design"],
+    "Design": ["Graphic Design", "Industrial Design", "Fashion Design", "Interior Design", "UX/UI Design"]
+    },
+    "Culture": {
+    "Cultural Studies": ["Media Culture", "Popular Culture", "Subcultures", "Cultural Theory"],
+    "Anthropology of Culture": ["Rituals", "Beliefs", "Social Norms", "Ethnography"],
+    "Folklore": ["Myths", "Legends", "Fables", "Oral Traditions"],
+    "Traditions": ["Festivals", "Ceremonies", "Customs", "Cultural Practices"],
+    "Customs": ["Marriage", "Death Rituals", "Coming-of-Age", "Food Practices"],
+    "Festivals": ["Religious Festivals", "Music Festivals", "Cultural Festivals", "Seasonal Celebrations"],
+    "Language and Dialects": ["Regional Dialects", "Slang", "Language Preservation", "Multilingualism"],
+    "Pop Culture": ["Movies", "TV Shows", "Music", "Celebrities", "Internet Culture"],
+    "Media Studies": ["Journalism", "Film Studies", "Advertising", "Digital Media"]
+    },
+    "Science": {
+    "Physics": ["Classical Mechanics", "Quantum Mechanics", "Thermodynamics", "Electromagnetism", "Relativity"],
+    "Chemistry": ["Organic Chemistry", "Inorganic Chemistry", "Physical Chemistry", "Analytical Chemistry", "Biochemistry"],
+    "Biology": ["Genetics", "Cell Biology", "Ecology", "Evolution", "Microbiology", "Physiology"],
+    "Astronomy": ["Astrophysics", "Cosmology", "Planetary Science", "Stellar Astronomy", "Observational Astronomy"],
+    "Earth Sciences": ["Geology", "Meteorology", "Oceanography", "Seismology", "Volcanology"],
+    "Geology": ["Mineralogy", "Petrology", "Paleontology", "Structural Geology", "Geomorphology"],
+    "Oceanography": ["Physical Oceanography", "Marine Biology", "Chemical Oceanography", "Geological Oceanography"],
+    "Meteorology": ["Climatology", "Weather Forecasting", "Atmospheric Science", "Severe Weather Studies"],
+    "Ecology": ["Population Ecology", "Community Ecology", "Ecosystem Ecology", "Conservation Biology"],
+    "Materials Science": ["Nanomaterials", "Metallurgy", "Polymers", "Ceramics", "Composite Materials"]
+    },
+    "Mathematics": {
+    "Algebra": ["Linear Algebra", "Abstract Algebra", "Group Theory", "Ring Theory"],
+    "Geometry": ["Euclidean Geometry", "Non-Euclidean Geometry", "Differential Geometry", "Topology"],
+    "Calculus": ["Differential Calculus", "Integral Calculus", "Multivariable Calculus", "Vector Calculus"],
+    "Statistics": ["Descriptive Statistics", "Inferential Statistics", "Regression Analysis", "Probability Distributions"],
+    "Probability": ["Random Variables", "Probability Theory", "Stochastic Processes", "Bayesian Probability"],
+    "Number Theory": ["Prime Numbers", "Diophantine Equations", "Modular Arithmetic", "Cryptography"],
+    "Discrete Mathematics": ["Graph Theory", "Combinatorics", "Logic", "Algorithms"],
+    "Topology": ["Point-Set Topology", "Algebraic Topology", "Differential Topology", "Geometric Topology"],
+    "Logic": ["Propositional Logic", "Predicate Logic", "Modal Logic", "Fuzzy Logic"],
+    "Applied Mathematics": ["Mathematical Modeling", "Numerical Analysis", "Operations Research", "Optimization"]
+    },
+    "Logic": {
+    "Formal Logic": ["Propositional Logic", "Predicate Logic", "Modal Logic", "Many-Valued Logic"],
+    "Symbolic Logic": ["Boolean Algebra", "Proof Theory", "Set Theory", "Lambda Calculus"],
+    "Mathematical Logic": ["Model Theory", "Recursion Theory", "Proof Theory", "Set Theory"],
+    "Philosophical Logic": ["Deontic Logic", "Epistemic Logic", "Temporal Logic", "Paraconsistent Logic"],
+    "Computational Logic": ["Automated Theorem Proving", "Logic Programming", "Constraint Logic", "Knowledge Representation"]
+    },
+    "Technology": {
+    "Computing": ["Algorithms", "Data Structures", "Operating Systems", "Computer Architecture", "Software Development"],
+    "Artificial Intelligence": ["Machine Learning", "Deep Learning", "Natural Language Processing", "Computer Vision", "Reinforcement Learning"],
+    "Robotics": ["Industrial Robots", "Humanoid Robots", "Swarm Robotics", "Robotics Control Systems", "Autonomous Vehicles"],
+    "Software Engineering": ["Agile Development", "DevOps", "Software Testing", "Requirements Engineering", "Software Architecture"],
+    "Hardware Engineering": ["Microprocessors", "Embedded Systems", "Circuit Design", "VLSI Design", "IoT Devices"],
+    "Electronics": ["Analog Electronics", "Digital Electronics", "Semiconductors", "Signal Processing", "Power Electronics"],
+    "Networking": ["Computer Networks", "Network Protocols", "Wireless Networks", "Network Security", "Cloud Networking"],
+    "Cybersecurity": ["Cryptography", "Penetration Testing", "Incident Response", "Network Security", "Application Security"],
+    "Information Systems": ["Database Systems", "Information Management", "Enterprise Systems", "Decision Support Systems"],
+    "Data Science": ["Data Mining", "Data Visualization", "Big Data Analytics", "Statistical Modeling", "Predictive Analytics"]
+    },
+    "Engineering": {
+    "Mechanical Engineering": ["Thermodynamics", "Fluid Mechanics", "Mechanical Design", "Robotics", "Materials Engineering"],
+    "Civil Engineering": ["Structural Engineering", "Transportation Engineering", "Geotechnical Engineering", "Water Resources", "Construction Management"],
+    "Electrical Engineering": ["Circuit Analysis", "Power Systems", "Control Systems", "Signal Processing", "Electronics"],
+    "Chemical Engineering": ["Process Design", "Chemical Reaction Engineering", "Thermodynamics", "Materials Processing", "Biochemical Engineering"],
+    "Aerospace Engineering": ["Aerodynamics", "Propulsion", "Aircraft Design", "Space Systems", "Avionics"],
+    "Industrial Engineering": ["Operations Research", "Supply Chain Management", "Human Factors", "Process Optimization", "Quality Control"],
+    "Environmental Engineering": ["Waste Management", "Water Treatment", "Air Pollution Control", "Sustainable Design", "Environmental Modeling"],
+    "Biomedical Engineering": ["Medical Imaging", "Biomechanics", "Biomaterials", "Rehabilitation Engineering", "Tissue Engineering"]
+    },
+    "Medicine": {
+    "Anatomy": ["Gross Anatomy", "Microscopic Anatomy", "Neuroanatomy", "Comparative Anatomy"],
+    "Physiology": ["Cardiovascular System", "Respiratory System", "Neurophysiology", "Endocrinology", "Renal Physiology"],
+    "Pathology": ["Histopathology", "Clinical Pathology", "Molecular Pathology", "Forensic Pathology"],
+    "Pharmacology": ["Drug Mechanisms", "Clinical Pharmacology", "Toxicology", "Pharmacokinetics", "Pharmacodynamics"],
+    "Surgery": ["General Surgery", "Orthopedic Surgery", "Neurosurgery", "Cardiothoracic Surgery", "Plastic Surgery"],
+    "Internal Medicine": ["Cardiology", "Gastroenterology", "Endocrinology", "Pulmonology", "Nephrology"],
+    "Pediatrics": ["Neonatology", "Pediatric Cardiology", "Pediatric Oncology", "Growth and Development"],
+    "Psychiatry": ["Clinical Psychiatry", "Neuropsychiatry", "Child and Adolescent Psychiatry", "Psychotherapy"],
+    "Public Health": ["Epidemiology", "Health Policy", "Biostatistics", "Global Health", "Environmental Health"],
+    "Epidemiology": ["Infectious Disease Epidemiology", "Chronic Disease Epidemiology", "Genetic Epidemiology", "Field Epidemiology"]
+    },
+    "Health": {
+    "Nutrition": ["Macronutrients", "Micronutrients", "Diets", "Nutritional Biochemistry", "Public Nutrition"],
+    "Mental Health": ["Depression", "Anxiety", "Stress Management", "Cognitive Behavioral Therapy", "Psychiatric Disorders"],
+    "Fitness": ["Strength Training", "Cardio Training", "Flexibility", "Endurance", "Sports Conditioning"],
+    "Wellness": ["Mindfulness", "Meditation", "Stress Reduction", "Self-Care", "Holistic Health"],
+    "Preventive Care": ["Vaccination", "Screening Programs", "Health Education", "Lifestyle Interventions"],
+    "Rehabilitation": ["Physical Therapy", "Occupational Therapy", "Speech Therapy", "Cardiac Rehab", "Neurological Rehab"],
+    "Sleep Science": ["Sleep Disorders", "Circadian Rhythms", "Sleep Hygiene", "Sleep Physiology"],
+    "Alternative Medicine": ["Acupuncture", "Herbal Medicine", "Homeopathy", "Ayurveda", "Chiropractic"],
+    "Dental Health": ["Oral Hygiene", "Orthodontics", "Periodontology", "Endodontics", "Prosthodontics"]
+    },
+    "Social Sciences": {
+    "Sociology": ["Social Theory", "Social Stratification", "Urban Sociology", "Sociology of Education", "Sociology of Religion"],
+    "Anthropology": ["Cultural Anthropology", "Biological Anthropology", "Archaeology", "Linguistic Anthropology"],
+    "Political Science": ["Comparative Politics", "International Relations", "Political Theory", "Public Policy", "Political Institutions"],
+    "Psychology": ["Cognitive Psychology", "Developmental Psychology", "Clinical Psychology", "Social Psychology", "Behavioral Neuroscience"],
+    "Economics": ["Microeconomics", "Macroeconomics", "Development Economics", "Behavioral Economics", "International Economics"],
+    "Human Geography": ["Population Geography", "Urban Geography", "Cultural Geography", "Economic Geography"],
+    "Archaeology": ["Field Methods", "Excavation Techniques", "Artifact Analysis", "Dating Methods", "Cultural Reconstruction"],
+    "Social Work": ["Child Welfare", "Community Development", "Clinical Social Work", "Policy Advocacy"],
+    "Cultural Studies": ["Media Analysis", "Popular Culture", "Identity Studies", "Postcolonial Studies"],
+    "Demography": ["Population Dynamics", "Fertility Studies", "Mortality Studies", "Migration Studies"]
+    },
+    "History": {
+    "Ancient History": ["Mesopotamia", "Ancient Egypt", "Ancient Greece", "Ancient Rome", "Indus Valley Civilization"],
+    "Medieval History": ["Feudalism", "Crusades", "Byzantine Empire", "Viking Age", "Medieval Art"],
+    "Modern History": ["Renaissance", "Industrial Revolution", "Enlightenment", "Colonialism", "World Wars"],
+    "World History": ["Global Trade", "Cultural Exchange", "Exploration", "Migration", "Empires"],
+    "Regional History": ["European History", "Asian History", "African History", "American History", "Middle Eastern History"],
+    "Military History": ["Battles", "Military Strategy", "Weapons History", "Tactics", "Famous Commanders"],
+    "Economic History": ["Trade History", "Banking History", "Industrialization", "Labor Movements", "Globalization"],
+    "History of Science": ["Scientific Revolutions", "Physics History", "Biology History", "Medicine History", "Astronomy History"],
+    "History of Art": ["Renaissance Art", "Baroque Art", "Modern Art", "Impressionism", "Contemporary Art"],
+    "Oral History": ["Storytelling", "Interviews", "Traditions", "Cultural Memory", "Personal Narratives"]
+    },
+    "Archaeology": {
+    "Prehistoric Archaeology": ["Stone Age", "Bronze Age", "Iron Age", "Early Settlements", "Cave Art"],
+    "Classical Archaeology": ["Greek Temples", "Roman Ruins", "Ancient Monuments", "Classical Sculpture", "Architecture"],
+    "Underwater Archaeology": ["Shipwrecks", "Submerged Cities", "Maritime Artifacts", "Preservation Techniques", "Diving Surveys"],
+    "Ethnoarchaeology": ["Cultural Practices", "Material Culture", "Field Observation", "Traditional Techniques"],
+    "Field Methods": ["Excavation", "Surveying", "Mapping", "Documentation", "Sampling"],
+    "Archaeological Theory": ["Processual Archaeology", "Post-Processual Archaeology", "Interpretive Methods", "Cultural Resource Management"],
+    "Artifact Analysis": ["Ceramics", "Tools", "Metal Objects", "Textiles", "Organic Remains"]
+    },
+    "Geography": {
+    "Physical Geography": ["Geomorphology", "Hydrology", "Climatology", "Soil Science", "Biogeography"],
+    "Human Geography": ["Urban Studies", "Population Geography", "Economic Geography", "Political Geography", "Cultural Geography"],
+    "Cartography": ["Map Design", "GIS", "Topography", "Thematic Maps", "Digital Mapping"],
+    "Geospatial Analysis": ["Remote Sensing", "Spatial Statistics", "GPS Applications", "Terrain Analysis", "Urban Modeling"],
+    "Urban Geography": ["City Planning", "Urbanization", "Housing Studies", "Infrastructure", "Transportation Networks"],
+    "Regional Geography": ["Continental Studies", "Country Profiles", "Climate Zones", "Economic Regions", "Cultural Regions"],
+    "Environmental Geography": ["Land Use", "Ecosystems", "Natural Hazards", "Sustainable Development", "Resource Management"]
+    },
+    "Environment": {
+    "Ecology": ["Population Ecology", "Community Ecology", "Ecosystem Ecology", "Conservation Biology", "Biodiversity"],
+    "Conservation": ["Wildlife Protection", "Habitat Restoration", "Endangered Species", "Protected Areas", "Conservation Policy"],
+    "Climate Science": ["Climate Change", "Global Warming", "Climate Modeling", "Paleoclimatology", "Mitigation Strategies"],
+    "Environmental Policy": ["Regulations", "International Agreements", "Environmental Economics", "Sustainability Standards", "Impact Assessment"],
+    "Sustainability": ["Renewable Energy", "Sustainable Agriculture", "Circular Economy", "Green Buildings", "Eco-Friendly Practices"],
+    "Pollution Studies": ["Air Pollution", "Water Pollution", "Soil Contamination", "Noise Pollution", "Waste Management"],
+    "Natural Resource Management": ["Forestry", "Water Resources", "Mineral Extraction", "Fisheries", "Land Management"]
+    },
+    "Philosophy": {
+    "Metaphysics": ["Ontology", "Cosmology", "Identity and Change", "Causality", "Existence"],
+    "Epistemology": ["Knowledge Theory", "Belief", "Justification", "Skepticism", "Perception"],
+    "Ethics": ["Normative Ethics", "Applied Ethics", "Virtue Ethics", "Deontology", "Consequentialism"],
+    "Aesthetics": ["Philosophy of Art", "Beauty", "Taste", "Criticism", "Art Theory"],
+    "Political Philosophy": ["Justice", "Liberty", "Equality", "Rights", "Government Theory"],
+    "Philosophy of Science": ["Scientific Method", "Explanation", "Laws of Nature", "Theory and Observation", "Realism vs. Anti-Realism"],
+    "Philosophy of Mind": ["Consciousness", "Mental States", "Personal Identity", "Mind-Body Problem", "Artificial Intelligence"],
+    "Logic": ["Deductive Logic", "Inductive Logic", "Modal Logic", "Paraconsistent Logic", "Philosophical Logic"]
+    },
+    "Ethics": {
+    "Normative Ethics": ["Consequentialism", "Deontology", "Virtue Ethics", "Care Ethics", "Rights Theory"],
+    "Applied Ethics": ["Medical Ethics", "Business Ethics", "Environmental Ethics", "Technology Ethics", "Animal Ethics"],
+    "Meta-Ethics": ["Moral Realism", "Moral Relativism", "Moral Subjectivism", "Moral Cognitivism", "Moral Emotivism"],
+    "Bioethics": ["Genetic Engineering", "End-of-Life Care", "Organ Transplants", "Medical Consent", "Public Health Ethics"],
+    "Business Ethics": ["Corporate Governance", "Corporate Social Responsibility", "Insider Trading", "Consumer Protection", "Whistleblowing"],
+    "Environmental Ethics": ["Sustainability", "Conservation", "Climate Justice", "Resource Allocation", "Animal Rights"]
+    },
+    "Law": {
+    "Constitutional Law": ["Separation of Powers", "Civil Rights", "Federalism", "Judicial Review", "Amendments"],
+    "Criminal Law": ["Crimes Against Persons", "Crimes Against Property", "Criminal Procedure", "Punishment", "Forensics"],
+    "Civil Law": ["Contracts", "Torts", "Property Law", "Family Law", "Inheritance Law"],
+    "International Law": ["Treaties", "Human Rights", "War Crimes", "International Organizations", "Diplomacy"],
+    "Administrative Law": ["Regulations", "Agencies", "Public Administration", "Rulemaking", "Judicial Oversight"],
+    "Human Rights Law": ["Freedom of Speech", "Right to Privacy", "Equality Rights", "International Conventions", "Refugee Law"],
+    "Intellectual Property": ["Patents", "Trademarks", "Copyright", "Trade Secrets", "IP Litigation"]
+    },
+    "Government": {
+    "Political Institutions": ["Legislatures", "Executives", "Judiciary", "Local Governments", "Bureaucracy"],
+    "Public Policy": ["Healthcare Policy", "Education Policy", "Economic Policy", "Environmental Policy", "Social Welfare"],
+    "International Relations": ["Diplomacy", "War and Peace", "Trade Relations", "Alliances", "International Organizations"],
+    "Political Theory": ["Liberalism", "Conservatism", "Socialism", "Anarchism", "Democracy Theory"],
+    "Elections and Voting": ["Electoral Systems", "Voting Behavior", "Campaigns", "Referendums", "Political Participation"],
+    "Bureaucracy": ["Public Administration", "Organizational Structure", "Policy Implementation", "Efficiency", "Corruption Studies"],
+    "Governance": ["Transparency", "Rule of Law", "Regulatory Oversight", "Public Accountability", "Civil Society"]
+    },
+    "Business": {
+    "Finance": ["Corporate Finance", "Investment", "Banking", "Financial Markets", "Risk Management"],
+    "Marketing": ["Market Research", "Advertising", "Brand Management", "Digital Marketing", "Consumer Behavior"],
+    "Management": ["Strategic Management", "Operations Management", "Human Resource Management", "Project Management", "Change Management"],
+    "Entrepreneurship": ["Startup Development", "Innovation", "Business Planning", "Funding", "Scaling Businesses"],
+    "Accounting": ["Financial Accounting", "Management Accounting", "Auditing", "Tax Accounting", "Forensic Accounting"],
+    "Operations": ["Supply Chain", "Logistics", "Production Planning", "Quality Control", "Process Improvement"],
+    "Human Resources": ["Recruitment", "Training and Development", "Compensation", "Employee Relations", "Performance Management"],
+    "Strategy": ["Corporate Strategy", "Competitive Analysis", "Business Models", "Mergers and Acquisitions", "Strategic Planning"],
+    "Economics": ["Microeconomics", "Macroeconomics", "Behavioral Economics", "International Economics", "Development Economics"],
+    "Business Ethics": ["Corporate Governance", "CSR", "Sustainability", "Compliance", "Ethical Decision-Making"]
+    },
+    "Economics": {
+    "Microeconomics": ["Consumer Theory", "Producer Theory", "Market Structures", "Game Theory", "Labor Economics"],
+    "Macroeconomics": ["GDP Analysis", "Monetary Policy", "Fiscal Policy", "Inflation", "Unemployment"],
+    "Development Economics": ["Poverty", "Economic Growth", "Inequality", "Microfinance", "Sustainable Development"],
+    "International Economics": ["Trade Theory", "Exchange Rates", "Balance of Payments", "Globalization", "Trade Policy"],
+    "Labor Economics": ["Wages", "Employment", "Labor Unions", "Human Capital", "Workforce Policy"],
+    "Behavioral Economics": ["Decision Making", "Cognitive Biases", "Prospect Theory", "Nudging", "Behavioral Finance"],
+    "Financial Economics": ["Asset Pricing", "Portfolio Theory", "Derivatives", "Risk Management", "Corporate Finance"]
+    },
+    "Education": {
+    "Pedagogy": ["Teaching Methods", "Instructional Design", "Classroom Management", "Assessment Strategies", "Inclusive Education"],
+    "Curriculum Design": ["Curriculum Theory", "Syllabus Planning", "Standards and Benchmarks", "Interdisciplinary Design", "Assessment Integration"],
+    "Educational Psychology": ["Learning Theories", "Motivation", "Cognitive Development", "Classroom Behavior", "Assessment Psychology"],
+    "E-learning": ["Online Courses", "Learning Management Systems", "Digital Pedagogy", "MOOCs", "Virtual Classrooms"],
+    "Literacy Studies": ["Reading Development", "Writing Skills", "Language Acquisition", "Critical Literacy", "Adult Literacy"],
+    "Special Education": ["Learning Disabilities", "Autism Spectrum", "Individualized Education Plans", "Assistive Technology", "Inclusive Practices"],
+    "Higher Education": ["University Administration", "Research Methods", "Academic Programs", "Student Affairs", "Accreditation"],
+    "Adult Education": ["Lifelong Learning", "Vocational Training", "Community Education", "Continuing Education", "Professional Development"]
+    },
+    "Learning": {
+    "Learning Theories": ["Behaviorism", "Cognitivism", "Constructivism", "Connectivism", "Experiential Learning"],
+    "Cognitive Science": ["Memory", "Attention", "Perception", "Problem Solving", "Decision Making"],
+    "Skill Acquisition": ["Motor Skills", "Cognitive Skills", "Deliberate Practice", "Expertise Development", "Learning Curves"],
+    "Memory and Recall": ["Short-Term Memory", "Long-Term Memory", "Working Memory", "Encoding Strategies", "Memory Retention"],
+    "Motivation in Learning": ["Intrinsic Motivation", "Extrinsic Motivation", "Goal Setting", "Self-Regulation", "Reinforcement"],
+    "Educational Technology": ["Learning Platforms", "Digital Tools", "Gamification", "Adaptive Learning", "Virtual Reality in Learning"]
+    },
+    "Sports": {
+    "Team Sports": ["Soccer", "Basketball", "Baseball", "Volleyball", "Rugby"],
+    "Individual Sports": ["Tennis", "Swimming", "Track and Field", "Gymnastics", "Martial Arts"],
+    "Athletics": ["Sprinting", "Marathon", "Long Jump", "High Jump", "Shot Put"],
+    "Water Sports": ["Rowing", "Sailing", "Surfing", "Diving", "Kayaking"],
+    "Combat Sports": ["Boxing", "Judo", "Wrestling", "Karate", "Taekwondo"],
+    "Extreme Sports": ["Skydiving", "Rock Climbing", "BMX", "Snowboarding", "Parkour"],
+    "Fitness Training": ["Strength Training", "Cardio Training", "Flexibility", "Endurance", "Circuit Training"],
+    "Sports Science": ["Exercise Physiology", "Biomechanics", "Sports Nutrition", "Sports Psychology", "Injury Prevention"]
+    },
+    "Recreation": {
+    "Outdoor Activities": ["Hiking", "Camping", "Fishing", "Birdwatching", "Rock Climbing"],
+    "Games": ["Board Games", "Card Games", "Video Games", "Role-Playing Games", "Puzzles"],
+    "Hobbies": ["Gardening", "Model Building", "Photography", "Collecting", "Crafts"],
+    "Travel": ["Adventure Travel", "Cultural Travel", "Ecotourism", "Backpacking", "Luxury Travel"],
+    "Leisure Studies": ["Time Use", "Recreation Management", "Leisure Behavior", "Wellbeing", "Community Programs"],
+    "Amusement Parks": ["Theme Parks", "Roller Coasters", "Water Parks", "Entertainment Shows", "Park Management"],
+    "Adventure Activities": ["Skydiving", "Paragliding", "Whitewater Rafting", "Bungee Jumping", "Caving"]
+    },
+    "Lifestyle": {
+    "Travel": ["Adventure Travel", "Cultural Travel", "Backpacking", "Luxury Travel", "Sustainable Travel"],
+    "Hobbies": ["Gardening", "Photography", "Knitting", "Collecting", "DIY Projects"],
+    "Fashion": ["Clothing Trends", "Accessories", "Fashion Design", "Textiles", "Sustainable Fashion"],
+    "Relationships": ["Family", "Friendship", "Romantic Relationships", "Networking", "Communication Skills"],
+    "Personal Finance": ["Budgeting", "Investing", "Saving", "Debt Management", "Retirement Planning"],
+    "Home and Living": ["Interior Design", "Organization", "Home Improvement", "Gardening", "Smart Home Technology"],
+    "Leisure": ["Entertainment", "Reading", "Music Listening", "Movies", "Recreational Activities"],
+    "Wellness": ["Mental Wellness", "Physical Wellness", "Mindfulness", "Stress Management", "Self-Care"]
+    },
+    "Personal Development": {
+    "Self-Improvement": ["Time Management", "Mindfulness", "Goal Setting", "Habit Formation", "Confidence Building"],
+    "Career Development": ["Resume Building", "Interview Skills", "Networking", "Career Planning", "Professional Growth"],
+    "Mindfulness": ["Meditation", "Breathing Exercises", "Yoga", "Stress Reduction", "Awareness Practices"],
+    "Time Management": ["Prioritization", "Scheduling", "Productivity Tools", "Goal Setting", "Work-Life Balance"],
+    "Productivity": ["Task Management", "Focus Techniques", "Efficiency Methods", "Time Blocking", "Workflow Optimization"],
+    "Leadership": ["Team Management", "Decision Making", "Conflict Resolution", "Motivation Techniques", "Strategic Thinking"],
+    "Goal Setting": ["SMART Goals", "Short-Term Goals", "Long-Term Goals", "Performance Tracking", "Accountability"],
+    "Motivation": ["Intrinsic Motivation", "Extrinsic Motivation", "Self-Discipline", "Inspiration Techniques", "Behavioral Motivation"]
+    },
+    "Food": {
+    "Cooking": ["Baking", "Grilling", "Stir-Frying", "Sous Vide", "Roasting"],
+    "Baking": ["Bread", "Cakes", "Pastries", "Cookies", "Pies"],
+    "Culinary Techniques": ["Knife Skills", "Sauce Making", "Fermentation", "Marination", "Plating"],
+    "Nutrition": ["Macronutrients", "Micronutrients", "Dietary Guidelines", "Food Labels", "Special Diets"],
+    "Food History": ["Culinary Traditions", "Cultural Cuisine", "Historical Ingredients", "Trade and Food", "Evolution of Recipes"],
+    "Gastronomy": ["Molecular Gastronomy", "Food Pairing", "Flavor Profiling", "Sensory Evaluation", "Modern Cuisine"],
+    "Food Safety": ["Hygiene", "Preservation", "Contamination", "Storage", "Cooking Temperatures"],
+    "Beverages": ["Wine", "Beer", "Tea", "Coffee", "Cocktails"]
+    },
+    "Agriculture": {
+    "Farming Techniques": ["Crop Rotation", "Irrigation", "Soil Fertility", "Organic Farming", "Precision Agriculture"],
+    "Crop Science": ["Plant Breeding", "Genetics", "Pest Management", "Disease Control", "Yield Optimization"],
+    "Animal Husbandry": ["Livestock Management", "Dairy Production", "Poultry Farming", "Health Care", "Breeding Techniques"],
+    "Sustainable Agriculture": ["Agroforestry", "Permaculture", "Soil Conservation", "Water Management", "Renewable Energy in Farming"],
+    "Agroecology": ["Ecological Practices", "Biodiversity", "Ecosystem Services", "Soil Microbiology", "Integrated Farming"],
+    "Agricultural Technology": ["Farm Machinery", "Drones in Agriculture", "Automation", "Irrigation Systems", "Data Analytics"],
+    "Horticulture": ["Fruit Cultivation", "Vegetable Cultivation", "Floriculture", "Greenhouse Management", "Landscape Gardening"]
+    },
+    "Language": {
+    "Linguistics": ["Phonology", "Morphology", "Syntax", "Semantics", "Pragmatics"],
+    "Syntax": ["Sentence Structure", "Grammar Rules", "Dependency Parsing", "Transformational Grammar", "Syntactic Theory"],
+    "Semantics": ["Meaning", "Lexical Semantics", "Compositional Semantics", "Semantic Roles", "Pragmatics Interface"],
+    "Phonetics": ["Articulatory Phonetics", "Acoustic Phonetics", "Auditory Phonetics", "IPA", "Speech Sounds"],
+    "Sociolinguistics": ["Language Variation", "Dialect Studies", "Code-Switching", "Language and Identity", "Language Policy"],
+    "Language Acquisition": ["First Language Acquisition", "Second Language Learning", "Bilingualism", "Critical Period Hypothesis", "Language Development"],
+    "Writing Systems": ["Alphabetic", "Logographic", "Syllabic", "Pictographic", "Braille"]
+    },
+    "Communication": {
+    "Rhetoric": ["Persuasion", "Argumentation", "Speech Writing", "Public Speaking Techniques", "Rhetorical Devices"],
+    "Public Speaking": ["Presentation Skills", "Voice Modulation", "Body Language", "Audience Engagement", "Storytelling"],
+    "Media Studies": ["Journalism", "Broadcast Media", "Digital Media", "Media Ethics", "Advertising"],
+    "Journalism": ["Investigative Reporting", "News Writing", "Editorials", "Photojournalism", "Data Journalism"],
+    "Interpersonal Communication": ["Conflict Resolution", "Active Listening", "Nonverbal Communication", "Relationship Skills", "Negotiation"],
+    "Digital Communication": ["Social Media", "Email Etiquette", "Online Communities", "Virtual Collaboration", "Digital Literacy"]
+    },
+    "Religion": {
+    "World Religions": ["Christianity", "Islam", "Hinduism", "Buddhism", "Judaism", "Sikhism"],
+    "Religious Practices": ["Rituals", "Prayer", "Pilgrimage", "Festivals", "Sacred Texts"],
+    "Theology": ["Systematic Theology", "Comparative Theology", "Philosophical Theology", "Ethical Theology", "Doctrinal Studies"],
+    "Spirituality": ["Meditation", "Mindfulness", "Personal Transformation", "Mystical Experiences", "Devotional Practices"],
+    "Comparative Religion": ["Beliefs Comparison", "Practices Comparison", "Religious History", "Sacred Texts Analysis", "Ritual Comparison"],
+    "Religious History": ["Church History", "Islamic History", "Hindu History", "Buddhist History", "Religious Conflicts"],
+    "Mythology": ["Greek Mythology", "Norse Mythology", "Egyptian Mythology", "Hindu Mythology", "Celtic Mythology"]
+    },
+    "Spirituality": {
+    "Meditation": ["Mindfulness Meditation", "Transcendental Meditation", "Zen Meditation", "Vipassana", "Loving-Kindness Meditation"],
+    "Mindfulness": ["Breath Awareness", "Body Scan", "Mindful Eating", "Walking Meditation", "Stress Reduction"],
+    "New Age Practices": ["Crystal Healing", "Chakra Balancing", "Energy Healing", "Astrology", "Tarot"],
+    "Mysticism": ["Sufism", "Kabbalah", "Christian Mysticism", "Buddhist Mysticism", "Contemplative Practices"],
+    "Yoga": ["Hatha Yoga", "Ashtanga Yoga", "Vinyasa Yoga", "Kundalini Yoga", "Yoga Philosophy"],
+    "Personal Belief Systems": ["Spiritual Philosophy", "Self-Reflection", "Ethics and Values", "Inner Growth", "Rituals and Practices"]
+    },
+    "Transportation": {
+    "Automobiles": ["Car Manufacturing", "Electric Vehicles", "Hybrid Vehicles", "Automotive Design", "Autonomous Cars"],
+    "Rail Transport": ["High-Speed Rail", "Urban Rail", "Freight Rail", "Rail Infrastructure", "Train Operations"],
+    "Air Transport": ["Commercial Aviation", "Cargo Aviation", "Air Traffic Control", "Airport Management", "Flight Safety"],
+    "Maritime Transport": ["Shipping", "Port Management", "Navigation", "Maritime Safety", "Cargo Handling"],
+    "Public Transportation": ["Buses", "Trams", "Subways", "Ride-Sharing", "Transit Planning"],
+    "Logistics": ["Supply Chain", "Warehousing", "Distribution", "Freight Management", "Inventory Control"],
+    "Space Exploration": ["Satellites", "Space Missions", "Spacecraft Design", "Planetary Exploration", "Astrobiology"]
+    },
+    "Infrastructure": {
+    "Urban Planning": ["City Design", "Zoning", "Public Spaces", "Transportation Planning", "Sustainability"],
+    "Civil Engineering": ["Roads", "Bridges", "Buildings", "Water Systems", "Tunnels"],
+    "Bridges and Roads": ["Bridge Design", "Bridge Maintenance", "Road Construction", "Highway Planning", "Traffic Management"],
+    "Water Systems": ["Water Supply", "Wastewater Treatment", "Irrigation Systems", "Stormwater Management", "Hydraulics"],
+    "Energy Systems": ["Power Generation", "Renewable Energy", "Grid Infrastructure", "Energy Storage", "Distribution Networks"],
+    "Telecommunications": ["Internet Infrastructure", "Mobile Networks", "Fiber Optics", "Satellite Communication", "Network Maintenance"],
+    "Smart Cities": ["IoT Integration", "Urban Sensors", "Traffic Optimization", "Sustainability Monitoring", "Data Analytics"]
+    },
+    "Military": {
+    "Strategy": ["Operational Planning", "Grand Strategy", "Tactical Doctrine", "War Games", "Military Campaigns"],
+    "Tactics": ["Infantry Tactics", "Naval Tactics", "Air Force Tactics", "Urban Combat", "Guerrilla Warfare"],
+    "Weapons": ["Firearms", "Missiles", "Artillery", "Naval Weapons", "Cyber Weapons"],
+    "Defense Systems": ["Air Defense", "Missile Defense", "Radar Systems", "Fortifications", "Cybersecurity Defense"],
+    "Military History": ["Ancient Warfare", "Medieval Warfare", "Modern Warfare", "World Wars", "Military Technology"],
+    "Logistics": ["Supply Chains", "Transport", "Resource Allocation", "Maintenance", "Field Support"],
+    "Peacekeeping": ["UN Missions", "Conflict Resolution", "Humanitarian Support", "Demobilization", "Reconstruction"]
+    },
+    "Security": {
+    "Cybersecurity": ["Network Security", "Application Security", "Penetration Testing", "Cryptography", "Incident Response"],
+    "National Security": ["Defense Policy", "Intelligence Operations", "Counterterrorism", "Border Security", "Crisis Management"],
+    "Intelligence": ["Signals Intelligence", "Human Intelligence", "Geospatial Intelligence", "Analysis", "Surveillance Techniques"],
+    "Surveillance": ["CCTV", "Digital Monitoring", "Data Collection", "Privacy Issues", "Regulations"],
+    "Crisis Management": ["Disaster Response", "Emergency Planning", "Continuity Planning", "Evacuation Procedures", "Coordination Strategies"],
+    "Emergency Preparedness": ["First Aid", "Emergency Supplies", "Training Drills", "Community Preparedness", "Risk Assessment"]
+    },
+    "Places": {
+    "Continents": ["Africa", "Asia", "Europe", "North America", "South America", "Oceania", "Antarctica"],
+    "Countries": {
+    "Africa": [
+    "Algeria","Angola","Benin","Botswana","Burkina Faso","Burundi","Cabo Verde","Cameroon",
+    "Central African Republic","Chad","Comoros","Congo, Republic of the","Congo, Democratic Republic of the",
+    "Côte d'Ivoire","Djibouti","Egypt","Equatorial Guinea","Eritrea","Eswatini","Ethiopia","Gabon","Gambia",
+    "Ghana","Guinea","Guinea-Bissau","Kenya","Lesotho","Liberia","Libya","Madagascar","Malawi","Mali",
+    "Mauritania","Mauritius","Morocco","Mozambique","Namibia","Niger","Nigeria","Rwanda","Sao Tome and Principe",
+    "Senegal","Seychelles","Sierra Leone","Somalia","South Africa","South Sudan","Sudan","Tanzania","Togo",
+    "Tunisia","Uganda","Zambia","Zimbabwe"
+    ],
+    "Asia": [
+    "Afghanistan","Armenia","Azerbaijan","Bahrain","Bangladesh","Bhutan","Brunei","Cambodia","China",
+    "Cyprus","Georgia","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Kazakhstan","Kuwait",
+    "Kyrgyzstan","Laos","Lebanon","Malaysia","Maldives","Mongolia","Myanmar","Nepal","North Korea",
+    "Oman","Pakistan","Palestine","Philippines","Qatar","Saudi Arabia","Singapore","South Korea",
+    "Sri Lanka","Syria","Tajikistan","Thailand","Timor-Leste","Turkmenistan","United Arab Emirates",
+    "Uzbekistan","Vietnam","Yemen"
+    ],
+    "Europe": [
+    "Albania","Andorra","Austria","Belarus","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia",
+    "Czech Republic (Czechia)","Denmark","Estonia","Finland","France","Germany","Greece","Hungary",
+    "Iceland","Ireland","Italy","Kosovo","Latvia","Liechtenstein","Lithuania","Luxembourg","Malta",
+    "Monaco","Montenegro","Netherlands","North Macedonia","Norway","Poland","Portugal","Romania",
+    "Russia","San Marino","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Ukraine",
+    "United Kingdom","Vatican City (Holy See)"
+    ],
+    "North America": [
+    "Antigua and Barbuda","Bahamas","Barbados","Belize","Canada","Costa Rica","Cuba","Dominica",
+    "Dominican Republic","El Salvador","Grenada","Guatemala","Haiti","Honduras","Jamaica","Mexico",
+    "Nicaragua","Panama","Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines",
+    "Trinidad and Tobago","United States"
+    ],
+    "South America": [
+    "Argentina","Bolivia","Brazil","Chile","Colombia","Ecuador","Guyana","Paraguay","Peru","Suriname",
+    "Uruguay","Venezuela"
+    ],
+    "Oceania": [
+    "Australia","Fiji","Kiribati","Marshall Islands","Micronesia","Nauru","New Zealand","Palau",
+    "Papua New Guinea","Samoa","Solomon Islands","Tonga","Tuvalu","Vanuatu"
+    ],
+    "Antarctica": [
+    "Research Stations","Ice Shelves","Mountains","Wildlife","Scientific Bases"
+    ]
+    },
+    "Cities": {
+    "Africa": ["Lagos","Cairo","Johannesburg","Nairobi","Casablanca"],
+    "Asia": ["Tokyo","Beijing","Mumbai","Seoul","Bangkok"],
+    "Europe": ["London","Paris","Berlin","Rome","Madrid"],
+    "North America": ["New York","Los Angeles","Toronto","Mexico City","Chicago"],
+    "South America": ["São Paulo","Buenos Aires","Santiago","Bogotá","Lima"],
+    "Oceania": ["Sydney","Melbourne","Auckland","Suva","Wellington"],
+    "Antarctica": ["McMurdo Station","Palmer Station","Scott Base","Vernadsky Station","Rothera Research Station"]
+    }
+    },
+    "Times": {
+    "Prehistory": [
+    "Paleolithic", "Mesolithic", "Neolithic", "Bronze Age", "Iron Age",
+    "3rd millennium BCE", "2nd millennium BCE", "1st millennium BCE"
+    ],
+    "Ancient History": [
+    "Sumerian Civilization", "Ancient Egypt", "Indus Valley Civilization",
+    "Ancient Greece", "Ancient Rome", "Classical Antiquity",
+    "3rd millennium BCE", "2nd millennium BCE", "1st millennium BCE"
+    ],
+    "Medieval History": [
+    "Early Middle Ages", "High Middle Ages", "Late Middle Ages",
+    "Viking Age", "Byzantine Empire",
+    "5th century", "6th century", "7th century", "8th century",
+    "9th century", "10th century", "11th century", "12th century",
+    "13th century", "14th century", "15th century"
+    ],
+    "Early Modern Period": [
+    "Renaissance", "Reformation", "Age of Exploration", "Scientific Revolution", "Enlightenment",
+    "15th century", "16th century", "17th century", "18th century"
+    ],
+    "Modern History": [
+    "Early Modern Period", "Age of Exploration", "Scientific Revolution", "Enlightenment",
+    "Industrial Revolution", "Age of Revolutions", "Napoleonic Era", "Victorian Era",
+    "Colonial Era / Imperialism", "World War I", "Interwar Period", "World War II",
+    "Late 19th Century", "Late Modern Period", "Progressive Era",
+    "16th century", "17th century", "18th century", "19th century", "20th century"
+    ],
+    "Contemporary History": [
+    "Cold War Era", "Post-Cold War Era", "Digital Age", "Globalization Era",
+    "21st Century", "Information Age", "Post-Industrial Era", "Contemporary Conflicts",
+    "Environmental Awareness Era", "Space Exploration Era", "Civil Rights Movement",
+    "European Integration Era", "Technological Revolution",
+    "20th century", "21st century"
+    ],
+    "Geological Time": [
+    "Precambrian", "Paleozoic", "Mesozoic", "Cenozoic", "Quaternary",
+    "Precambrian Era", "Paleozoic Era", "Mesozoic Era", "Cenozoic Era",
+    "Cambrian", "Ordovician", "Silurian", "Devonian", "Carboniferous", "Permian",
+    "Triassic", "Jurassic", "Cretaceous", "Paleogene", "Neogene", "Quaternary"
+    ]
+    }
+    }
+    const NO_PREVIEW_SVG = `data:image/svg+xml;charset=UTF-8,%3Csvg width='200' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%23888888' text-anchor='middle' dy='.3em'%3ENo Preview%3C/text%3E%3C/svg%3E`;
+    let activeTerms = [];
+    let openPaths = [];
+    let offset = 0;
+    let loading = false;
+    function init() {
+    const hash = window.location.hash.substring(1);
+    if (hash) activeTerms = decodeURIComponent(hash).split(',').filter(t => t);
+    updateFilterUI();
+    renderTree();
+    if (activeTerms.length > 0) resetFeed();
+    // Shrink on click outside
+    document.addEventListener('click', (e) => {
+    const header = document.getElementById('mainHeader');
+    if (!header.contains(e.target) && openPaths.length > 0) {
+    openPaths = [];
+    renderTree();
+    }
+    });
+    }
+    // --- TREE RENDERING ---
+    function renderTree() {
+    const container = document.getElementById('treeContainer');
+    container.innerHTML = '';
+    
+    // Render Top Level Horizontally
+    Object.keys(TREE).forEach(key => {
+    const topNode = document.createElement('div');
+    topNode.className = 'top-level-node';
+    buildBranch(TREE[key], topNode, [key], key);
+    container.appendChild(topNode);
+    });
+    }
+    function buildBranch(data, parentElement, pathStack, labelName) {
+    const isFolder = typeof data === 'object' && !Array.isArray(data);
+    const isLeafList = Array.isArray(data);
+    const currentID = pathStack.join('|');
+    const isOpen = openPaths.includes(currentID);
+    // Row UI
+    const row = document.createElement('div');
+    row.className = 'node-row';
+    row.onclick = (e) => e.stopPropagation();
+    const plus = document.createElement('div');
+    plus.className = 'node-plus';
+    plus.innerText = '+';
+    // FIXED: Use e.preventDefault and stopPropagation to ensure "Add" works
+    plus.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addTerm(labelName);
+    };
+    const label = document.createElement('button');
+    label.className = `node-label ${isOpen ? 'expanded' : ''}`;
+    label.innerText = labelName + (isFolder || isLeafList ? (isOpen ? ' ▾' : ' ▸') : '');
+    label.onclick = (e) => {
+    e.stopPropagation();
+    if (isFolder || isLeafList) togglePath(currentID);
+    else addTerm(labelName);
+    };
+    row.appendChild(plus);
+    row.appendChild(label);
+    parentElement.appendChild(row);
+    // Recurse if open
+    if (isOpen) {
+    const branch = document.createElement('div');
+    branch.className = 'node-branch';
+    parentElement.appendChild(branch);
+    if (isFolder) {
+    Object.keys(data).forEach(k => buildBranch(data[k], branch, pathStack.concat(k), k));
+    } else if (isLeafList) {
+    data.forEach(item => buildBranch(item, branch, pathStack.concat(item), item));
+    }
+    }
+    }
+    function togglePath(id) {
+    openPaths = openPaths.includes(id) ? openPaths.filter(p => p !== id) : [...openPaths, id];
+    renderTree();
+    }
+    function goToRoot() { openPaths = []; renderTree(); }
+    function addTerm(term) {
+    if (!activeTerms.includes(term)) {
+    activeTerms.push(term);
+    syncState();
+    }
+    }
+    function removeTerm(term) {
+    activeTerms = activeTerms.filter(t => t !== term);
+    syncState();
+    }
+    function clearAll() { activeTerms = []; syncState(); }
+    function pickRandom() {
+    const items = [];
+    function find(node, name) {
+    if (Array.isArray(node)) { items.push(name); items.push(...node); }
+    else if (typeof node === 'object') { items.push(name); for(let k in node) find(node[k], k); }
+    else items.push(node);
+    }
+    Object.keys(TREE).forEach(k => find(TREE[k], k));
+    activeTerms = items.filter(x => x).sort(() => 0.5 - Math.random()).slice(0, 2);
+    syncState();
+    }
+    function syncState() {
+    window.location.hash = encodeURIComponent(activeTerms.join(','));
+    updateFilterUI();
+    resetFeed();
+    }
+    function updateFilterUI() {
+    const bar = document.getElementById('activeFilters');
+    bar.innerHTML = '';
+    activeTerms.forEach(t => {
+    const tag = document.createElement('div');
+    tag.className = 'tag';
+    tag.innerHTML = `${t} <span onclick="removeTerm('${t}')">×</span>`;
+    bar.appendChild(tag);
+    });
+    }
+    // --- API & FEED ---
+    function resetFeed() {
+    document.getElementById('feed').innerHTML = '';
+    offset = 0;
+    if (activeTerms.length > 0) fetchArticles();
+    }
+    async function fetchArticles() {
+    if (loading || activeTerms.length === 0) return;
+    loading = true;
+    document.getElementById('sentinel').innerText = "Searching...";
+    
+    const query = activeTerms.map(t => `"${t}"`).join(' AND ');
+    const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&sroffset=${offset}&srlimit=10&format=json&origin=*`;
+    console.log(url);
+    try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.query.search.length > 0) {
+    await fetchRichData(data.query.search.map(r => r.title));
+    offset += 10;
+    document.getElementById('sentinel').innerText = "Scroll for more";
+    } else {
+    document.getElementById('sentinel').innerText = "No results found.";
+    }
+    } catch (e) { console.error(e); }
+    finally { loading = false; }
+    }
+    async function fetchRichData(titles) {
+    const titleStr = titles.join('|');
+    const url = `https://en.wikipedia.org/w/api.php?action=query&prop=pageimages|extracts|info&inprop=url&exintro&explaintext&exchars=350&piprop=thumbnail&pithumbsize=400&titles=${encodeURIComponent(titleStr)}&format=json&origin=*`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const pages = data.query.pages;
+    for (const id in pages) {
+    const page = pages[id];
+    if (page.title) {
+    const views = await fetchViewCount(page.title);
+    renderArticle(page, views);
+    }
+    }
+    }
+    async function fetchViewCount(title) {
+    const end = new Date();
+    const start = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    const fmt = (d) => d.toISOString().split('T')[0].replace(/-/g, '');
+    const slug = title.replace(/ /g, '_');
+    const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/${encodeURIComponent(slug)}/daily/${fmt(start)}/${fmt(end)}`;
+    try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.items.reduce((sum, d) => sum + d.views, 0).toLocaleString();
+    } catch (e) { return "N/A"; }
+    }
+    function renderArticle(page, views) {
+    const feed = document.getElementById('feed');
+    const imgUrl = page.thumbnail ? page.thumbnail.source : NO_PREVIEW_SVG;
+    const wikiUrl = `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}`;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+    <a href="${wikiUrl}" target="_blank" class="card-img-link">
+        <img src="${imgUrl}" alt="${page.title}" loading="lazy">
+    </a>
+    <div class="card-content">
+        <a href="${wikiUrl}" target="_blank" class="card-title">${page.title}</a>
+        <p class="card-summary">${page.extract || 'No introduction available for this Wikipedia article.'}</p>
+        <div class="card-stats">📈 ${views} Views (14d)</div>
+    </div>
+    `;
+    feed.appendChild(card);
+    }
+    const obs = new IntersectionObserver((e) => { if (e[0].isIntersecting && activeTerms.length > 0) fetchArticles(); });
+    obs.observe(document.getElementById('sentinel'));
+    init();
     </script>
 </body>
 </html>
