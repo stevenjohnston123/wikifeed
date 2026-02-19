@@ -14,136 +14,56 @@
         }
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; color: var(--text); }
         header { background: var(--card); border-bottom: 1px solid var(--border); padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .nav-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .container { max-width: 1200px; margin: 0 auto; position: relative; }
+        .nav-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; position: relative; }
         .nav-btn { background: #fff; border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 5px; }
         .nav-btn.primary { background: var(--accent); color: white; border: none; }
         
-        .custom-input-wrap { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: 2px 8px; }
-        .custom-input-wrap input { border: none; outline: none; padding: 4px; font-size: 16px; width: 120px; }
+        .custom-input-wrap { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 6px; background: #fff; padding: 2px 8px; flex-grow: 1; max-width: 350px; }
+        .custom-input-wrap input { border: none; outline: none; padding: 6px; font-size: 16px; width: 100%; }
         
+        #treeDrawer { 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            width: 100%;
+            max-width: 500px;
+            background: #fff; 
+            border: 1px solid var(--border); 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); 
+            max-height: 500px; 
+            overflow-y: auto; 
+            z-index: 2000; 
+            border-radius: 8px;
+            display: none;
+            margin-top: 5px;
+        }
+
         .active-filters { display: flex; flex-wrap: wrap; padding: 4px 0; gap: 8px; }
-        .tag { background: var(--accent); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .tag { background: var(--accent); color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; border: 2px solid transparent; }
         .tag.custom { background: var(--custom-tag); }
-        .tag.browsing { ring: 2px solid #000; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); }
+        /* Highlighting for the browsing/active term */
+        .tag.browsing { border-color: #000; box-shadow: 0 0 0 2px var(--accent); }
         .remove-btn { font-size: 16px; margin-left: 4px; cursor: pointer; }
 
-        #siblingPicker { display: none; background: #fff; border: 1px solid var(--border); padding: 10px; margin-top: 10px; border-radius: 8px; overflow-x: auto; white-space: nowrap; gap: 8px; }
-        .sibling-item { display: inline-block; padding: 4px 12px; background: var(--tag-bg); border-radius: 15px; font-size: 11px; cursor: pointer; color: var(--accent); font-weight: 700; }
+        #siblingPicker { display: none; background: #fff; border: 1px solid var(--border); padding: 12px; margin-top: 10px; border-radius: 8px; overflow-x: auto; white-space: nowrap; gap: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        .sibling-item { display: inline-block; padding: 6px 14px; background: var(--tag-bg); border-radius: 20px; font-size: 12px; cursor: pointer; color: var(--accent); font-weight: 700; border: 1px solid transparent; }
+        .sibling-item:hover { background: var(--accent); color: white; }
+        .sibling-item.current { background: white; border-color: var(--accent); cursor: default; }
 
-        .search-container { position: relative; width: 100%; margin-bottom: 12px; }
-        #treeSearch { width: 100%; padding: 10px 35px 10px 10px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; }
-        #clearSearch { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--secondary); display: none; font-weight: bold; }
+        .node-row { display: flex; align-items: center; border-bottom: 1px solid #f0f0f0; background: #fff; }
+        .node-row:hover { background: #f8f9fa; }
+        .node-plus { padding: 8px 12px; color: var(--accent); font-weight: bold; cursor: pointer; border-right: 1px solid #f0f0f0; }
+        .node-label { flex-grow: 1; padding: 8px 12px; border: none; background: none; text-align: left; cursor: pointer; font-size: 13px; color: var(--text); }
 
-        #treeDrawer { border-top: 1px solid var(--border); padding-top: 10px; max-height: 50vh; overflow-y: auto; }
-        .node-row { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 2px; background: #fff; }
-        .node-plus { padding: 4px 8px; background: #f8f9fa; border-right: 1px solid var(--border); cursor: pointer; color: var(--accent); font-weight: bold; }
-        .node-label { flex-grow: 1; padding: 4px 10px; border: none; background: none; text-align: left; cursor: pointer; font-size: 12px; }
-
-        #feed { max-width: 700px; margin: 20px auto; padding: 0 15px; }
-        .card { display: flex; background: var(--card); border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border); overflow: hidden; }
-        .card-img { flex: 0 0 150px; background: #eee; }
-        .card-img img { width: 100%; height: 100%; object-fit: cover; }
-        .card-body { flex: 1; padding: 5px; padding-left: 10px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
-        .card-title { font-weight: 700; text-decoration: none; color: var(--text); font-size: 1.1rem; }
-        .card-text { font-size: 13px; color: #444; margin: 0px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .card-stats { font-size: 11px; color: var(--accent); font-weight: 700; border-top: 1px solid #f0f0f0; padding-top: 8px; }
-
-        /* --- Feed --- */
         #feed { max-width: 800px; margin: 20px auto; padding: 0 15px; min-height: 50vh;}
-        /* --- Desktop & Mobile Base Card --- */
-        .card {
-        display: flex;
-        background: var(--card);
-        border-radius: 12px;
-        margin-bottom: 16px;
-        border: 1px solid var(--border);
-        overflow: hidden;
-        min-height: 120px; /* Instead of fixed height */
-        }
-        .card-img-link {
-        flex: 0 0 180px; /* Fixed width image */
-        background: #eee;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        }
-        .card-img-link img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        }
-        .card-content {
-        flex: 1;
-        padding: 12px 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between; /* Pushes stats to the bottom */
-        min-width: 0; /* Prevents text from breaking layout */
-        }
-        /* Stats Styling */
-        .card-stats {
-        margin-top: 8px;
-        display: flex;
-        gap: 12px;
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--accent);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-top: 1px solid #f0f0f0;
-        padding-top: 6px;
-        }
-        .card-title { display: block; font-size: 1.2rem; font-weight: 700; text-decoration: none; color: var(--text); margin-bottom: 5px; }
-
-        @media (max-width: 600px) {
-        .card {
-        height: 110px; /* Rigid constraint */
-        max-height: 110px;
-        margin-bottom: 8px;
-        border-radius: 6px;
-        position: relative;
-        }
-        .card-img-link {
-        flex: 0 0 85px; /* Square-ish thumbnail */
-        height: 100px;
-        }
-        .card-content {
-        padding: 6px 10px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden; /* Safety first */
-        }
-        .card-title {
-        font-size: 0.95rem;
-        line-height: 1;
-        padding-bottom: 5px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Title MUST stay on one line */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        }
-        .card-summary {
-        font-size: 0.85rem; /* Slightly smaller text for higher density */
-        line-height: 1.15; /* Tight but readable leading */
-        color: #444; /* Darker for better contrast at small sizes */
-        /* Increased clamp: allows up to 4 lines if title is short */
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin: 0px;
-        padding-top: 2px;
-        }
-        /* Stats as a tight footer row */
-        .card-stats {
-        margin-top: auto; /* Pushes to the very bottom */
-        padding-top: 4px;
-        font-size: 10px;
-        border-top: 1px solid #f5f5f5;
-        gap: 8px;
-        }
-
+        .card { display: flex; background: var(--card); border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border); overflow: hidden; min-height: 120px; max-height: 200px; }
+        .card-img { flex: 0 0 180px; background: #eee; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .card-body { flex: 1; padding: 12px 16px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+        .card-title { font-weight: 700; text-decoration: none; color: var(--text); font-size: 1.1rem; margin-bottom: 4px; display: block; }
+        .card-text { font-size: 13px; color: #444; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-stats { font-size: 11px; color: var(--accent); font-weight: 700; border-top: 1px solid #f0f0f0; padding-top: 8px; margin-top: 8px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -151,22 +71,23 @@
         <div class="container">
             <div class="nav-bar">
                 <button class="nav-btn primary" onclick="toggleTreeVisibility()">🔍 Topics <span id="toggleArrow">▸</span></button>
-                <button class="nav-btn" onclick="addOneRandom()">🎲 Random</button>
+                <button class="nav-btn" onclick="addOneRandom()">🎲 Add Random</button>
                 <button class="nav-btn" onclick="clearAll()" style="color:#dc3545">🗑 Clear</button>
+                
                 <div class="custom-input-wrap">
-                    <input type="text" id="customInput" placeholder="Add custom..." onkeydown="if(event.key==='Enter') addCustom()">
-                    <button class="nav-btn" style="border:none" onclick="addCustom()">➕</button>
+                    <input type="text" id="customInput" placeholder="Search or add topic..." 
+                           oninput="handleSearch(this.value)" 
+                           onkeydown="handleKeyDown(event)">
+                    <span id="clearSearch" onclick="clearSearchInput()" style="cursor:pointer; display:none; padding: 0 5px;">×</span>
+                </div>
+
+                <div id="treeDrawer">
+                    <div id="treeContainer"></div>
                 </div>
             </div>
+
             <div class="active-filters" id="activeFilters"></div>
             <div id="siblingPicker"></div>
-            <div id="treeDrawer" style="display: none;">
-                <div class="search-container">
-                    <input type="text" id="treeSearch" placeholder="Search topics..." oninput="handleSearch(this.value)">
-                    <span id="clearSearch" onclick="clearSearchInput()">×</span>
-                </div>
-                <div id="treeContainer"></div>
-            </div>
         </div>
     </header>
 
@@ -177,52 +98,92 @@
     let activeTerms = [];
     let customTerms = [];
     let openPaths = [];
-    let browsingTerm = null; // Tracks which term is showing siblings
+    let browsingTerm = null;
     let offset = 0;
     let loading = false;
 
     function init() {
-    // Ensure TREE exists from topics.js
-    if (typeof TREE === 'undefined') window.TREE = {};
-    
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        // Clear existing to avoid duplicates on manual init calls
-        activeTerms = [];
-        customTerms = [];
-        
-        decodeURIComponent(hash).split(',').forEach(t => {
-            if (t.startsWith('c:')) {
-                const clean = t.substring(2);
-                activeTerms.push(clean);
-                customTerms.push(clean);
-            } else {
-                activeTerms.push(t);
-            }
-        });
-        
-        // CRITICAL FIX: Trigger the UI update and the API fetch
-        updateFilterUI();
-        resetFeed(); 
-    } else {
-        // If no hash, add a random one (which calls syncState/resetFeed automatically)
-        addOneRandom();
+        if (typeof TREE === 'undefined') window.TREE = {};
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            decodeURIComponent(hash).split(',').forEach(t => {
+                if (t.startsWith('c:')) {
+                    const clean = t.substring(2);
+                    activeTerms.push(clean);
+                    customTerms.push(clean);
+                } else {
+                    activeTerms.push(t);
+                }
+            });
+            updateFilterUI();
+            resetFeed(); 
+        } else {
+            addOneRandom();
+        }
     }
-    renderTree();
-}
 
+    // --- SEARCH & MATCH LOGIC ---
+    function getExactMatch(query) {
+        let found = null;
+        const search = (obj) => {
+            if (found) return;
+            for (let k in obj) {
+                if (k.toLowerCase() === query.toLowerCase()) { found = k; return; }
+                if (typeof obj[k] === 'object' && !Array.isArray(obj[k])) search(obj[k]);
+                else if (Array.isArray(obj[k])) {
+                    const leaf = obj[k].find(i => i.toLowerCase() === query.toLowerCase());
+                    if (leaf) { found = leaf; return; }
+                }
+            }
+        };
+        search(TREE);
+        return found;
+    }
 
-    // --- SIBLING TOGGLE LOGIC ---
+    function handleSearch(val) {
+        const drawer = document.getElementById('treeDrawer');
+        const clearBtn = document.getElementById('clearSearch');
+        clearBtn.style.display = val ? 'block' : 'none';
+        
+        if (val.trim().length > 0) {
+            drawer.style.display = 'block';
+            document.getElementById('toggleArrow').innerText = '▾';
+            renderTree(val.toLowerCase().trim());
+        } else if (document.getElementById('toggleArrow').innerText === '▸') {
+            drawer.style.display = 'none';
+        }
+    }
+
+    function handleKeyDown(e) {
+        if (e.key === 'Enter') {
+            const val = e.target.value.trim();
+            if (!val) return;
+            const exact = getExactMatch(val);
+            if (exact) addTerm(exact); 
+            else addCustom(val);
+            clearSearchInput();
+        }
+    }
+
+    function clearSearchInput() {
+        const inp = document.getElementById('customInput');
+        const drawer = document.getElementById('treeDrawer');
+        inp.value = '';
+        handleSearch('');
+        if (drawer.style.display != 'none'){
+               toggleTreeVisibility();
+        }
+    }
+
+    // --- SIBLING PICKER LOGIC ---
     function toggleSiblings(term) {
         const picker = document.getElementById('siblingPicker');
-        
-        if (browsingTerm === term) {
-            // Requirement 4: Click again to hide
-            browsingTerm = null;
-            picker.style.display = 'none';
-        } else {
-            browsingTerm = term;
-            showSiblings(term);
+        if (browsingTerm === term) { 
+            browsingTerm = null; 
+            picker.style.display = 'none'; 
+        } else { 
+            browsingTerm = term; 
+            showSiblings(term); 
         }
         updateFilterUI();
     }
@@ -231,10 +192,11 @@
         const picker = document.getElementById('siblingPicker');
         picker.innerHTML = '';
         let siblings = [];
-
+        
         const find = (obj) => {
-            if (Array.isArray(obj)) { if (obj.includes(term)) siblings = obj; }
-            else if (typeof obj === 'object') {
+            if (Array.isArray(obj)) {
+                if (obj.includes(term)) siblings = obj;
+            } else if (typeof obj === 'object') {
                 if (Object.keys(obj).includes(term)) siblings = Object.keys(obj);
                 else Object.values(obj).forEach(find);
             }
@@ -245,8 +207,8 @@
             picker.style.display = 'flex';
             siblings.forEach(s => {
                 const item = document.createElement('div');
-                item.className = 'sibling-item';
-                item.innerText = s === term ? `${s} •` : s;
+                item.className = `sibling-item ${s === term ? 'current' : ''}`;
+                item.innerText = s;
                 if (s !== term) item.onclick = () => replaceTerm(term, s);
                 picker.appendChild(item);
             });
@@ -260,7 +222,6 @@
         const idx = activeTerms.indexOf(oldTerm);
         if (idx !== -1) {
             activeTerms[idx] = newTerm;
-            // Since we're replacing, if the old was custom, the new one isn't unless it was already
             customTerms = customTerms.filter(t => t !== oldTerm);
             browsingTerm = newTerm;
             syncState();
@@ -268,7 +229,51 @@
         }
     }
 
-    // --- URL ENCODING FOR CUSTOM TAGS ---
+    // --- CORE UI LOGIC ---
+    function updateFilterUI() {
+        const bar = document.getElementById('activeFilters');
+        bar.innerHTML = '';
+        activeTerms.forEach(t => {
+            const isCustom = customTerms.includes(t);
+            const tag = document.createElement('div');
+            tag.className = `tag ${isCustom ? 'custom' : ''} ${browsingTerm === t ? 'browsing' : ''}`;
+            tag.innerHTML = `${t} <span class="remove-btn" onclick="event.stopPropagation(); removeTerm('${t}')">×</span>`;
+            tag.onclick = () => toggleSiblings(t);
+            bar.appendChild(tag);
+        });
+    }
+
+    function toggleTreeVisibility() {
+        const d = document.getElementById('treeDrawer');
+        const a = document.getElementById('toggleArrow');
+        const isHidden = window.getComputedStyle(d).display === 'none';
+        if (isHidden) { d.style.display = 'block'; a.innerText = '▾'; renderTree(); } 
+        else { d.style.display = 'none'; a.innerText = '▸'; }
+    }
+
+    function addTerm(t) { 
+        if (!activeTerms.includes(t)) { activeTerms.push(t); syncState(); }
+        document.getElementById('treeDrawer').style.display = 'none';
+        document.getElementById('toggleArrow').innerText = '▸';
+    }
+    
+    function addCustom(val) {
+        if (val && !activeTerms.includes(val)) {
+            customTerms.push(val);
+            activeTerms.push(val);
+            syncState();
+        }
+        document.getElementById('treeDrawer').style.display = 'none';
+        document.getElementById('toggleArrow').innerText = '▸';
+    }
+
+    function removeTerm(t) {
+        activeTerms = activeTerms.filter(x => x !== t);
+        customTerms = customTerms.filter(x => x !== t);
+        if (browsingTerm === t) { browsingTerm = null; document.getElementById('siblingPicker').style.display = 'none'; }
+        syncState();
+    }
+
     function syncState() {
         const hashParts = activeTerms.map(t => customTerms.includes(t) ? `c:${t}` : t);
         window.location.hash = encodeURIComponent(hashParts.join(','));
@@ -276,38 +281,83 @@
         resetFeed();
     }
 
-    // --- BATCHED API CALLS (FASTER) ---
+    function renderTree(query = "") {
+        const container = document.getElementById('treeContainer');
+        container.innerHTML = '';
+        if (query) {
+            const matches = [];
+            const search = (obj, path = []) => {
+                for (let k in obj) {
+                    let cp = [...path, k];
+                    if (k.toLowerCase().includes(query)) matches.push({n: k, p: cp});
+                    if (typeof obj[k] === 'object' && !Array.isArray(obj[k])) search(obj[k], cp);
+                    else if (Array.isArray(obj[k])) obj[k].forEach(i => { 
+                        if(i.toLowerCase().includes(query)) matches.push({n: i, p: [...cp, i]}); 
+                    });
+                }
+            };
+            search(TREE);
+            if (matches.length === 0) {
+                container.innerHTML = `<div style="padding:15px; font-size:12px; color:#666">No tree matches. Press Enter to add custom topic.</div>`;
+                return;
+            }
+            matches.slice(0, 40).forEach(m => {
+                const row = document.createElement('div');
+                row.className = 'node-row';
+                const pathStr = m.p.length > 1 ? m.p.slice(0, -1).join(' > ') : '';
+                row.innerHTML = `<div class="node-plus" onclick="event.stopPropagation(); addTerm('${m.n}')">+</div><div class="node-label">${m.n} <small style="color:#999; margin-left:8px">${pathStr}</small></div>`;
+                row.onclick = () => addTerm(m.n);
+                container.appendChild(row);
+            });
+        } else {
+            Object.keys(TREE).forEach(k => buildBranch(TREE[k], container, [k], k));
+        }
+    }
+
+    function buildBranch(data, parent, path, label) {
+        const isFolder = typeof data === 'object' && !Array.isArray(data);
+        const isLeafList = Array.isArray(data);
+        const id = path.join('|');
+        const isOpen = openPaths.includes(id);
+        const row = document.createElement('div');
+        row.className = 'node-row';
+        row.innerHTML = `<div class="node-plus" onclick="event.stopPropagation(); addTerm('${label}')">+</div><button class="node-label">${label}${isFolder || isLeafList ? (isOpen ? ' ▾' : ' ▸') : ''}</button>`;
+        row.onclick = () => { if(isFolder || isLeafList) { isOpen ? openPaths = openPaths.filter(p => p !== id) : openPaths.push(id); renderTree(); } else addTerm(label); };
+        parent.appendChild(row);
+        if (isOpen) {
+            const sub = document.createElement('div');
+            sub.style.marginLeft = '15px';
+            if (isFolder) Object.keys(data).forEach(k => buildBranch(data[k], sub, [...path, k], k));
+            else data.forEach(i => {
+                const l = document.createElement('div');
+                l.className = 'node-row';
+                l.innerHTML = `<div class="node-plus" onclick="event.stopPropagation(); addTerm('${i}')">+</div><button class="node-label">${i}</button>`;
+                l.onclick = () => addTerm(i);
+                sub.appendChild(l);
+            });
+            parent.appendChild(sub);
+        }
+    }
+
+    // --- API LOGIC ---
     async function fetchArticles() {
         if (loading || activeTerms.length === 0) return;
         loading = true;
         document.getElementById('sentinel').innerText = "Loading...";
-
         const query = activeTerms.map(t => `"${t}"`).join(' AND ');
-        // ONE call for search, summaries, and images
         const url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(query)}&gsrlimit=10&gsroffset=${offset}&prop=pageimages|extracts&exintro&explaintext&exlimit=max&piprop=thumbnail&pithumbsize=400&format=json&origin=*`;
-
         try {
             const res = await fetch(url);
             const data = await res.json();
-            
             if (data.query && data.query.pages) {
                 const pages = Object.values(data.query.pages).sort((a,b) => a.index - b.index);
-                
-                // Fetch view counts in parallel to minimize wait time
                 const viewPromises = pages.map(p => fetchViews(p.title));
                 const viewResults = await Promise.all(viewPromises);
-
                 pages.forEach((page, i) => renderCard(page, viewResults[i]));
                 offset += 10;
                 document.getElementById('sentinel').innerText = "Scroll for more...";
-            } else {
-                document.getElementById('sentinel').innerText = "No more results.";
-            }
-        } catch (e) {
-            console.error(e);
-        } finally {
-            loading = false;
-        }
+            } else { document.getElementById('sentinel').innerText = "No more results."; }
+        } catch (e) { console.error(e); } finally { loading = false; }
     }
 
     async function fetchViews(title) {
@@ -326,81 +376,14 @@
         const feed = document.getElementById('feed');
         const card = document.createElement('div');
         card.className = 'card';
-
-        const NO_PREVIEW_SVG = `data:image/svg+xml;charset=UTF-8,%3Csvg width='200' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%23888888' text-anchor='middle' dy='.3em'%3ENo Preview%3C/text%3E%3C/svg%3E`;
-
-        const img = page.thumbnail ? page.thumbnail.source : NO_PREVIEW_SVG;
+        const img = page.thumbnail ? page.thumbnail.source : `data:image/svg+xml;charset=UTF-8,%3Csvg width='200' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%23888888' text-anchor='middle' dy='.3em'%3ENo Preview%3C/text%3E%3C/svg%3E`;
         const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}`;
-
-        card.innerHTML = `
-            <a href="${url}" target="_blank" class="card-img"><img src="${img}" loading="lazy"></a>
-            <div class="card-body">
-                <div>
-                    <a href="${url}" target="_blank" class="card-title">${page.title}</a>
-                    <p class="card-text">${page.extract || ''}</p>
-                </div>
-                <div class="card-stats">📈 ${views} Views (14D)</div>
-            </div>
-        `;
+        card.innerHTML = `<a href="${url}" target="_blank" class="card-img"><img src="${img}" loading="lazy"></a><div class="card-body"><div><a href="${url}" target="_blank" class="card-title">${page.title}</a><p class="card-text">${page.extract || ''}</p></div><div class="card-stats">📈 ${views} Views (14D)</div></div>`;
         feed.appendChild(card);
     }
 
-    // --- UI HELPERS ---
-    function updateFilterUI() {
-        const bar = document.getElementById('activeFilters');
-        bar.innerHTML = '';
-        activeTerms.forEach(t => {
-            const isCustom = customTerms.includes(t);
-            const tag = document.createElement('div');
-            tag.className = `tag ${isCustom ? 'custom' : ''} ${browsingTerm === t ? 'browsing' : ''}`;
-            tag.innerHTML = `${t} <span class="remove-btn" onclick="event.stopPropagation(); removeTerm('${t}')">×</span>`;
-            tag.onclick = () => toggleSiblings(t);
-            bar.appendChild(tag);
-        });
-    }
-
-    function addTerm(t) { if (!activeTerms.includes(t)) { activeTerms.push(t); syncState(); } }
-    
-    function addCustom() {
-        const inp = document.getElementById('customInput');
-        const val = inp.value.trim();
-        if (val && !activeTerms.includes(val)) {
-            customTerms.push(val);
-            addTerm(val);
-            inp.value = '';
-        }
-    }
-
-    function removeTerm(t) {
-        activeTerms = activeTerms.filter(x => x !== t);
-        customTerms = customTerms.filter(x => x !== t);
-        if (browsingTerm === t) { browsingTerm = null; document.getElementById('siblingPicker').style.display = 'none'; }
-        syncState();
-    }
-
-    function clearAll() { activeTerms = []; customTerms = []; syncState(); }
-    
+    function clearAll() { activeTerms = []; customTerms = []; browsingTerm = null; document.getElementById('siblingPicker').style.display = 'none'; syncState(); }
     function resetFeed() { document.getElementById('feed').innerHTML = ''; offset = 0; fetchArticles(); }
-
-    function handleSearch(val) {
-        document.getElementById('clearSearch').style.display = val ? 'block' : 'none';
-        renderTree();
-    }
-
-    function clearSearchInput() {
-        const inp = document.getElementById('treeSearch');
-        inp.value = '';
-        handleSearch('');
-    }
-
-    function toggleTreeVisibility() {
-        const d = document.getElementById('treeDrawer');
-        const a = document.getElementById('toggleArrow');
-        const isHidden = d.style.display === 'none';
-        d.style.display = isHidden ? 'block' : 'none';
-        a.innerText = isHidden ? '▾' : '▸';
-    }
-
     function addOneRandom() {
         const leaves = [];
         const collect = (o) => { if (Array.isArray(o)) leaves.push(...o); else Object.values(o).forEach(collect); };
@@ -408,63 +391,7 @@
         addTerm(leaves[Math.floor(Math.random() * leaves.length)]);
     }
 
-    function renderTree() {
-        const container = document.getElementById('treeContainer');
-        const query = document.getElementById('treeSearch').value.toLowerCase().trim();
-        container.innerHTML = '';
-
-        if (query) {
-            const matches = [];
-            const search = (obj, path = []) => {
-                for (let k in obj) {
-                    let cp = [...path, k];
-                    if (k.toLowerCase().includes(query)) matches.push({n: k, p: cp});
-                    if (typeof obj[k] === 'object' && !Array.isArray(obj[k])) search(obj[k], cp);
-                    else if (Array.isArray(obj[k])) obj[k].forEach(i => { if(i.toLowerCase().includes(query)) matches.push({n: i, p: [...cp, i]}); });
-                }
-            };
-            search(TREE);
-            matches.slice(0, 30).forEach(m => {
-                const row = document.createElement('div');
-                row.className = 'node-row';
-                row.innerHTML = `<div class="node-plus" onclick="addTerm('${m.n}')">+</div><div class="node-label">${m.n} <small style="color:#999; margin-left:10px">${m.p.join(' > ')}</small></div>`;
-                row.onclick = () => addTerm(m.n);
-                container.appendChild(row);
-            });
-        } else {
-            Object.keys(TREE).forEach(k => buildBranch(TREE[k], container, [k], k));
-        }
-    }
-
-    function buildBranch(data, parent, path, label) {
-        const isFolder = typeof data === 'object' && !Array.isArray(data);
-        const isLeafList = Array.isArray(data);
-        const id = path.join('|');
-        const isOpen = openPaths.includes(id);
-
-        const row = document.createElement('div');
-        row.className = 'node-row';
-        row.innerHTML = `<div class="node-plus" onclick="event.stopPropagation(); addTerm('${label}')">+</div><button class="node-label">${label}${isFolder || isLeafList ? (isOpen ? ' ▾' : ' ▸') : ''}</button>`;
-        row.onclick = () => { if(isFolder || isLeafList) { isOpen ? openPaths = openPaths.filter(p => p !== id) : openPaths.push(id); renderTree(); } else addTerm(label); };
-        parent.appendChild(row);
-
-        if (isOpen) {
-            const sub = document.createElement('div');
-            sub.style.marginLeft = '15px';
-            if (isFolder) Object.keys(data).forEach(k => buildBranch(data[k], sub, [...path, k], k));
-            else data.forEach(i => {
-                const l = document.createElement('div');
-                l.className = 'node-row';
-                l.innerHTML = `<div class="node-plus" onclick="event.stopPropagation(); addTerm('${i}')">+</div><button class="node-label">${i}</button>`;
-                l.onclick = () => addTerm(i);
-                sub.appendChild(l);
-            });
-            parent.appendChild(sub);
-        }
-    }
-
     window.addEventListener('scroll', () => { if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) fetchArticles(); });
-    
     init();
     </script>
 </body>
