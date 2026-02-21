@@ -7,7 +7,7 @@ TREE = {
       "North America",
       "South America",
       "Oceania",
-"Antarctica"
+      "Antarctica"
     ],
     "Countries": {
       "Africa": [
@@ -64,7 +64,7 @@ TREE = {
         "Tunisia",
         "Uganda",
         "Zambia",
-"Zimbabwe"
+        "Zimbabwe"
       ],
       "Asia": [
         "Afghanistan",
@@ -113,7 +113,7 @@ TREE = {
         "United Arab Emirates",
         "Uzbekistan",
         "Vietnam",
-"Yemen"
+        "Yemen"
       ],
       "Europe": [
         "Albania",
@@ -124,7 +124,7 @@ TREE = {
         "Bosnia and Herzegovina",
         "Bulgaria",
         "Croatia",
-        "Czech Republic (Czechia)",
+        "Czech Republic",
         "Denmark",
         "Estonia",
         "Finland",
@@ -159,7 +159,7 @@ TREE = {
         "Switzerland",
         "Ukraine",
         "United Kingdom",
-"Vatican City (Holy See)"
+        "Vatican City (Holy See)"
       ],
       "North America": [
         "Antigua and Barbuda",
@@ -184,7 +184,7 @@ TREE = {
         "Saint Lucia",
         "Saint Vincent and the Grenadines",
         "Trinidad and Tobago",
-"United States"
+        "United States"
       ],
       "South America": [
         "Argentina",
@@ -198,7 +198,7 @@ TREE = {
         "Peru",
         "Suriname",
         "Uruguay",
-"Venezuela"
+        "Venezuela"
       ],
       "Oceania": [
         "Australia",
@@ -214,14 +214,14 @@ TREE = {
         "Solomon Islands",
         "Tonga",
         "Tuvalu",
-"Vanuatu"
+        "Vanuatu"
       ],
       "Antarctica": [
         "Research Stations",
         "Ice Shelves",
         "Mountains",
         "Wildlife",
-"Scientific Bases"
+        "Scientific Bases"
       ]
     },
     "Cities": {
@@ -230,49 +230,555 @@ TREE = {
         "Cairo",
         "Johannesburg",
         "Nairobi",
-"Casablanca"
+        "Casablanca"
       ],
       "Asia": [
         "Tokyo",
         "Beijing",
         "Mumbai",
         "Seoul",
-"Bangkok"
+        "Bangkok"
       ],
       "Europe": [
         "London",
         "Paris",
         "Berlin",
         "Rome",
-"Madrid"
+        "Madrid"
       ],
       "North America": [
         "New York",
         "Los Angeles",
         "Toronto",
         "Mexico City",
-"Chicago"
+        "Chicago"
       ],
       "South America": [
         "São Paulo",
         "Buenos Aires",
         "Santiago",
         "Bogotá",
-"Lima"
+        "Lima"
       ],
       "Oceania": [
         "Sydney",
         "Melbourne",
         "Auckland",
         "Suva",
-"Wellington"
+        "Wellington"
       ],
       "Antarctica": [
         "McMurdo Station",
         "Palmer Station",
         "Scott Base",
         "Vernadsky Station",
-"Rothera Research Station"
+        "Rothera Research Station"
+      ]
+    },
+    "Landmarks": {
+      "Ancient Wonders & Archeological Sites": [
+        "Great Pyramid of Giza",
+        "Colosseum",
+        "Machu Picchu",
+        "Stonehenge",
+        "Chichen Itza",
+        "Petra",
+        "Acropolis of Athens",
+        "Angkor Wat",
+        "Terracotta Army",
+        "Great Wall of China",
+        "Parthenon",
+        "Pompeii",
+        "Tikal",
+        "Teotihuacán",
+        "Bagan",
+        "Hampi",
+        "Ellora Caves",
+        "Ajanta Caves",
+        "Ancient Carthage",
+        "Ephesus",
+        "Knossos",
+        "Mesa Verde",
+        "Mohenjo-Daro",
+        "My Son Sanctuary",
+        "Nazca Lines",
+        "Persepolis",
+        "Sigiriya",
+        "Taxila",
+        "Valley of the Kings",
+        "Borobudur",
+        "Prambanan",
+        "Masada",
+        "Baalbek",
+        "Skara Brae",
+        "Delphi",
+        "Palmyra",
+        "Leptis Magna",
+        "Volubilis",
+        "Troy",
+        "Gobekli Tepe"
+      ],
+      "Modern Architecture": [
+        "Eiffel Tower",
+        "Statue of Liberty",
+        "Sydney Opera House",
+        "Burj Khalifa",
+        "Empire State Building",
+        "Golden Gate Bridge",
+        "Sagrada Família",
+        "Louvre Pyramid",
+        "Guggenheim Museum Bilbao",
+        "Fallingwater",
+        "Chrysler Building",
+        "Taipei 101",
+        "Petronas Towers",
+        "Shanghai Tower",
+        "One World Trade Center",
+        "Space Needle",
+        "CN Tower",
+        "Willis Tower",
+        "The Shard",
+        "30 St Mary Axe (The Gherkin)",
+        "Flatiron Building",
+        "Atomium",
+        "Gateway Arch",
+        "Habitat 67",
+        "Centre Pompidou",
+        "Lotus Temple",
+        "Marina Bay Sands",
+        "CCTV Headquarters",
+        "Beijing National Stadium (Bird's Nest)",
+        "Burj Al Arab",
+        "Turning Torso",
+        "Casa Batlló",
+        "Lloyd's Building",
+        "Villa Savoye",
+        "Seattle Central Library",
+        "National Stadium Kaohsiung",
+        "The Interlace",
+        "Bosco Verticale",
+        "Elbphilharmonie",
+        "Cayan Tower"
+      ],
+      "Natural Wonders": [
+        "Grand Canyon",
+        "Great Barrier Reef",
+        "Mount Everest",
+        "Victoria Falls",
+        "Northern Lights (Aurora Borealis)",
+        "Galápagos Islands",
+        "Mount Kilimanjaro",
+        "Iguazu Falls",
+        "Amazon Rainforest",
+        "Dead Sea",
+        "Ha Long Bay",
+        "Salar de Uyuni",
+        "Table Mountain",
+        "Giant's Causeway",
+        "Yellowstone National Park",
+        "Yosemite National Park",
+        "Serengeti National Park",
+        "Sahara Desert",
+        "Gobi Desert",
+        "Antelope Canyon",
+        "The Matterhorn",
+        "Mont Blanc",
+        "Mount Fuji",
+        "Krakatoa",
+        "Great Blue Hole",
+        "Pamukkale",
+        "Zhangjiajie National Forest",
+        "Uluru (Ayers Rock)",
+        "Milford Sound",
+        "Cliffs of Moher",
+        "Angel Falls",
+        "Lake Baikal",
+        "Jeju Island",
+        "Komodo Island",
+        "Puerto Princesa Underground River",
+        "El Yunque National Forest",
+        "Bryce Canyon",
+        "Zion National Park",
+        "Banff National Park",
+        "Ngorongoro Crater"
+      ],
+      "Sacred Sites": [
+        "Vatican City",
+        "St. Peter's Basilica",
+        "Masjid al-Haram",
+        "Al-Masjid an-Nabawi",
+        "Dome of the Rock",
+        "Western Wall",
+        "Church of the Holy Sepulchre",
+        "Golden Temple",
+        "Meenakshi Amman Temple",
+        "Kashi Vishwanath Temple",
+        "Mahabodhi Temple",
+        "Shwedagon Pagoda",
+        "Temple of Heaven",
+        "Ise Grand Shrine",
+        "Itsukushima Shrine",
+        "Wat Phra Kaew",
+        "Blue Mosque",
+        "Hagia Sophia",
+        "Notre-Dame de Paris",
+        "Westminster Abbey",
+        "Cologne Cathedral",
+        "Santiago de Compostela",
+        "Mont-Saint-Michel",
+        "Salt Cathedral of Zipaquirá",
+        "Bahá'í Terraces",
+        "Batu Caves",
+        "Sheikh Zayed Grand Mosque",
+        "Hassan II Mosque",
+        "Salt Lake Temple",
+        "Basilica of Our Lady of Guadalupe",
+        "Pashupatinath Temple",
+        "Swayambhunath Stupa",
+        "Jokhang Temple",
+        "Potala Palace",
+        "Senso-ji",
+        "Todai-ji",
+        "Saint Basil's Cathedral",
+        "La Madeleine",
+        "Chartres Cathedral",
+        "Duomo di Milano"
+      ],
+      "Palaces and Castles": [
+        "Palace of Versailles",
+        "The Alhambra",
+        "The Forbidden City",
+        "Neuschwanstein Castle",
+        "Moscow Kremlin",
+        "Tower of London",
+        "Himeji Castle",
+        "Edinburgh Castle",
+        "Windsor Castle",
+        "Buckingham Palace",
+        "Peterhof Palace",
+        "Winter Palace",
+        "Topkapi Palace",
+        "Mysore Palace",
+        "Amer Fort",
+        "Mehrangarh Fort",
+        "Red Fort",
+        "Agra Fort",
+        "Krak des Chevaliers",
+        "Bran Castle",
+        "Prague Castle",
+        "Matsumoto Castle",
+        "Osaka Castle",
+        "Alcázar of Segovia",
+        "Pena Palace",
+        "Château de Chambord",
+        "Schönbrunn Palace",
+        "Wawel Royal Castle",
+        "Malbork Castle",
+        "Spiš Castle",
+        "Cité de Carcassonne",
+        "Citadel of Aleppo",
+        "Citadel of Cairo",
+        "Great Zimbabwe",
+        "Rock-hewn Churches of Lalibela",
+        "Catherine Palace",
+        "Blenheim Palace",
+        "Hampton Court Palace",
+        "Royal Palace of Madrid",
+        "Palace of the Grand Masters of Rhodes"
+      ],
+      "Monuments": [
+        "Mount Rushmore",
+        "Christ the Redeemer",
+        "Lincoln Memorial",
+        "Gateway Arch",
+        "Moai (Easter Island)",
+        "Arc de Triomphe",
+        "Brandenburg Gate",
+        "Vietnam Veterans Memorial",
+        "USS Arizona Memorial",
+        "Statue of David",
+        "The Little Mermaid",
+        "Manneken Pis",
+        "Mother Motherland",
+        "The Motherland Calls",
+        "African Renaissance Monument",
+        "Statue of Unity",
+        "Spring Temple Buddha",
+        "Leshan Giant Buddha",
+        "Great Buddha of Kamakura",
+        "Monument to the Revolution",
+        "Washington Monument",
+        "Jefferson Memorial",
+        "Martin Luther King Jr. Memorial",
+        "Holocaust Memorial",
+        "9/11 Memorial",
+        "Hiroshima Peace Memorial",
+        "Genghis Khan Equestrian Statue",
+        "The Merlion",
+        "Nelson's Column",
+        "Trafalgar Square",
+        "Cenotaph",
+        "Victory Monument",
+        "Monument of the Discoveries",
+        "Triumph of the Republic",
+        "Columbus Monument",
+        "Liberty Bell",
+        "Mount Nemrut Statues",
+        "Vimy Ridge Memorial",
+        "Yasukuni Shrine Memorial",
+        "Bunker Hill Monument"
+      ],
+      "Museums": [
+        "The Louvre",
+        "British Museum",
+        "Metropolitan Museum of Art",
+        "Vatican Museums",
+        "State Hermitage Museum",
+        "Uffizi Gallery",
+        "Prado Museum",
+        "Rijksmuseum",
+        "National Gallery",
+        "Smithsonian Institution",
+        "Musée d'Orsay",
+        "Acropolis Museum",
+        "Egyptian Museum",
+        "National Palace Museum",
+        "Tokyo National Museum",
+        "National Museum of Anthropology",
+        "Museum of Tomorrow",
+        "National Museum of China",
+        "Guggenheim Museum New York",
+        "Museum of Modern Art",
+        "Tate Modern",
+        "Centre Pompidou",
+        "Field Museum",
+        "American Museum of Natural History",
+        "Victoria and Albert Museum",
+        "Pergamon Museum",
+        "Deutsches Museum",
+        "Science Museum",
+        "Exploratorium",
+        "Getty Center",
+        "Library of Congress",
+        "Bodleian Library",
+        "Bibliothèque Nationale de France",
+        "Vatican Library",
+        "Trinity College Library",
+        "Morgan Library",
+        "Royal Library",
+        "New York Public Library",
+        "Austrian National Library",
+        "Library of Alexandria"
+      ],
+      "Engineering Marvels": [
+        "Golden Gate Bridge",
+        "Tower Bridge",
+        "Brooklyn Bridge",
+        "Sydney Harbour Bridge",
+        "Rialto Bridge",
+        "Ponte Vecchio",
+        "Charles Bridge",
+        "Millau Viaduct",
+        "Akashi Kaikyo Bridge",
+        "Vasco da Gama Bridge",
+        "Erasmusbrug",
+        "Chain Bridge",
+        "Harbour Bridge",
+        "Kapellbrücke",
+        "Verrazzano-Narrows Bridge",
+        "George Washington Bridge",
+        "Øresund Bridge",
+        "Pont du Gard",
+        "Hoover Dam",
+        "Three Gorges Dam",
+        "Panama Canal",
+        "Suez Canal",
+        "Channel Tunnel",
+        "Gotthard Base Tunnel",
+        "Tokyo Bay Aqua-Line",
+        "Palm Jumeirah",
+        "The World Islands",
+        "Great Man-Made River",
+        "Itaipu Dam",
+        "Millennium Bridge",
+        "Lupu Bridge",
+        "Forth Bridge",
+        "Glenfinnan Viaduct",
+        "Bixby Creek Bridge",
+        "Confederation Bridge",
+        "Hangzhou Bay Bridge",
+        "Duge Bridge",
+        "Lake Pontchartrain Causeway",
+        "Gotthard Road Tunnel",
+        "Seikan Tunnel"
+      ],
+      "Famous Streets": [
+        "Times Square",
+        "Red Square",
+        "Tiananmen Square",
+        "St. Peter's Square",
+        "Piazza San Marco",
+        "Trafalgar Square",
+        "Place de la Concorde",
+        "Champs-Élysées",
+        "Las Vegas Strip",
+        "Shibuya Crossing",
+        "Jemaa el-Fnaa",
+        "Plaza de Mayo",
+        "Zócalo (Mexico City)",
+        "Union Square",
+        "Piccadilly Circus",
+        "Dam Square",
+        "Alexanderplatz",
+        "Rossio Square",
+        "Main Market Square",
+        "Old Town Square",
+        "Grand Place",
+        "Rynek Główny",
+        "Plaza Mayor",
+        "Hollywood Walk of Fame",
+        "Abbey Road",
+        "Fifth Avenue",
+        "Rodeo Drive",
+        "Bourbon Street",
+        "Lombard Street",
+        "Royal Mile",
+        "Las Ramblas",
+        "Nanjing Road",
+        "The Ginza",
+        "Wall Street",
+        "The Bund",
+        "Unter den Linden",
+        "Avenida 9 de Julio",
+        "Nevsky Prospect",
+        "Istiklal Avenue",
+        "Nathan Road"
+      ],
+      "Public Spaces": [
+        "Central Park",
+        "Hyde Park",
+        "Royal Botanic Gardens",
+        "Gardens by the Bay",
+        "Butchart Gardens",
+        "Keukenhof",
+        "Tuileries Garden",
+        "Luxembourg Gardens",
+        "Park Güell",
+        "Boboli Gardens",
+        "Shinjuku Gyoen",
+        "Kenrokuen",
+        "Summer Palace",
+        "Villa d'Este",
+        "Versailles Gardens",
+        "Generalife",
+        "Tivoli Gardens",
+        "Stanley Park",
+        "Millennium Park",
+        "High Line",
+        "Tiergarten",
+        "Retiro Park",
+        "Ibirapuera Park",
+        "Chapultepec Park",
+        "Kirstenbosch National Botanical Garden",
+        "Singapore Botanic Gardens",
+        "Nong Nooch Tropical Botanical Garden",
+        "Brooklyn Botanic Garden",
+        "Jardin des Plantes",
+        "Stourhead",
+        "Monet's Garden",
+        "Exotic Garden of Monaco",
+        "Mirabell Gardens",
+        "Mainau Island",
+        "Portland Japanese Garden",
+        "Vancouver Island Gardens",
+        "Ryoan-ji",
+        "Gion District",
+        "Hanging Gardens of Mumbai",
+        "Majorelle Garden"
+      ],
+      "Theaters": [
+        "Sydney Opera House",
+        "La Scala",
+        "Metropolitan Opera House",
+        "Royal Opera House (Covent Garden)",
+        "Vienna State Opera",
+        "Bolshoi Theatre",
+        "Teatro Colón",
+        "Palais Garnier",
+        "Teatro Amazonas",
+        "Greek Theatre",
+        "Epidaurus Theatre",
+        "Madison Square Garden",
+        "Wembley Stadium",
+        "Maracanã Stadium",
+        "Camp Nou",
+        "Colosseum",
+        "Arena di Verona",
+        "Minack Theatre",
+        "Globe Theatre",
+        "Radio City Music Hall",
+        "Walt Disney Concert Hall",
+        "Elbphilharmonie",
+        "Guangzhou Opera House",
+        "Oslo Opera House",
+        "Amazonas Opera House",
+        "Teatro alla Scala",
+        "Glyndebourne",
+        "Festspielhaus Baden-Baden",
+        "Palau de la Música Catalana",
+        "Roman Theatre of Orange",
+        "Arènes de Nîmes",
+        "Hollywood Bowl",
+        "Red Rocks Amphitheatre",
+        "Teatro Massimo",
+        "Hungarian State Opera House",
+        "Mariinsky Theatre",
+        "National Centre for the Performing Arts",
+        "Teatro Real",
+        "Odeon of Herodes Atticus",
+        "Stone Amphitheatre"
+      ],
+      "Towers": [
+        "Eiffel Tower",
+        "Leaning Tower of Pisa",
+        "Tokyo Tower",
+        "Oriental Pearl Tower",
+        "Canton Tower",
+        "Galata Tower",
+        "Belem Tower",
+        "CN Tower",
+        "Stratosphere Tower",
+        "Berlin TV Tower",
+        "Milad Tower",
+        "Ostankino Tower",
+        "Sky Tower",
+        "Kuala Lumpur Tower",
+        "Maiden's Tower",
+        "Pharos of Alexandria",
+        "Tower of Hercules",
+        "Portland Head Light",
+        "Heceta Head Lighthouse",
+        "Cape Hatteras Light",
+        "Lindau Lighthouse",
+        "Hook Lighthouse",
+        "Peggy's Point Lighthouse",
+        "Griffith Observatory",
+        "Mauna Kea Observatories",
+        "Royal Observatory",
+        "Yerkes Observatory",
+        "Arecibo Observatory",
+        "Very Large Array",
+        "Paranal Observatory",
+        "Jodrell Bank",
+        "Palomar Observatory",
+        "Pic du Midi Observatory",
+        "Lick Observatory",
+        "Mount Wilson Observatory",
+        "Roque de los Muchachos Observatory",
+        "Sydney Tower",
+        "Umeda Sky Building",
+        "Bitexco Financial Tower",
+        "Lotte World Tower"
       ]
     }
   },
@@ -285,7 +791,7 @@ TREE = {
       "Iron Age",
       "3rd millennium BCE",
       "2nd millennium BCE",
-"1st millennium BCE"
+      "1st millennium BCE"
     ],
     "Ancient History": [
       "Sumerian Civilization",
@@ -296,7 +802,7 @@ TREE = {
       "Classical Antiquity",
       "3rd millennium BCE",
       "2nd millennium BCE",
-"1st millennium BCE"
+      "1st millennium BCE"
     ],
     "Medieval History": [
       "Early Middle Ages",
@@ -314,7 +820,7 @@ TREE = {
       "12th century",
       "13th century",
       "14th century",
-"15th century"
+      "15th century"
     ],
     "Early Modern Period": [
       "Renaissance",
@@ -325,7 +831,7 @@ TREE = {
       "15th century",
       "16th century",
       "17th century",
-"18th century"
+      "18th century"
     ],
     "Modern History": [
       "Early Modern Period",
@@ -348,7 +854,7 @@ TREE = {
       "17th century",
       "18th century",
       "19th century",
-"20th century"
+      "20th century"
     ],
     "Contemporary History": [
       "Cold War",
@@ -364,7 +870,7 @@ TREE = {
       "European Integration",
       "Technological Revolution",
       "20th century",
-"21st century"
+      "21st century"
     ],
     "Geological Time": [
       "Precambrian",
@@ -387,7 +893,421 @@ TREE = {
       "Cretaceous",
       "Paleogene",
       "Neogene",
-"Quaternary"
+      "Quaternary"
+    ]
+  },
+  "People": {
+    "Scientists": [
+      "Albert Einstein",
+      "Isaac Newton",
+      "Charles Darwin",
+      "Marie Curie",
+      "Stephen Hawking",
+      "Nikola Tesla",
+      "Galileo Galilei",
+      "Richard Feynman",
+      "Ada Lovelace",
+      "Alan Turing",
+      "Max Planck",
+      "Niels Bohr",
+      "Johannes Kepler",
+      "Gregor Mendel",
+      "Louis Pasteur",
+      "Alexander Fleming",
+      "James Clerk Maxwell",
+      "Rosalind Franklin",
+      "Michael Faraday",
+      "Ernest Rutherford",
+      "Werner Heisenberg",
+      "Carl Sagan",
+      "Jane Goodall",
+      "Katherine Johnson",
+      "Edwin Hubble",
+      "Archimedes",
+      "Pythagoras",
+      "Euclid",
+      "Leonhard Euler",
+      "Carl Friedrich Gauss",
+      "Bernhard Riemann",
+      "Srinivasa Ramanujan",
+      "Emmy Noether",
+      "David Hilbert",
+      "Kurt Gödel",
+      "Blaise Pascal",
+      "Gottfried Wilhelm Leibniz",
+      "Pierre-Simon Laplace",
+      "Joseph Fourier",
+      "Henri Poincaré"
+    ],
+    "Leaders": [
+      "Abraham Lincoln",
+      "Winston Churchill",
+      "Nelson Mandela",
+      "George Washington",
+      "Mahatma Gandhi",
+      "Franklin D. Roosevelt",
+      "Thomas Jefferson",
+      "Theodore Roosevelt",
+      "Margaret Thatcher",
+      "Queen Elizabeth I",
+      "Queen Victoria",
+      "Catherine the Great",
+      "Peter the Great",
+      "Napoleon Bonaparte",
+      "Julius Caesar",
+      "Augustus",
+      "Alexander the Great",
+      "Charlemagne",
+      "Genghis Khan",
+      "Akbar the Great",
+      "Ashoka",
+      "Mao Zedong",
+      "Deng Xiaoping",
+      "Sun Yat-sen",
+      "Jawaharlal Nehru",
+      "Indira Gandhi",
+      "Benazir Bhutto",
+      "Golda Meir",
+      "Anwar Sadat",
+      "Simón Bolívar",
+      "José de San Martín",
+      "Fidel Castro",
+      "Che Guevara",
+      "Mikhail Gorbachev",
+      "Vladimir Lenin",
+      "Joseph Stalin",
+      "Otto von Bismarck",
+      "Charles de Gaulle",
+      "Konrad Adenauer",
+      "Justinian I"
+    ],
+    "Philosophers": [
+      "Socrates",
+      "Plato",
+      "Aristotle",
+      "Confucius",
+      "Laozi",
+      "Mencius",
+      "Epicurus",
+      "Marcus Aurelius",
+      "Saint Augustine",
+      "Thomas Aquinas",
+      "Niccolò Machiavelli",
+      "Francis Bacon",
+      "René Descartes",
+      "Thomas Hobbes",
+      "Baruch Spinoza",
+      "John Locke",
+      "David Hume",
+      "Jean-Jacques Rousseau",
+      "Immanuel Kant",
+      "Georg Wilhelm Friedrich Hegel",
+      "Arthur Schopenhauer",
+      "John Stuart Mill",
+      "Søren Kierkegaard",
+      "Karl Marx",
+      "Friedrich Nietzsche",
+      "William James",
+      "Sigmund Freud",
+      "Carl Jung",
+      "Jean-Paul Sartre",
+      "Simone de Beauvoir",
+      "Hannah Arendt",
+      "Michel Foucault",
+      "Noam Chomsky",
+      "Bertrand Russell",
+      "Ludwig Wittgenstein",
+      "Martin Heidegger",
+      "Jacques Derrida",
+      "Thomas Kuhn",
+      "Karl Popper",
+      "Ayn Rand"
+    ],
+    "Artists": [
+      "Leonardo da Vinci",
+      "Michelangelo",
+      "Raphael",
+      "Donatello",
+      "Rembrandt",
+      "Johannes Vermeer",
+      "Vincent van Gogh",
+      "Claude Monet",
+      "Pablo Picasso",
+      "Salvador Dalí",
+      "Frida Kahlo",
+      "Diego Rivera",
+      "Andy Warhol",
+      "Jackson Pollock",
+      "Henri Matisse",
+      "Georgia O'Keeffe",
+      "Katsushika Hokusai",
+      "Gustav Klimt",
+      "Edvard Munch",
+      "Marcel Duchamp",
+      "Auguste Rodin",
+      "Filippo Brunelleschi",
+      "Gian Lorenzo Bernini",
+      "Antoni Gaudí",
+      "Frank Lloyd Wright",
+      "Le Corbusier",
+      "Ludwig Mies van der Rohe",
+      "Zaha Hadid",
+      "Oscar Niemeyer",
+      "I. M. Pei",
+      "Frank Gehry",
+      "Renzo Piano",
+      "Norman Foster",
+      "Christopher Wren",
+      "Andrea Palladio",
+      "Walter Gropius",
+      "Louis Sullivan",
+      "Alvar Aalto",
+      "Rem Koolhaas",
+      "Tadao Ando"
+    ],
+    "Writers": [
+      "William Shakespeare",
+      "Homer",
+      "Dante Alighieri",
+      "Miguel de Cervantes",
+      "Johann Wolfgang von Goethe",
+      "Victor Hugo",
+      "Leo Tolstoy",
+      "Fyodor Dostoevsky",
+      "Anton Chekhov",
+      "Charles Dickens",
+      "Jane Austen",
+      "George Eliot",
+      "Virginia Woolf",
+      "James Joyce",
+      "Samuel Beckett",
+      "Franz Kafka",
+      "Marcel Proust",
+      "Gabriel García Márquez",
+      "Jorge Luis Borges",
+      "Pablo Neruda",
+      "Walt Whitman",
+      "Emily Dickinson",
+      "Robert Frost",
+      "T. S. Eliot",
+      "W. B. Yeats",
+      "John Milton",
+      "Geoffrey Chaucer",
+      "Mark Twain",
+      "Ernest Hemingway",
+      "F. Scott Fitzgerald",
+      "William Faulkner",
+      "Toni Morrison",
+      "Maya Angelou",
+      "Langston Hughes",
+      "Rabindranath Tagore",
+      "Matsuo Bashō",
+      "Li Bai",
+      "Du Fu",
+      "Omar Khayyam",
+      "Rumi"
+    ],
+    "Musicians": [
+      "Johann Sebastian Bach",
+      "Wolfgang Amadeus Mozart",
+      "Ludwig van Beethoven",
+      "Johannes Brahms",
+      "Richard Wagner",
+      "Pyotr Ilyich Tchaikovsky",
+      "Frédéric Chopin",
+      "Franz Schubert",
+      "Giuseppe Verdi",
+      "Giacomo Puccini",
+      "Igor Stravinsky",
+      "Claude Debussy",
+      "Miles Davis",
+      "John Coltrane",
+      "Duke Ellington",
+      "Louis Armstrong",
+      "Ella Fitzgerald",
+      "Billie Holiday",
+      "Charlie Parker",
+      "Robert Johnson",
+      "Muddy Waters",
+      "B.B. King",
+      "Elvis Presley",
+      "Chuck Berry",
+      "Little Richard",
+      "The Beatles",
+      "Bob Dylan",
+      "Jimi Hendrix",
+      "Aretha Franklin",
+      "James Brown",
+      "Marvin Gaye",
+      "Stevie Wonder",
+      "Michael Jackson",
+      "Prince",
+      "David Bowie",
+      "Freddie Mercury",
+      "Nina Simone",
+      "Bob Marley",
+      "Joni Mitchell",
+      "Johnny Cash"
+    ]
+  },
+  "Descriptors": {
+    "Size": [
+      "Small",
+      "Smallest",
+      "Large",
+      "Largest",
+      "Big",
+      "Biggest",
+      "Tiny",
+      "Tiniest",
+      "Huge",
+      "Hugest",
+      "Massive",
+      "Most Massive",
+      "Compact",
+      "Gigantic",
+      "Enormous",
+      "Miniature"
+    ],
+    "Age": [
+      "Young",
+      "Youngest",
+      "Old",
+      "Oldest",
+      "New",
+      "Newest",
+      "Ancient",
+      "Most Ancient",
+      "Modern",
+      "Most Modern",
+      "Recent",
+      "Most Recent",
+      "Contemporary",
+      "Primitive",
+      "Most Primitive",
+      "Historic",
+      "Most Historic",
+      "Timeless"
+    ],
+    "Quality": [
+      "Good",
+      "Best",
+      "Bad",
+      "Worst",
+      "Excellent",
+      "Poor",
+      "Poorest",
+      "Superior",
+      "Inferior",
+      "Outstanding",
+      "Most Outstanding",
+      "Average",
+      "Exceptional",
+      "Flawed"
+    ],
+    "Speed": [
+      "Fast",
+      "Fastest",
+      "Quick",
+      "Quickest",
+      "Slow",
+      "Slowest",
+      "Rapid",
+      "Swift",
+      "Swiftest"
+    ],
+    "Strength": [
+      "Strong",
+      "Strongest",
+      "Weak",
+      "Weakest",
+      "Powerful",
+      "Most Powerful",
+      "Fragile",
+      "Most Fragile",
+      "Durable",
+      "Most Durable",
+      "Resilient",
+      "Most Resilient",
+      "Sturdy",
+      "Sturdiest",
+      "Robust",
+      "Most Robust"
+    ],
+    "Value": [
+      "Cheap",
+      "Cheapest",
+      "Expensive",
+      "Most Expensive",
+      "Valuable",
+      "Most Valuable",
+      "Worthless",
+      "Most Worthless",
+      "Affordable",
+      "Most Affordable",
+      "Premium",
+      "Most Premium",
+      "Luxury",
+      "Luxurious",
+      "Priceless"
+    ],
+    "Frequency": [
+      "Common",
+      "Most Common",
+      "Rare",
+      "Rarest",
+      "Frequent",
+      "Most Frequent",
+      "Occasional",
+      "Constant",
+      "Most Constant",
+      "Intermittent",
+      "Regular",
+      "Sporadic"
+    ],
+    "Importance": [
+      "Important",
+      "Most Important",
+      "Significant",
+      "Most Significant",
+      "Critical",
+      "Most Critical",
+      "Minor",
+      "Major",
+      "Essential",
+      "Prize Winning",
+      "Vital",
+      "Trivial",
+      "Non Trivial"
+    ],
+    "Difficulty": [
+      "Easy",
+      "Easiest",
+      "Hard",
+      "Hardest",
+      "Difficult",
+      "Most Difficult",
+      "Simple",
+      "Simplest",
+      "Complex",
+      "Most Complex",
+      "Challenging",
+      "Most Challenging",
+      "Straightforward",
+      "Demanding"
+    ],
+    "Intensity": [
+      "Strong",
+      "Strongest",
+      "Intense",
+      "Extreme",
+      "Mild",
+      "Mildest",
+      "Severe",
+      "Moderate",
+      "Subtle",
+      "Subtlest",
+      "Overwhelming"
     ]
   },
   "Arts": {
@@ -398,7 +1318,7 @@ TREE = {
       "Drama",
       "Essays",
       "Fiction",
-"Non-Fiction"
+      "Non-Fiction"
     ],
     "Genres": [
       "Poetry",
@@ -420,7 +1340,7 @@ TREE = {
       "Satire",
       "Adventure",
       "Children's Literature",
-"Young Adult"
+      "Young Adult"
     ],
     "Music": [
       "Classical",
@@ -431,7 +1351,7 @@ TREE = {
       "World Music",
       "Music Theory",
       "Composition",
-"Performance"
+      "Performance"
     ],
     "Visual Arts": [
       "Painting",
@@ -440,7 +1360,7 @@ TREE = {
       "Printmaking",
       "Digital Art",
       "Installation Art",
-"Photography"
+      "Photography"
     ],
     "Performing Arts": [
       "Theater",
@@ -448,7 +1368,7 @@ TREE = {
       "Opera",
       "Performance Art",
       "Circus",
-"Mime"
+      "Mime"
     ],
     "Film": [
       "Directing",
@@ -457,14 +1377,14 @@ TREE = {
       "Editing",
       "Acting",
       "Film Theory",
-"Documentary"
+      "Documentary"
     ],
     "Photography": [
       "Portrait Photography",
       "Landscape Photography",
       "Street Photography",
       "Photojournalism",
-"Experimental Photography"
+      "Experimental Photography"
     ],
     "Theater": [
       "Acting",
@@ -472,7 +1392,7 @@ TREE = {
       "Playwriting",
       "Stage Design",
       "Lighting",
-"Costume Design"
+      "Costume Design"
     ],
     "Dance": [
       "Ballet",
@@ -480,21 +1400,21 @@ TREE = {
       "Hip-Hop",
       "Contemporary",
       "Folk Dance",
-"Choreography"
+      "Choreography"
     ],
     "Architecture": [
       "Residential",
       "Commercial",
       "Urban Design",
       "Landscape Architecture",
-"Sustainable Design"
+      "Sustainable Design"
     ],
     "Design": [
       "Graphic Design",
       "Industrial Design",
       "Fashion Design",
       "Interior Design",
-"UX/UI Design"
+      "UX/UI Design"
     ]
   },
   "Culture": {
@@ -502,56 +1422,56 @@ TREE = {
       "Media Culture",
       "Popular Culture",
       "Subcultures",
-"Cultural Theory"
+      "Cultural Theory"
     ],
     "Anthropology of Culture": [
       "Rituals",
       "Beliefs",
       "Social Norms",
-"Ethnography"
+      "Ethnography"
     ],
     "Folklore": [
       "Myths",
       "Legends",
       "Fables",
-"Oral Traditions"
+      "Oral Traditions"
     ],
     "Traditions": [
       "Festivals",
       "Ceremonies",
       "Customs",
-"Cultural Practices"
+      "Cultural Practices"
     ],
     "Customs": [
       "Marriage",
       "Death Rituals",
       "Coming-of-Age",
-"Food Practices"
+      "Food Practices"
     ],
     "Festivals": [
       "Religious Festivals",
       "Music Festivals",
       "Cultural Festivals",
-"Seasonal Celebrations"
+      "Seasonal Celebrations"
     ],
     "Language and Dialects": [
       "Regional Dialects",
       "Slang",
       "Language Preservation",
-"Multilingualism"
+      "Multilingualism"
     ],
     "Pop Culture": [
       "Movies",
       "TV Shows",
       "Music",
       "Celebrities",
-"Internet Culture"
+      "Internet Culture"
     ],
     "Media Studies": [
       "Journalism",
       "Film Studies",
       "Advertising",
-"Digital Media"
+      "Digital Media"
     ]
   },
   "Science": {
@@ -578,7 +1498,7 @@ TREE = {
       "Molecular Physics",
       "Computational Physics",
       "Mathematical Physics",
-"Biophysics"
+      "Biophysics"
     ],
     "Chemistry": [
       "Organic Chemistry",
@@ -599,7 +1519,7 @@ TREE = {
       "Solid State Chemistry",
       "Green Chemistry",
       "Medicinal Chemistry",
-"Environmental Chemistry"
+      "Environmental Chemistry"
     ],
     "Biology": [
       "Genetics",
@@ -622,7 +1542,7 @@ TREE = {
       "Systems Biology",
       "Synthetic Biology",
       "Computational Biology",
-"Structural Biology"
+      "Structural Biology"
     ],
     "Astronomy": [
       "Astrophysics",
@@ -641,7 +1561,7 @@ TREE = {
       "Optical Astronomy",
       "X-ray Astronomy",
       "Gravitational Wave Astronomy",
-"Time Domain Astronomy"
+      "Time Domain Astronomy"
     ],
     "Earth Sciences": [
       "Geology",
@@ -658,7 +1578,7 @@ TREE = {
       "Sedimentology",
       "Paleoclimatology",
       "Earth System Science",
-"Environmental Geoscience"
+      "Environmental Geoscience"
     ],
     "Geology": [
       "Mineralogy",
@@ -675,7 +1595,7 @@ TREE = {
       "Economic Geology",
       "Hydrogeology",
       "Engineering Geology",
-"Planetary Geology"
+      "Planetary Geology"
     ],
     "Oceanography": [
       "Physical Oceanography",
@@ -690,7 +1610,7 @@ TREE = {
       "Paleoceanography",
       "Ocean Circulation",
       "Ocean Modeling",
-"Marine Ecology"
+      "Marine Ecology"
     ],
     "Meteorology": [
       "Atmospheric Science",
@@ -704,7 +1624,7 @@ TREE = {
       "Mesoscale Meteorology",
       "Atmospheric Chemistry",
       "Atmospheric Dynamics",
-"Climate Modeling"
+      "Climate Modeling"
     ],
     "Ecology": [
       "Population Ecology",
@@ -719,7 +1639,7 @@ TREE = {
       "Marine Ecology",
       "Freshwater Ecology",
       "Global Ecology",
-"Theoretical Ecology"
+      "Theoretical Ecology"
     ],
     "Materials Science": [
       "Nanomaterials",
@@ -740,7 +1660,7 @@ TREE = {
       "Crystallography",
       "Phase Transitions",
       "Materials Characterization",
-"Computational Materials Science"
+      "Computational Materials Science"
     ]
   },
   "Mathematics": {
@@ -760,7 +1680,7 @@ TREE = {
       "Universal Algebra",
       "Category Theory",
       "Algebraic Geometry",
-"Algebraic Topology"
+      "Algebraic Topology"
     ],
     "Geometry": [
       "Euclidean Geometry",
@@ -775,7 +1695,7 @@ TREE = {
       "Computational Geometry",
       "Convex Geometry",
       "Fractal Geometry",
-"Metric Geometry"
+      "Metric Geometry"
     ],
     "Calculus": [
       "Differential Calculus",
@@ -791,7 +1711,7 @@ TREE = {
       "Variational Calculus",
       "Calculus of Variations",
       "Partial Differential Equations",
-"Ordinary Differential Equations"
+      "Ordinary Differential Equations"
     ],
     "Statistics": [
       "Descriptive Statistics",
@@ -807,7 +1727,7 @@ TREE = {
       "Hypothesis Testing",
       "Experimental Design",
       "Sampling Theory",
-"Statistical Learning"
+      "Statistical Learning"
     ],
     "Probability": [
       "Probability Theory",
@@ -822,7 +1742,7 @@ TREE = {
       "Queueing Theory",
       "Renewal Theory",
       "Stochastic Calculus",
-"Information Theory"
+      "Information Theory"
     ],
     "Number Theory": [
       "Prime Numbers",
@@ -837,7 +1757,7 @@ TREE = {
       "Transcendental Numbers",
       "Additive Number Theory",
       "Multiplicative Number Theory",
-"Cryptography"
+      "Cryptography"
     ],
     "Discrete Mathematics": [
       "Graph Theory",
@@ -853,7 +1773,7 @@ TREE = {
       "Computational Complexity",
       "Algorithms",
       "Coding Theory",
-"Discrete Geometry"
+      "Discrete Geometry"
     ],
     "Topology": [
       "Point-Set Topology",
@@ -868,7 +1788,7 @@ TREE = {
       "Cohomology Theory",
       "Manifold Theory",
       "Topological Groups",
-"Topological Dynamics"
+      "Topological Dynamics"
     ],
     "Logic": [
       "Propositional Logic",
@@ -885,7 +1805,7 @@ TREE = {
       "Set Theory",
       "Computability Theory",
       "Recursion Theory",
-"Type Theory"
+      "Type Theory"
     ],
     "Applied Mathematics": [
       "Mathematical Modeling",
@@ -901,7 +1821,7 @@ TREE = {
       "Computational Mathematics",
       "Mathematical Physics",
       "Mathematical Biology",
-"Financial Mathematics"
+      "Financial Mathematics"
     ]
   },
   "Logic": {
@@ -909,31 +1829,31 @@ TREE = {
       "Propositional Logic",
       "Predicate Logic",
       "Modal Logic",
-"Many-Valued Logic"
+      "Many-Valued Logic"
     ],
     "Symbolic Logic": [
       "Boolean Algebra",
       "Proof Theory",
       "Set Theory",
-"Lambda Calculus"
+      "Lambda Calculus"
     ],
     "Mathematical Logic": [
       "Model Theory",
       "Recursion Theory",
       "Proof Theory",
-"Set Theory"
+      "Set Theory"
     ],
     "Philosophical Logic": [
       "Deontic Logic",
       "Epistemic Logic",
       "Temporal Logic",
-"Paraconsistent Logic"
+      "Paraconsistent Logic"
     ],
     "Computational Logic": [
       "Automated Theorem Proving",
       "Logic Programming",
       "Constraint Logic",
-"Knowledge Representation"
+      "Knowledge Representation"
     ]
   },
   "Technology": {
@@ -952,7 +1872,7 @@ TREE = {
       "Virtualization",
       "Cloud Computing",
       "Edge Computing",
-"High Performance Computing"
+      "High Performance Computing"
     ],
     "Artificial Intelligence": [
       "Machine Learning",
@@ -969,7 +1889,7 @@ TREE = {
       "Probabilistic Models",
       "Neural Networks",
       "Explainable AI",
-"AI Safety"
+      "AI Safety"
     ],
     "Robotics": [
       "Industrial Robots",
@@ -986,7 +1906,7 @@ TREE = {
       "Human-Robot Interaction",
       "Autonomous Vehicles",
       "Aerial Robotics",
-"Underwater Robotics"
+      "Underwater Robotics"
     ],
     "Software Engineering": [
       "Software Development",
@@ -1002,7 +1922,7 @@ TREE = {
       "Continuous Deployment",
       "Software Maintenance",
       "Technical Debt",
-"Formal Methods"
+      "Formal Methods"
     ],
     "Hardware Engineering": [
       "Microprocessors",
@@ -1017,7 +1937,7 @@ TREE = {
       "Sensor Systems",
       "Actuators",
       "Power Management",
-"Hardware Verification"
+      "Hardware Verification"
     ],
     "Electronics": [
       "Analog Electronics",
@@ -1032,7 +1952,7 @@ TREE = {
       "Photonics",
       "Integrated Circuits",
       "Electronic Packaging",
-"EMI Compatibility"
+      "EMI Compatibility"
     ],
     "Networking": [
       "Computer Networks",
@@ -1047,7 +1967,7 @@ TREE = {
       "Network Virtualization",
       "Edge Networking",
       "Internet Architecture",
-"Quality of Service"
+      "Quality of Service"
     ],
     "Cybersecurity": [
       "Cryptography",
@@ -1063,7 +1983,7 @@ TREE = {
       "Access Control",
       "Security Architecture",
       "Threat Modeling",
-"Malware Analysis"
+      "Malware Analysis"
     ],
     "Information Systems": [
       "Database Systems",
@@ -1077,7 +1997,7 @@ TREE = {
       "Workflow Systems",
       "Information Governance",
       "Records Management",
-"Systems Integration"
+      "Systems Integration"
     ],
     "Data Science": [
       "Data Mining",
@@ -1092,7 +2012,28 @@ TREE = {
       "Distributed Data Processing",
       "Feature Engineering",
       "Model Evaluation",
-"Causal Inference"
+      "Causal Inference"
+    ],
+    "Emerging Technologies": [
+      "Transhumanism",
+      "Nanofabrication",
+      "Quantum Computing Futures",
+      "Technological Singularity",
+      "Space Colonization"
+    ],
+    "Societal Trends": [
+      "Post-Scarcity Economics",
+      "Universal Basic Income",
+      "Global Governance",
+      "Demographic Shifts",
+      "Urbanization Futures"
+    ],
+    "Environmental Futures": [
+      "Terraforming",
+      "Climate Engineering",
+      "Ecological Restoration",
+      "Resource Depletion Models",
+      "Renewable Energy Transition"
     ]
   },
   "Engineering": {
@@ -1113,7 +2054,7 @@ TREE = {
       "Materials Engineering",
       "Manufacturing",
       "Additive Manufacturing",
-"Computational Mechanics"
+      "Computational Mechanics"
     ],
     "Civil Engineering": [
       "Structural Engineering",
@@ -1130,7 +2071,7 @@ TREE = {
       "Surveying",
       "Urban Infrastructure",
       "Earthquake Engineering",
-"Coastal Engineering"
+      "Coastal Engineering"
     ],
     "Electrical Engineering": [
       "Circuit Analysis",
@@ -1147,7 +2088,7 @@ TREE = {
       "Embedded Systems",
       "Robotics",
       "Instrumentation",
-"Renewable Energy"
+      "Renewable Energy"
     ],
     "Chemical Engineering": [
       "Process Design",
@@ -1163,7 +2104,7 @@ TREE = {
       "Catalysis",
       "Electrochemical Engineering",
       "Process Safety",
-"Chemical Kinetics"
+      "Chemical Kinetics"
     ],
     "Aerospace Engineering": [
       "Aerodynamics",
@@ -1180,7 +2121,7 @@ TREE = {
       "Control",
       "Hypersonics",
       "Aeroelasticity",
-"Spacecraft Design"
+      "Spacecraft Design"
     ],
     "Industrial Engineering": [
       "Operations Research",
@@ -1196,7 +2137,7 @@ TREE = {
       "Reliability Engineering",
       "Systems Engineering",
       "Manufacturing Systems",
-"Decision Analysis"
+      "Decision Analysis"
     ],
     "Environmental Engineering": [
       "Waste Management",
@@ -1212,7 +2153,7 @@ TREE = {
       "Life Cycle Assessment",
       "Environmental Hydraulics",
       "Soil Remediation",
-"Resource Recovery"
+      "Resource Recovery"
     ],
     "Biomedical Engineering": [
       "Medical Imaging",
@@ -1228,7 +2169,7 @@ TREE = {
       "Medical Devices",
       "Clinical Engineering",
       "Biotransport",
-"Systems Physiology"
+      "Systems Physiology"
     ]
   },
   "Medicine": {
@@ -1236,66 +2177,66 @@ TREE = {
       "Gross Anatomy",
       "Microscopic Anatomy",
       "Neuroanatomy",
-"Comparative Anatomy"
+      "Comparative Anatomy"
     ],
     "Physiology": [
       "Cardiovascular System",
       "Respiratory System",
       "Neurophysiology",
       "Endocrinology",
-"Renal Physiology"
+      "Renal Physiology"
     ],
     "Pathology": [
       "Histopathology",
       "Clinical Pathology",
       "Molecular Pathology",
-"Forensic Pathology"
+      "Forensic Pathology"
     ],
     "Pharmacology": [
       "Drug Mechanisms",
       "Clinical Pharmacology",
       "Toxicology",
       "Pharmacokinetics",
-"Pharmacodynamics"
+      "Pharmacodynamics"
     ],
     "Surgery": [
       "General Surgery",
       "Orthopedic Surgery",
       "Neurosurgery",
       "Cardiothoracic Surgery",
-"Plastic Surgery"
+      "Plastic Surgery"
     ],
     "Internal Medicine": [
       "Cardiology",
       "Gastroenterology",
       "Endocrinology",
       "Pulmonology",
-"Nephrology"
+      "Nephrology"
     ],
     "Pediatrics": [
       "Neonatology",
       "Pediatric Cardiology",
       "Pediatric Oncology",
-"Growth and Development"
+      "Growth and Development"
     ],
     "Psychiatry": [
       "Clinical Psychiatry",
       "Neuropsychiatry",
       "Child and Adolescent Psychiatry",
-"Psychotherapy"
+      "Psychotherapy"
     ],
     "Public Health": [
       "Epidemiology",
       "Health Policy",
       "Biostatistics",
       "Global Health",
-"Environmental Health"
+      "Environmental Health"
     ],
     "Epidemiology": [
       "Infectious Disease Epidemiology",
       "Chronic Disease Epidemiology",
       "Genetic Epidemiology",
-"Field Epidemiology"
+      "Field Epidemiology"
     ]
   },
   "Health": {
@@ -1304,61 +2245,61 @@ TREE = {
       "Micronutrients",
       "Diets",
       "Nutritional Biochemistry",
-"Public Nutrition"
+      "Public Nutrition"
     ],
     "Mental Health": [
       "Depression",
       "Anxiety",
       "Stress Management",
       "Cognitive Behavioral Therapy",
-"Psychiatric Disorders"
+      "Psychiatric Disorders"
     ],
     "Fitness": [
       "Strength Training",
       "Cardio Training",
       "Flexibility",
       "Endurance",
-"Sports Conditioning"
+      "Sports Conditioning"
     ],
     "Wellness": [
       "Mindfulness",
       "Meditation",
       "Stress Reduction",
       "Self-Care",
-"Holistic Health"
+      "Holistic Health"
     ],
     "Preventive Care": [
       "Vaccination",
       "Screening Programs",
       "Health Education",
-"Lifestyle Interventions"
+      "Lifestyle Interventions"
     ],
     "Rehabilitation": [
       "Physical Therapy",
       "Occupational Therapy",
       "Speech Therapy",
       "Cardiac Rehab",
-"Neurological Rehab"
+      "Neurological Rehab"
     ],
     "Sleep Science": [
       "Sleep Disorders",
       "Circadian Rhythms",
       "Sleep Hygiene",
-"Sleep Physiology"
+      "Sleep Physiology"
     ],
     "Alternative Medicine": [
       "Acupuncture",
       "Herbal Medicine",
       "Homeopathy",
       "Ayurveda",
-"Chiropractic"
+      "Chiropractic"
     ],
     "Dental Health": [
       "Oral Hygiene",
       "Orthodontics",
       "Periodontology",
       "Endodontics",
-"Prosthodontics"
+      "Prosthodontics"
     ]
   },
   "Social Sciences": {
@@ -1367,65 +2308,65 @@ TREE = {
       "Social Stratification",
       "Urban Sociology",
       "Sociology of Education",
-"Sociology of Religion"
+      "Sociology of Religion"
     ],
     "Anthropology": [
       "Cultural Anthropology",
       "Biological Anthropology",
       "Archaeology",
-"Linguistic Anthropology"
+      "Linguistic Anthropology"
     ],
     "Political Science": [
       "Comparative Politics",
       "International Relations",
       "Political Theory",
       "Public Policy",
-"Political Institutions"
+      "Political Institutions"
     ],
     "Psychology": [
       "Cognitive Psychology",
       "Developmental Psychology",
       "Clinical Psychology",
       "Social Psychology",
-"Behavioral Neuroscience"
+      "Behavioral Neuroscience"
     ],
     "Economics": [
       "Microeconomics",
       "Macroeconomics",
       "Development Economics",
       "Behavioral Economics",
-"International Economics"
+      "International Economics"
     ],
     "Human Geography": [
       "Population Geography",
       "Urban Geography",
       "Cultural Geography",
-"Economic Geography"
+      "Economic Geography"
     ],
     "Archaeology": [
       "Field Methods",
       "Excavation Techniques",
       "Artifact Analysis",
       "Dating Methods",
-"Cultural Reconstruction"
+      "Cultural Reconstruction"
     ],
     "Social Work": [
       "Child Welfare",
       "Community Development",
       "Clinical Social Work",
-"Policy Advocacy"
+      "Policy Advocacy"
     ],
     "Cultural Studies": [
       "Media Analysis",
       "Popular Culture",
       "Identity Studies",
-"Postcolonial Studies"
+      "Postcolonial Studies"
     ],
     "Demography": [
       "Population Dynamics",
       "Fertility Studies",
       "Mortality Studies",
-"Migration Studies"
+      "Migration Studies"
     ]
   },
   "History": {
@@ -1449,7 +2390,7 @@ TREE = {
       "Mohenjo-Daro",
       "Shang Dynasty",
       "Zhou Dynasty",
-"Achaemenid Empire"
+      "Achaemenid Empire"
     ],
     "Medieval History": [
       "Feudalism",
@@ -1465,7 +2406,7 @@ TREE = {
       "Medieval Art",
       "Scholasticism",
       "Guilds",
-"Serfdom"
+      "Serfdom"
     ],
     "Modern History": [
       "Renaissance",
@@ -1482,7 +2423,7 @@ TREE = {
       "World War II",
       "Cold War",
       "Decolonization",
-"Globalization"
+      "Globalization"
     ],
     "World History": [
       "Global Trade",
@@ -1497,7 +2438,7 @@ TREE = {
       "Imperialism",
       "Technological Diffusion",
       "Pandemics",
-"Environmental Change"
+      "Environmental Change"
     ],
     "Regional History": [
       "European History",
@@ -1514,7 +2455,7 @@ TREE = {
       "Sub-Saharan History",
       "American History",
       "Latin American History",
-"Middle Eastern History"
+      "Middle Eastern History"
     ],
     "Military History": [
       "Battles",
@@ -1530,7 +2471,7 @@ TREE = {
       "Military Technology",
       "Conscription",
       "Professional Armies",
-"Famous Commanders"
+      "Famous Commanders"
     ],
     "Economic History": [
       "Trade History",
@@ -1545,7 +2486,7 @@ TREE = {
       "Plantation Economies",
       "Globalization",
       "Economic Crises",
-"Development"
+      "Development"
     ],
     "History of Science": [
       "Scientific Revolutions",
@@ -1559,7 +2500,7 @@ TREE = {
       "Astronomy History",
       "Technology History",
       "Instrumentation",
-"Scientific Institutions"
+      "Scientific Institutions"
     ],
     "History of Art": [
       "Prehistoric Art",
@@ -1576,7 +2517,7 @@ TREE = {
       "Impressionism",
       "Modern Art",
       "Postmodern Art",
-"Contemporary Art"
+      "Contemporary Art"
     ],
     "Oral History": [
       "Storytelling",
@@ -1588,7 +2529,7 @@ TREE = {
       "Cultural Memory",
       "Collective Memory",
       "Personal Narratives",
-"Community History"
+      "Community History"
     ]
   },
   "Archaeology": {
@@ -1597,47 +2538,47 @@ TREE = {
       "Bronze Age",
       "Iron Age",
       "Early Settlements",
-"Cave Art"
+      "Cave Art"
     ],
     "Classical Archaeology": [
       "Greek Temples",
       "Roman Ruins",
       "Ancient Monuments",
       "Classical Sculpture",
-"Architecture"
+      "Architecture"
     ],
     "Underwater Archaeology": [
       "Shipwrecks",
       "Submerged Cities",
       "Maritime Artifacts",
       "Preservation Techniques",
-"Diving Surveys"
+      "Diving Surveys"
     ],
     "Ethnoarchaeology": [
       "Cultural Practices",
       "Material Culture",
       "Field Observation",
-"Traditional Techniques"
+      "Traditional Techniques"
     ],
     "Field Methods": [
       "Excavation",
       "Surveying",
       "Mapping",
       "Documentation",
-"Sampling"
+      "Sampling"
     ],
     "Archaeological Theory": [
       "Processual Archaeology",
       "Post-Processual Archaeology",
       "Interpretive Methods",
-"Cultural Resource Management"
+      "Cultural Resource Management"
     ],
     "Artifact Analysis": [
       "Ceramics",
       "Tools",
       "Metal Objects",
       "Textiles",
-"Organic Remains"
+      "Organic Remains"
     ]
   },
   "Geography": {
@@ -1646,49 +2587,49 @@ TREE = {
       "Hydrology",
       "Climatology",
       "Soil Science",
-"Biogeography"
+      "Biogeography"
     ],
     "Human Geography": [
       "Urban Studies",
       "Population Geography",
       "Economic Geography",
       "Political Geography",
-"Cultural Geography"
+      "Cultural Geography"
     ],
     "Cartography": [
       "Map Design",
       "GIS",
       "Topography",
       "Thematic Maps",
-"Digital Mapping"
+      "Digital Mapping"
     ],
     "Geospatial Analysis": [
       "Remote Sensing",
       "Spatial Statistics",
       "GPS Applications",
       "Terrain Analysis",
-"Urban Modeling"
+      "Urban Modeling"
     ],
     "Urban Geography": [
       "City Planning",
       "Urbanization",
       "Housing Studies",
       "Infrastructure",
-"Transportation Networks"
+      "Transportation Networks"
     ],
     "Regional Geography": [
       "Continental Studies",
       "Country Profiles",
       "Climate Zones",
       "Economic Regions",
-"Cultural Regions"
+      "Cultural Regions"
     ],
     "Environmental Geography": [
       "Land Use",
       "Ecosystems",
       "Natural Hazards",
       "Sustainable Development",
-"Resource Management"
+      "Resource Management"
     ]
   },
   "Environment": {
@@ -1697,49 +2638,49 @@ TREE = {
       "Community Ecology",
       "Ecosystem Ecology",
       "Conservation Biology",
-"Biodiversity"
+      "Biodiversity"
     ],
     "Conservation": [
       "Wildlife Protection",
       "Habitat Restoration",
       "Endangered Species",
       "Protected Areas",
-"Conservation Policy"
+      "Conservation Policy"
     ],
     "Climate Science": [
       "Climate Change",
       "Global Warming",
       "Climate Modeling",
       "Paleoclimatology",
-"Mitigation Strategies"
+      "Mitigation Strategies"
     ],
     "Environmental Policy": [
       "Regulations",
       "International Agreements",
       "Environmental Economics",
       "Sustainability Standards",
-"Impact Assessment"
+      "Impact Assessment"
     ],
     "Sustainability": [
       "Renewable Energy",
       "Sustainable Agriculture",
       "Circular Economy",
       "Green Buildings",
-"Eco-Friendly Practices"
+      "Eco-Friendly Practices"
     ],
     "Pollution Studies": [
       "Air Pollution",
       "Water Pollution",
       "Soil Contamination",
       "Noise Pollution",
-"Waste Management"
+      "Waste Management"
     ],
     "Natural Resource Management": [
       "Forestry",
       "Water Resources",
       "Mineral Extraction",
       "Fisheries",
-"Land Management"
+      "Land Management"
     ]
   },
   "Philosophy": {
@@ -1762,7 +2703,7 @@ TREE = {
       "Objects",
       "Properties",
       "Events",
-"Cosmology"
+      "Cosmology"
     ],
     "Epistemology": [
       "Knowledge",
@@ -1780,7 +2721,7 @@ TREE = {
       "Externalism",
       "Testimony",
       "Ignorance",
-"Disagreement"
+      "Disagreement"
     ],
     "Ethics": [
       "Normative Ethics",
@@ -1795,7 +2736,7 @@ TREE = {
       "Moral Agency",
       "Moral Luck",
       "Practical Reason",
-"Value Theory"
+      "Value Theory"
     ],
     "Aesthetics": [
       "Philosophy of Art",
@@ -1811,7 +2752,7 @@ TREE = {
       "Meaning",
       "Creativity",
       "Sublime",
-"Aesthetic Experience"
+      "Aesthetic Experience"
     ],
     "Political Philosophy": [
       "Justice",
@@ -1830,7 +2771,7 @@ TREE = {
       "Cosmopolitanism",
       "Anarchism",
       "Liberalism",
-"Socialism"
+      "Socialism"
     ],
     "Philosophy of Science": [
       "Scientific Method",
@@ -1848,7 +2789,7 @@ TREE = {
       "Realism",
       "Instrumentalism",
       "Anti-Realism",
-"Scientific Change"
+      "Scientific Change"
     ],
     "Philosophy of Mind": [
       "Consciousness",
@@ -1864,7 +2805,7 @@ TREE = {
       "Functionalism",
       "Mental Causation",
       "Qualia",
-"Artificial Intelligence"
+      "Artificial Intelligence"
     ],
     "Logic": [
       "Deductive Logic",
@@ -1879,7 +2820,7 @@ TREE = {
       "Philosophical Logic",
       "Logical Consequence",
       "Validity",
-"Soundness"
+      "Soundness"
     ]
   },
   "Ethics": {
@@ -1893,7 +2834,7 @@ TREE = {
       "Utilitarianism",
       "Egoism",
       "Perfectionism",
-"Pluralism"
+      "Pluralism"
     ],
     "Applied Ethics": [
       "Medical Ethics",
@@ -1905,7 +2846,7 @@ TREE = {
       "Research Ethics",
       "Legal Ethics",
       "Military Ethics",
-"Media Ethics"
+      "Media Ethics"
     ],
     "Meta-Ethics": [
       "Moral Realism",
@@ -1918,7 +2859,7 @@ TREE = {
       "Emotivism",
       "Prescriptivism",
       "Moral Semantics",
-"Moral Epistemology"
+      "Moral Epistemology"
     ],
     "Bioethics": [
       "Genetic Engineering",
@@ -1930,7 +2871,7 @@ TREE = {
       "Public Health Ethics",
       "Disability Ethics",
       "Neuroethics",
-"Research Integrity"
+      "Research Integrity"
     ],
     "Business Ethics": [
       "Corporate Governance",
@@ -1942,7 +2883,7 @@ TREE = {
       "Labor Ethics",
       "Global Business Ethics",
       "Compliance",
-"Transparency"
+      "Transparency"
     ],
     "Environmental Ethics": [
       "Sustainability",
@@ -1954,7 +2895,7 @@ TREE = {
       "Ecocentrism",
       "Anthropocentrism",
       "Environmental Responsibility",
-"Biodiversity Ethics"
+      "Biodiversity Ethics"
     ]
   },
   "Law": {
@@ -1963,49 +2904,49 @@ TREE = {
       "Civil Rights",
       "Federalism",
       "Judicial Review",
-"Amendments"
+      "Amendments"
     ],
     "Criminal Law": [
       "Crimes Against Persons",
       "Crimes Against Property",
       "Criminal Procedure",
       "Punishment",
-"Forensics"
+      "Forensics"
     ],
     "Civil Law": [
       "Contracts",
       "Torts",
       "Property Law",
       "Family Law",
-"Inheritance Law"
+      "Inheritance Law"
     ],
     "International Law": [
       "Treaties",
       "Human Rights",
       "War Crimes",
       "International Organizations",
-"Diplomacy"
+      "Diplomacy"
     ],
     "Administrative Law": [
       "Regulations",
       "Agencies",
       "Public Administration",
       "Rulemaking",
-"Judicial Oversight"
+      "Judicial Oversight"
     ],
     "Human Rights Law": [
       "Freedom of Speech",
       "Right to Privacy",
       "Equality Rights",
       "International Conventions",
-"Refugee Law"
+      "Refugee Law"
     ],
     "Intellectual Property": [
       "Patents",
       "Trademarks",
       "Copyright",
       "Trade Secrets",
-"IP Litigation"
+      "IP Litigation"
     ]
   },
   "Government": {
@@ -2014,49 +2955,49 @@ TREE = {
       "Executives",
       "Judiciary",
       "Local Governments",
-"Bureaucracy"
+      "Bureaucracy"
     ],
     "Public Policy": [
       "Healthcare Policy",
       "Education Policy",
       "Economic Policy",
       "Environmental Policy",
-"Social Welfare"
+      "Social Welfare"
     ],
     "International Relations": [
       "Diplomacy",
       "War and Peace",
       "Trade Relations",
       "Alliances",
-"International Organizations"
+      "International Organizations"
     ],
     "Political Theory": [
       "Liberalism",
       "Conservatism",
       "Socialism",
       "Anarchism",
-"Democracy Theory"
+      "Democracy Theory"
     ],
     "Elections and Voting": [
       "Electoral Systems",
       "Voting Behavior",
       "Campaigns",
       "Referendums",
-"Political Participation"
+      "Political Participation"
     ],
     "Bureaucracy": [
       "Public Administration",
       "Organizational Structure",
       "Policy Implementation",
       "Efficiency",
-"Corruption Studies"
+      "Corruption Studies"
     ],
     "Governance": [
       "Transparency",
       "Rule of Law",
       "Regulatory Oversight",
       "Public Accountability",
-"Civil Society"
+      "Civil Society"
     ]
   },
   "Business": {
@@ -2065,70 +3006,70 @@ TREE = {
       "Investment",
       "Banking",
       "Financial Markets",
-"Risk Management"
+      "Risk Management"
     ],
     "Marketing": [
       "Market Research",
       "Advertising",
       "Brand Management",
       "Digital Marketing",
-"Consumer Behavior"
+      "Consumer Behavior"
     ],
     "Management": [
       "Strategic Management",
       "Operations Management",
       "Human Resource Management",
       "Project Management",
-"Change Management"
+      "Change Management"
     ],
     "Entrepreneurship": [
       "Startup Development",
       "Innovation",
       "Business Planning",
       "Funding",
-"Scaling Businesses"
+      "Scaling Businesses"
     ],
     "Accounting": [
       "Financial Accounting",
       "Management Accounting",
       "Auditing",
       "Tax Accounting",
-"Forensic Accounting"
+      "Forensic Accounting"
     ],
     "Operations": [
       "Supply Chain",
       "Logistics",
       "Production Planning",
       "Quality Control",
-"Process Improvement"
+      "Process Improvement"
     ],
     "Human Resources": [
       "Recruitment",
       "Training and Development",
       "Compensation",
       "Employee Relations",
-"Performance Management"
+      "Performance Management"
     ],
     "Strategy": [
       "Corporate Strategy",
       "Competitive Analysis",
       "Business Models",
       "Mergers and Acquisitions",
-"Strategic Planning"
+      "Strategic Planning"
     ],
     "Economics": [
       "Microeconomics",
       "Macroeconomics",
       "Behavioral Economics",
       "International Economics",
-"Development Economics"
+      "Development Economics"
     ],
     "Business Ethics": [
       "Corporate Governance",
       "CSR",
       "Sustainability",
       "Compliance",
-"Ethical Decision-Making"
+      "Ethical Decision-Making"
     ]
   },
   "Economics": {
@@ -2137,49 +3078,49 @@ TREE = {
       "Producer Theory",
       "Market Structures",
       "Game Theory",
-"Labor Economics"
+      "Labor Economics"
     ],
     "Macroeconomics": [
       "GDP Analysis",
       "Monetary Policy",
       "Fiscal Policy",
       "Inflation",
-"Unemployment"
+      "Unemployment"
     ],
     "Development Economics": [
       "Poverty",
       "Economic Growth",
       "Inequality",
       "Microfinance",
-"Sustainable Development"
+      "Sustainable Development"
     ],
     "International Economics": [
       "Trade Theory",
       "Exchange Rates",
       "Balance of Payments",
       "Globalization",
-"Trade Policy"
+      "Trade Policy"
     ],
     "Labor Economics": [
       "Wages",
       "Employment",
       "Labor Unions",
       "Human Capital",
-"Workforce Policy"
+      "Workforce Policy"
     ],
     "Behavioral Economics": [
       "Decision Making",
       "Cognitive Biases",
       "Prospect Theory",
       "Nudging",
-"Behavioral Finance"
+      "Behavioral Finance"
     ],
     "Financial Economics": [
       "Asset Pricing",
       "Portfolio Theory",
       "Derivatives",
       "Risk Management",
-"Corporate Finance"
+      "Corporate Finance"
     ]
   },
   "Education": {
@@ -2188,56 +3129,56 @@ TREE = {
       "Instructional Design",
       "Classroom Management",
       "Assessment Strategies",
-"Inclusive Education"
+      "Inclusive Education"
     ],
     "Curriculum Design": [
       "Curriculum Theory",
       "Syllabus Planning",
       "Standards and Benchmarks",
       "Interdisciplinary Design",
-"Assessment Integration"
+      "Assessment Integration"
     ],
     "Educational Psychology": [
       "Learning Theories",
       "Motivation",
       "Cognitive Development",
       "Classroom Behavior",
-"Assessment Psychology"
+      "Assessment Psychology"
     ],
     "E-learning": [
       "Online Courses",
       "Learning Management Systems",
       "Digital Pedagogy",
       "MOOCs",
-"Virtual Classrooms"
+      "Virtual Classrooms"
     ],
     "Literacy Studies": [
       "Reading Development",
       "Writing Skills",
       "Language Acquisition",
       "Critical Literacy",
-"Adult Literacy"
+      "Adult Literacy"
     ],
     "Special Education": [
       "Learning Disabilities",
       "Autism Spectrum",
       "Individualized Education Plans",
       "Assistive Technology",
-"Inclusive Practices"
+      "Inclusive Practices"
     ],
     "Higher Education": [
       "University Administration",
       "Research Methods",
       "Academic Programs",
       "Student Affairs",
-"Accreditation"
+      "Accreditation"
     ],
     "Adult Education": [
       "Lifelong Learning",
       "Vocational Training",
       "Community Education",
       "Continuing Education",
-"Professional Development"
+      "Professional Development"
     ]
   },
   "Learning": {
@@ -2246,42 +3187,42 @@ TREE = {
       "Cognitivism",
       "Constructivism",
       "Connectivism",
-"Experiential Learning"
+      "Experiential Learning"
     ],
     "Cognitive Science": [
       "Memory",
       "Attention",
       "Perception",
       "Problem Solving",
-"Decision Making"
+      "Decision Making"
     ],
     "Skill Acquisition": [
       "Motor Skills",
       "Cognitive Skills",
       "Deliberate Practice",
       "Expertise Development",
-"Learning Curves"
+      "Learning Curves"
     ],
     "Memory and Recall": [
       "Short-Term Memory",
       "Long-Term Memory",
       "Working Memory",
       "Encoding Strategies",
-"Memory Retention"
+      "Memory Retention"
     ],
     "Motivation in Learning": [
       "Intrinsic Motivation",
       "Extrinsic Motivation",
       "Goal Setting",
       "Self-Regulation",
-"Reinforcement"
+      "Reinforcement"
     ],
     "Educational Technology": [
       "Learning Platforms",
       "Digital Tools",
       "Gamification",
       "Adaptive Learning",
-"Virtual Reality in Learning"
+      "Virtual Reality in Learning"
     ]
   },
   "Sports": {
@@ -2290,56 +3231,56 @@ TREE = {
       "Basketball",
       "Baseball",
       "Volleyball",
-"Rugby"
+      "Rugby"
     ],
     "Individual Sports": [
       "Tennis",
       "Swimming",
       "Track and Field",
       "Gymnastics",
-"Martial Arts"
+      "Martial Arts"
     ],
     "Athletics": [
       "Sprinting",
       "Marathon",
       "Long Jump",
       "High Jump",
-"Shot Put"
+      "Shot Put"
     ],
     "Water Sports": [
       "Rowing",
       "Sailing",
       "Surfing",
       "Diving",
-"Kayaking"
+      "Kayaking"
     ],
     "Combat Sports": [
       "Boxing",
       "Judo",
       "Wrestling",
       "Karate",
-"Taekwondo"
+      "Taekwondo"
     ],
     "Extreme Sports": [
       "Skydiving",
       "Rock Climbing",
       "BMX",
       "Snowboarding",
-"Parkour"
+      "Parkour"
     ],
     "Fitness Training": [
       "Strength Training",
       "Cardio Training",
       "Flexibility",
       "Endurance",
-"Circuit Training"
+      "Circuit Training"
     ],
     "Sports Science": [
       "Exercise Physiology",
       "Biomechanics",
       "Sports Nutrition",
       "Sports Psychology",
-"Injury Prevention"
+      "Injury Prevention"
     ]
   },
   "Recreation": {
@@ -2348,49 +3289,49 @@ TREE = {
       "Camping",
       "Fishing",
       "Birdwatching",
-"Rock Climbing"
+      "Rock Climbing"
     ],
     "Games": [
       "Board Games",
       "Card Games",
       "Video Games",
       "Role-Playing Games",
-"Puzzles"
+      "Puzzles"
     ],
     "Hobbies": [
       "Gardening",
       "Model Building",
       "Photography",
       "Collecting",
-"Crafts"
+      "Crafts"
     ],
     "Travel": [
       "Adventure Travel",
       "Cultural Travel",
       "Ecotourism",
       "Backpacking",
-"Luxury Travel"
+      "Luxury Travel"
     ],
     "Leisure Studies": [
       "Time Use",
       "Recreation Management",
       "Leisure Behavior",
       "Wellbeing",
-"Community Programs"
+      "Community Programs"
     ],
     "Amusement Parks": [
       "Theme Parks",
       "Roller Coasters",
       "Water Parks",
       "Entertainment Shows",
-"Park Management"
+      "Park Management"
     ],
     "Adventure Activities": [
       "Skydiving",
       "Paragliding",
       "Whitewater Rafting",
       "Bungee Jumping",
-"Caving"
+      "Caving"
     ]
   },
   "Lifestyle": {
@@ -2399,56 +3340,56 @@ TREE = {
       "Cultural Travel",
       "Backpacking",
       "Luxury Travel",
-"Sustainable Travel"
+      "Sustainable Travel"
     ],
     "Hobbies": [
       "Gardening",
       "Photography",
       "Knitting",
       "Collecting",
-"DIY Projects"
+      "DIY Projects"
     ],
     "Fashion": [
       "Clothing Trends",
       "Accessories",
       "Fashion Design",
       "Textiles",
-"Sustainable Fashion"
+      "Sustainable Fashion"
     ],
     "Relationships": [
       "Family",
       "Friendship",
       "Romantic Relationships",
       "Networking",
-"Communication Skills"
+      "Communication Skills"
     ],
     "Personal Finance": [
       "Budgeting",
       "Investing",
       "Saving",
       "Debt Management",
-"Retirement Planning"
+      "Retirement Planning"
     ],
     "Home and Living": [
       "Interior Design",
       "Organization",
       "Home Improvement",
       "Gardening",
-"Smart Home Technology"
+      "Smart Home Technology"
     ],
     "Leisure": [
       "Entertainment",
       "Reading",
       "Music Listening",
       "Movies",
-"Recreational Activities"
+      "Recreational Activities"
     ],
     "Wellness": [
       "Mental Wellness",
       "Physical Wellness",
       "Mindfulness",
       "Stress Management",
-"Self-Care"
+      "Self-Care"
     ]
   },
   "Personal Development": {
@@ -2457,56 +3398,56 @@ TREE = {
       "Mindfulness",
       "Goal Setting",
       "Habit Formation",
-"Confidence Building"
+      "Confidence Building"
     ],
     "Career Development": [
       "Resume Building",
       "Interview Skills",
       "Networking",
       "Career Planning",
-"Professional Growth"
+      "Professional Growth"
     ],
     "Mindfulness": [
       "Meditation",
       "Breathing Exercises",
       "Yoga",
       "Stress Reduction",
-"Awareness Practices"
+      "Awareness Practices"
     ],
     "Time Management": [
       "Prioritization",
       "Scheduling",
       "Productivity Tools",
       "Goal Setting",
-"Work-Life Balance"
+      "Work-Life Balance"
     ],
     "Productivity": [
       "Task Management",
       "Focus Techniques",
       "Efficiency Methods",
       "Time Blocking",
-"Workflow Optimization"
+      "Workflow Optimization"
     ],
     "Leadership": [
       "Team Management",
       "Decision Making",
       "Conflict Resolution",
       "Motivation Techniques",
-"Strategic Thinking"
+      "Strategic Thinking"
     ],
     "Goal Setting": [
       "SMART Goals",
       "Short-Term Goals",
       "Long-Term Goals",
       "Performance Tracking",
-"Accountability"
+      "Accountability"
     ],
     "Motivation": [
       "Intrinsic Motivation",
       "Extrinsic Motivation",
       "Self-Discipline",
       "Inspiration Techniques",
-"Behavioral Motivation"
+      "Behavioral Motivation"
     ]
   },
   "Food": {
@@ -2515,56 +3456,56 @@ TREE = {
       "Grilling",
       "Stir-Frying",
       "Sous Vide",
-"Roasting"
+      "Roasting"
     ],
     "Baking": [
       "Bread",
       "Cakes",
       "Pastries",
       "Cookies",
-"Pies"
+      "Pies"
     ],
     "Culinary Techniques": [
       "Knife Skills",
       "Sauce Making",
       "Fermentation",
       "Marination",
-"Plating"
+      "Plating"
     ],
     "Nutrition": [
       "Macronutrients",
       "Micronutrients",
       "Dietary Guidelines",
       "Food Labels",
-"Special Diets"
+      "Special Diets"
     ],
     "Food History": [
       "Culinary Traditions",
       "Cultural Cuisine",
       "Historical Ingredients",
       "Trade and Food",
-"Evolution of Recipes"
+      "Evolution of Recipes"
     ],
     "Gastronomy": [
       "Molecular Gastronomy",
       "Food Pairing",
       "Flavor Profiling",
       "Sensory Evaluation",
-"Modern Cuisine"
+      "Modern Cuisine"
     ],
     "Food Safety": [
       "Hygiene",
       "Preservation",
       "Contamination",
       "Storage",
-"Cooking Temperatures"
+      "Cooking Temperatures"
     ],
     "Beverages": [
       "Wine",
       "Beer",
       "Tea",
       "Coffee",
-"Cocktails"
+      "Cocktails"
     ]
   },
   "Agriculture": {
@@ -2573,49 +3514,49 @@ TREE = {
       "Irrigation",
       "Soil Fertility",
       "Organic Farming",
-"Precision Agriculture"
+      "Precision Agriculture"
     ],
     "Crop Science": [
       "Plant Breeding",
       "Genetics",
       "Pest Management",
       "Disease Control",
-"Yield Optimization"
+      "Yield Optimization"
     ],
     "Animal Husbandry": [
       "Livestock Management",
       "Dairy Production",
       "Poultry Farming",
       "Health Care",
-"Breeding Techniques"
+      "Breeding Techniques"
     ],
     "Sustainable Agriculture": [
       "Agroforestry",
       "Permaculture",
       "Soil Conservation",
       "Water Management",
-"Renewable Energy in Farming"
+      "Renewable Energy in Farming"
     ],
     "Agroecology": [
       "Ecological Practices",
       "Biodiversity",
       "Ecosystem Services",
       "Soil Microbiology",
-"Integrated Farming"
+      "Integrated Farming"
     ],
     "Agricultural Technology": [
       "Farm Machinery",
       "Drones in Agriculture",
       "Automation",
       "Irrigation Systems",
-"Data Analytics"
+      "Data Analytics"
     ],
     "Horticulture": [
       "Fruit Cultivation",
       "Vegetable Cultivation",
       "Floriculture",
       "Greenhouse Management",
-"Landscape Gardening"
+      "Landscape Gardening"
     ]
   },
   "Language": {
@@ -2624,49 +3565,49 @@ TREE = {
       "Morphology",
       "Syntax",
       "Semantics",
-"Pragmatics"
+      "Pragmatics"
     ],
     "Syntax": [
       "Sentence Structure",
       "Grammar Rules",
       "Dependency Parsing",
       "Transformational Grammar",
-"Syntactic Theory"
+      "Syntactic Theory"
     ],
     "Semantics": [
       "Meaning",
       "Lexical Semantics",
       "Compositional Semantics",
       "Semantic Roles",
-"Pragmatics Interface"
+      "Pragmatics Interface"
     ],
     "Phonetics": [
       "Articulatory Phonetics",
       "Acoustic Phonetics",
       "Auditory Phonetics",
       "IPA",
-"Speech Sounds"
+      "Speech Sounds"
     ],
     "Sociolinguistics": [
       "Language Variation",
       "Dialect Studies",
       "Code-Switching",
       "Language and Identity",
-"Language Policy"
+      "Language Policy"
     ],
     "Language Acquisition": [
       "First Language Acquisition",
       "Second Language Learning",
       "Bilingualism",
       "Critical Period Hypothesis",
-"Language Development"
+      "Language Development"
     ],
     "Writing Systems": [
       "Alphabetic",
       "Logographic",
       "Syllabic",
       "Pictographic",
-"Braille"
+      "Braille"
     ]
   },
   "Communication": {
@@ -2675,42 +3616,42 @@ TREE = {
       "Argumentation",
       "Speech Writing",
       "Public Speaking Techniques",
-"Rhetorical Devices"
+      "Rhetorical Devices"
     ],
     "Public Speaking": [
       "Presentation Skills",
       "Voice Modulation",
       "Body Language",
       "Audience Engagement",
-"Storytelling"
+      "Storytelling"
     ],
     "Media Studies": [
       "Journalism",
       "Broadcast Media",
       "Digital Media",
       "Media Ethics",
-"Advertising"
+      "Advertising"
     ],
     "Journalism": [
       "Investigative Reporting",
       "News Writing",
       "Editorials",
       "Photojournalism",
-"Data Journalism"
+      "Data Journalism"
     ],
     "Interpersonal Communication": [
       "Conflict Resolution",
       "Active Listening",
       "Nonverbal Communication",
       "Relationship Skills",
-"Negotiation"
+      "Negotiation"
     ],
     "Digital Communication": [
       "Social Media",
       "Email Etiquette",
       "Online Communities",
       "Virtual Collaboration",
-"Digital Literacy"
+      "Digital Literacy"
     ]
   },
   "Religion": {
@@ -2729,7 +3670,7 @@ TREE = {
       "Bahai",
       "Jainism",
       "Yoruba",
-"Indigenous Religions"
+      "Indigenous Religions"
     ],
     "Religious Practices": [
       "Rituals",
@@ -2745,7 +3686,7 @@ TREE = {
       "Ordination",
       "Purification",
       "Divination",
-"Asceticism"
+      "Asceticism"
     ],
     "Theology": [
       "Systematic Theology",
@@ -2759,7 +3700,7 @@ TREE = {
       "Natural Theology",
       "Liberation Theology",
       "Feminist Theology",
-"Political Theology"
+      "Political Theology"
     ],
     "Spirituality": [
       "Meditation",
@@ -2773,7 +3714,7 @@ TREE = {
       "Personal Transformation",
       "Inner Experience",
       "Prayer Life",
-"Spiritual Direction"
+      "Spiritual Direction"
     ],
     "Comparative Religion": [
       "Belief Systems",
@@ -2785,7 +3726,7 @@ TREE = {
       "Religious History",
       "Typology",
       "Phenomenology",
-"Syncretism"
+      "Syncretism"
     ],
     "Religious History": [
       "Church History",
@@ -2799,7 +3740,7 @@ TREE = {
       "Missions",
       "Conversions",
       "Religious Conflicts",
-"Secularization"
+      "Secularization"
     ],
     "Mythology": [
       "Greek Mythology",
@@ -2815,7 +3756,7 @@ TREE = {
       "Mesoamerican Mythology",
       "African Mythology",
       "Creation Myths",
-"Hero Myths"
+      "Hero Myths"
     ]
   },
   "Spirituality": {
@@ -2824,42 +3765,42 @@ TREE = {
       "Transcendental Meditation",
       "Zen Meditation",
       "Vipassana",
-"Loving-Kindness Meditation"
+      "Loving-Kindness Meditation"
     ],
     "Mindfulness": [
       "Breath Awareness",
       "Body Scan",
       "Mindful Eating",
       "Walking Meditation",
-"Stress Reduction"
+      "Stress Reduction"
     ],
     "New Age Practices": [
       "Crystal Healing",
       "Chakra Balancing",
       "Energy Healing",
       "Astrology",
-"Tarot"
+      "Tarot"
     ],
     "Mysticism": [
       "Sufism",
       "Kabbalah",
       "Christian Mysticism",
       "Buddhist Mysticism",
-"Contemplative Practices"
+      "Contemplative Practices"
     ],
     "Yoga": [
       "Hatha Yoga",
       "Ashtanga Yoga",
       "Vinyasa Yoga",
       "Kundalini Yoga",
-"Yoga Philosophy"
+      "Yoga Philosophy"
     ],
     "Personal Belief Systems": [
       "Spiritual Philosophy",
       "Self-Reflection",
       "Ethics and Values",
       "Inner Growth",
-"Rituals and Practices"
+      "Rituals and Practices"
     ]
   },
   "Transportation": {
@@ -2868,49 +3809,49 @@ TREE = {
       "Electric Vehicles",
       "Hybrid Vehicles",
       "Automotive Design",
-"Autonomous Cars"
+      "Autonomous Cars"
     ],
     "Rail Transport": [
       "High-Speed Rail",
       "Urban Rail",
       "Freight Rail",
       "Rail Infrastructure",
-"Train Operations"
+      "Train Operations"
     ],
     "Air Transport": [
       "Commercial Aviation",
       "Cargo Aviation",
       "Air Traffic Control",
       "Airport Management",
-"Flight Safety"
+      "Flight Safety"
     ],
     "Maritime Transport": [
       "Shipping",
       "Port Management",
       "Navigation",
       "Maritime Safety",
-"Cargo Handling"
+      "Cargo Handling"
     ],
     "Public Transportation": [
       "Buses",
       "Trams",
       "Subways",
       "Ride-Sharing",
-"Transit Planning"
+      "Transit Planning"
     ],
     "Logistics": [
       "Supply Chain",
       "Warehousing",
       "Distribution",
       "Freight Management",
-"Inventory Control"
+      "Inventory Control"
     ],
     "Space Exploration": [
       "Satellites",
       "Space Missions",
       "Spacecraft Design",
       "Planetary Exploration",
-"Astrobiology"
+      "Astrobiology"
     ]
   },
   "Infrastructure": {
@@ -2919,49 +3860,75 @@ TREE = {
       "Zoning",
       "Public Spaces",
       "Transportation Planning",
-"Sustainability"
+      "Sustainability"
     ],
     "Civil Engineering": [
       "Roads",
       "Bridges",
       "Buildings",
       "Water Systems",
-"Tunnels"
+      "Tunnels"
     ],
     "Bridges and Roads": [
       "Bridge Design",
       "Bridge Maintenance",
       "Road Construction",
       "Highway Planning",
-"Traffic Management"
+      "Traffic Management"
     ],
     "Water Systems": [
       "Water Supply",
       "Wastewater Treatment",
       "Irrigation Systems",
       "Stormwater Management",
-"Hydraulics"
+      "Hydraulics"
     ],
     "Energy Systems": [
       "Power Generation",
       "Renewable Energy",
       "Grid Infrastructure",
       "Energy Storage",
-"Distribution Networks"
+      "Distribution Networks",
+      "Power Grids",
+      "Renewable Energy Storage",
+      "Nuclear Infrastructure",
+      "Microgrids",
+      "Hydrogen Distribution"
     ],
     "Telecommunications": [
       "Internet Infrastructure",
       "Mobile Networks",
       "Fiber Optics",
       "Satellite Communication",
-"Network Maintenance"
+      "Network Maintenance"
     ],
     "Smart Cities": [
       "IoT Integration",
       "Urban Sensors",
       "Traffic Optimization",
       "Sustainability Monitoring",
-"Data Analytics"
+      "Data Analytics"
+    ],
+    "Transportation Networks": [
+      "High-Speed Rail",
+      "Autonomous Transit Systems",
+      "Aviation Infrastructure",
+      "Maritime Ports",
+      "Smart Roads"
+    ],
+    "Utility Systems": [
+      "Water Purification",
+      "Wastewater Management",
+      "Solid Waste Disposal",
+      "Internet Backbone",
+      "Telecommunications Towers"
+    ],
+    "Public Works": [
+      "Tunnels",
+      "Dams and Levees",
+      "Public Housing",
+      "Urban Drainage",
+      "Green Infrastructure"
     ]
   },
   "Military": {
@@ -2970,49 +3937,77 @@ TREE = {
       "Grand Strategy",
       "Tactical Doctrine",
       "War Games",
-"Military Campaigns"
+      "Military Campaigns"
     ],
     "Tactics": [
       "Infantry Tactics",
       "Naval Tactics",
       "Air Force Tactics",
       "Urban Combat",
-"Guerrilla Warfare"
+      "Guerrilla Warfare"
     ],
     "Weapons": [
       "Firearms",
       "Missiles",
       "Artillery",
       "Naval Weapons",
-"Cyber Weapons"
+      "Cyber Weapons"
     ],
     "Defense Systems": [
       "Air Defense",
       "Missile Defense",
       "Radar Systems",
       "Fortifications",
-"Cybersecurity Defense"
+      "Cybersecurity Defense"
     ],
     "Military History": [
       "Ancient Warfare",
       "Medieval Warfare",
       "Modern Warfare",
       "World Wars",
-"Military Technology"
+      "Military Technology"
     ],
     "Logistics": [
       "Supply Chains",
       "Transport",
       "Resource Allocation",
       "Maintenance",
-"Field Support"
+      "Field Support"
     ],
     "Peacekeeping": [
       "UN Missions",
       "Conflict Resolution",
       "Humanitarian Support",
       "Demobilization",
-"Reconstruction"
+      "Reconstruction"
+    ],
+    "Strategy and Tactics": [
+      "Grand Strategy",
+      "Operational Art",
+      "Asymmetric Warfare",
+      "Urban Combat",
+      "Counterinsurgency"
+    ],
+    "Military Technology": [
+      "Ballistics",
+      "Stealth Technology",
+      "Electronic Warfare",
+      "Unmanned Combat Systems",
+      "Hypersonic Weapons"
+    ],
+    "Logistics and Support": [
+      "Supply Chain Management",
+      "Military Medicine",
+      "Field Engineering",
+      "Strategic Airlift",
+      "Procurement"
+    ],
+    "Command and Control": [
+      "Leadership Theory",
+      "Military Intelligence",
+      "Signals and Communication",
+      "Joint Operations",
+      "Rules of Engagement"
     ]
   },
   "Security": {
@@ -3021,42 +4016,42 @@ TREE = {
       "Application Security",
       "Penetration Testing",
       "Cryptography",
-"Incident Response"
+      "Incident Response"
     ],
     "National Security": [
       "Defense Policy",
       "Intelligence Operations",
       "Counterterrorism",
       "Border Security",
-"Crisis Management"
+      "Crisis Management"
     ],
     "Intelligence": [
       "Signals Intelligence",
       "Human Intelligence",
       "Geospatial Intelligence",
       "Analysis",
-"Surveillance Techniques"
+      "Surveillance Techniques"
     ],
     "Surveillance": [
       "CCTV",
       "Digital Monitoring",
       "Data Collection",
       "Privacy Issues",
-"Regulations"
+      "Regulations"
     ],
     "Crisis Management": [
       "Disaster Response",
       "Emergency Planning",
       "Continuity Planning",
       "Evacuation Procedures",
-"Coordination Strategies"
+      "Coordination Strategies"
     ],
     "Emergency Preparedness": [
       "First Aid",
       "Emergency Supplies",
       "Training Drills",
       "Community Preparedness",
-"Risk Assessment"
+      "Risk Assessment"
     ]
   }
 }
