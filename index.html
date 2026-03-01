@@ -457,10 +457,16 @@
         const feed = document.getElementById('feed');
         const card = document.createElement('div');
         card.className = 'card';
+        card.id = page.title;
         const img = page.thumbnail ? page.thumbnail.source : `data:image/svg+xml;charset=UTF-8,%3Csvg width='200' height='150' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeee'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%23888888' text-anchor='middle' dy='.3em'%3ENo Preview%3C/text%3E%3C/svg%3E`;
         const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title)}`;
         card.innerHTML = `<a href="${url}" target="_blank" class="card-img"><img src="${img}" loading="lazy"></a><div class="card-body"><div><a href="${url}" target="_blank" class="card-title">${page.title}</a><p class="card-text">${page.extract || ''}</p></div><div class="card-stats">📈 ${views} Views (14D)</div></div>`;
-        feed.appendChild(card);
+            // Check if a child with the same ID already exists
+        if (!document.getElementById(card.id)) {
+            feed.appendChild(card);
+        } else {
+            console.log(`Skipped since ${card.id} already exists.`);
+        }
     }
 
     function clearAll() { activeTerms = []; customTerms = []; browsingTerm = null; document.getElementById('siblingPicker').style.display = 'none'; syncState(); }
