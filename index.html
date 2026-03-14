@@ -334,8 +334,7 @@
 
     function addTerm(t) { 
         if (!activeTerms.includes(t)) { activeTerms.push(t); syncState(); }
-        document.getElementById('treeDrawer').style.display = 'none';
-        document.getElementById('toggleArrow').innerText = '▸';
+        clearSearchInput();
     }
     
     function addCustom(val) {
@@ -344,8 +343,7 @@
             activeTerms.push(val);
             syncState();
         }
-        document.getElementById('treeDrawer').style.display = 'none';
-        document.getElementById('toggleArrow').innerText = '▸';
+        clearSearchInput();
     }
 
     function removeTerm(t) {
@@ -480,6 +478,24 @@
 
     window.addEventListener('scroll', () => { if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) fetchArticles(); });
     init();
+
+    // Close tree drawer when clicking outside, but ignore internal redraws
+    document.addEventListener('click', (event) => {
+    const drawer = document.getElementById('treeDrawer');
+    const topicsBtn = document.querySelector('.nav-btn.primary');
+    
+    // composedPath() tracks the click's origin even if the DOM changes
+    const path = event.composedPath();
+    const isInsideDrawer = path.includes(drawer);
+    const isBtnClick = path.includes(topicsBtn);
+
+    // Only close if the drawer is open and the click was outside both the button and drawer
+    if (drawer.style.display === 'block' && !isInsideDrawer && !isBtnClick) {
+        drawer.style.display = 'none';
+        document.getElementById('toggleArrow').innerText = '▸';
+    }
+});
+
     </script>
 </body>
 </html>
